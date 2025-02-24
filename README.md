@@ -172,6 +172,8 @@ For demonstration purposes, use:
 ---
 ![system management](/screenshots/screenshot_5.PNG)
 ---
+![system overview](/screenshots/screenshot_7.PNG)
+---
 ![system ATO process](/screenshots/screenshot_9.PNG)
 ---
 
