@@ -1,0 +1,9 @@
+$sonarScannerPath = "C:\Users\Panda\Downloads\sonar-scanner-cli-7.0.2.4839-windows-x64\sonar-scanner-7.0.2.4839-windows-x64\bin"
+$currentPath = [Environment]::GetEnvironmentVariable("Path", "Machine")
+if ($currentPath -notlike "*$sonarScannerPath*") {
+    [Environment]::SetEnvironmentVariable("Path", "$currentPath;$sonarScannerPath", "Machine")
+    Write-Host "SonarScanner path has been added to your system PATH variable."
+    Write-Host "Please restart your PowerShell window for the changes to take effect."
+} else {
+    Write-Host "SonarScanner path is already in your system PATH variable."
+}

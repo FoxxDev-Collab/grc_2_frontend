@@ -1,0 +1,6 @@
+projectKey=GRC_2
+serverUrl=http://sonar.localhost:29000
+serverVersion=25.2.0.102705
+dashboardUrl=http://sonar.localhost:29000/dashboard?id=GRC_2
+ceTaskId=7355c86b-a40c-4760-80b6-d37e90d58630
+ceTaskUrl=http://sonar.localhost:29000/api/ce/task?id=7355c86b-a40c-4760-80b6-d37e90d58630
