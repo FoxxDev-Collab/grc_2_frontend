@@ -1,256 +1,135 @@
-import { delay, getCurrentDate, validateRequired, checkExists } from '../apiHelpers';
-import {
-  mockSystems,
-  SystemStatus,
-  ATOStatus,
-  SecurityLevel,
-  InformationLevel,
-  SystemCategory,
-  mockNetworkTypes,
-  mockComponentTypes,
-  mockProcedureTypes,
-  mockCommonPorts
-} from '../mocks/systemMockData';
-import { mockAuthData } from '../mocks/authorizationMockData';
+import { get, post, put } from '../apiHelpers';
 
 // Re-export enums for backward compatibility
-export { SystemStatus, ATOStatus, SecurityLevel, InformationLevel, SystemCategory };
+export const SystemStatus = {
+  DRAFT: 'DRAFT',
+  IN_PROGRESS: 'IN_PROGRESS',
+  COMPLETED: 'COMPLETED',
+  ARCHIVED: 'ARCHIVED'
+};
 
-// In-memory storage for CRUD operations
-let systems = [...mockSystems];
+export const ATOStatus = {
+  NOT_STARTED: 'NOT_STARTED',
+  IN_PROGRESS: 'IN_PROGRESS',
+  APPROVED: 'APPROVED',
+  DENIED: 'DENIED',
+  EXPIRED: 'EXPIRED'
+};
+
+export const SecurityLevel = {
+  LOW: 'low',
+  MODERATE: 'moderate',
+  HIGH: 'high'
+};
+
+export const InformationLevel = {
+  PUBLIC: 'public',
+  INTERNAL: 'internal',
+  CONFIDENTIAL: 'confidential',
+  RESTRICTED: 'restricted'
+};
+
+export const SystemCategory = {
+  MISSION_CRITICAL: 'Mission Critical',
+  BUSINESS_CRITICAL: 'Business Critical',
+  BUSINESS_OPERATIONAL: 'Business Operational',
+  BUSINESS_SUPPORT: 'Business Support'
+};
 
 export const systemApi = {
   getSystems: async (clientId) => {
-    await delay(500);
-    validateRequired({ clientId }, ['clientId']);
-    
-    const numericClientId = Number(clientId);
-    const filteredSystems = systems.filter(s => s.clientId === numericClientId);
-    return [...filteredSystems];
+    return get(`/systems?clientId=${clientId}`);
   },
 
   getSystemTypes: async () => {
-    await delay(300);
-    return [
-      'Major Application',
-      'General Support System',
-      'Minor Application',
-      'Other'
-    ];
+    const response = await get('/system-types');
+    return response.map(type => type.name);
   },
 
   getNetworkTypes: async () => {
-    await delay(300);
-    return [...mockNetworkTypes];
+    const response = await get('/network-types');
+    return response.map(type => type.name);
   },
 
   getComponentTypes: async () => {
-    await delay(300);
-    return [...mockComponentTypes];
+    const response = await get('/component-types');
+    return response.map(type => type.name);
   },
 
   getProcedureTypes: async () => {
-    await delay(300);
-    return [...mockProcedureTypes];
+    const response = await get('/procedure-types');
+    return response.map(type => type.name);
   },
 
   getCommonPorts: async () => {
-    await delay(300);
-    return [...mockCommonPorts];
+    return get('/common-ports');
   },
 
   getSystemStatuses: async () => {
-    await delay(300);
-    return Object.values(SystemStatus);
+    const response = await get('/system-statuses');
+    return response.map(status => status.name);
   },
 
   getATOStatuses: async () => {
-    await delay(300);
-    return Object.values(ATOStatus);
+    const response = await get('/ato-statuses');
+    return response.map(status => status.name);
   },
 
   getSecurityLevels: async () => {
-    await delay(300);
-    return Object.values(SecurityLevel);
+    const response = await get('/security-levels');
+    return response.map(level => level.name);
   },
 
   getInformationLevels: async () => {
-    await delay(300);
-    return Object.values(InformationLevel);
+    const response = await get('/information-levels');
+    return response.map(level => level.name);
   },
 
   getSystemCategories: async () => {
-    await delay(300);
-    return Object.values(SystemCategory);
+    const response = await get('/system-categories');
+    return response.map(category => category.name);
   },
 
   getSystem: async (clientId, systemId) => {
-    await delay(300);
-    validateRequired({ clientId, systemId }, ['clientId', 'systemId']);
+    // Get base system data
+    const system = await get(`/systems/${systemId}`);
     
-    const numericClientId = Number(clientId);
-    const system = systems.find(s => 
-      s.clientId === numericClientId && 
-      s.id === systemId
-    );
+    // Get authorization data
+    const authData = await get(`/authorization/${clientId}/${systemId}`);
     
-    checkExists(system, 'System');
-
-    // Get authorization data from mock data
-    const authData = mockAuthData[clientId]?.[systemId] || {
-      riskAssessment: { risks: [], nonCompliantControls: [] },
-      package: {
-        completed: [],
-        pending: [],
-        executiveSummary: '',
-        status: 'not-started',
-        validationStatus: 'pending',
-        completionPercentage: 0,
-      },
-      decision: {
-        result: '',
-        official: '',
-        date: '',
-        expirationDate: '',
-        justification: '',
-        conditions: [],
-        boundary: '',
-      },
-    };
-
-    // Add authorization data to system response
-    const systemWithAuth = {
+    // Combine system and authorization data
+    return {
       ...system,
       phases: {
         ...system.phases,
         authorization: authData
       }
     };
-    
-    return systemWithAuth;
   },
 
   createPOAMItem: async (clientId, systemId, poamData) => {
-    await delay(800);
-    validateRequired({ clientId, systemId, ...poamData }, ['clientId', 'systemId', 'controlId', 'mitigationPlan']);
-    
-    const numericClientId = Number(clientId);
-    const systemIndex = systems.findIndex(s => 
-      s.clientId === numericClientId && 
-      s.id === systemId
-    );
-    
-    checkExists(systems[systemIndex], 'System');
-
-    const newPOAM = {
-      id: `poam-${Date.now()}`,
+    return post(`/authorization/${clientId}/${systemId}/poam`, {
       ...poamData,
       status: 'OPEN',
-      dateCreated: getCurrentDate(),
-    };
-
-    // Update system's authorization data
-    if (!systems[systemIndex].phases) {
-      systems[systemIndex].phases = {};
-    }
-    if (!systems[systemIndex].phases.authorization) {
-      systems[systemIndex].phases.authorization = mockAuthData[clientId]?.[systemId] || {
-        riskAssessment: { risks: [], nonCompliantControls: [] },
-        package: { completed: [], pending: [] },
-        decision: {},
-      };
-    }
-
-    systems[systemIndex].phases.authorization.riskAssessment.risks.push(newPOAM);
-    systems[systemIndex].updatedAt = getCurrentDate();
-
-    return newPOAM;
+      dateCreated: new Date().toISOString().split('T')[0]
+    });
   },
 
   updateAuthorizationPackage: async (clientId, systemId, packageData) => {
-    await delay(500);
-    validateRequired({ clientId, systemId }, ['clientId', 'systemId']);
-    
-    const numericClientId = Number(clientId);
-    const systemIndex = systems.findIndex(s => 
-      s.clientId === numericClientId && 
-      s.id === systemId
-    );
-    
-    checkExists(systems[systemIndex], 'System');
-
-    // Ensure authorization data exists
-    if (!systems[systemIndex].phases) {
-      systems[systemIndex].phases = {};
-    }
-    if (!systems[systemIndex].phases.authorization) {
-      systems[systemIndex].phases.authorization = mockAuthData[clientId]?.[systemId] || {
-        riskAssessment: { risks: [], nonCompliantControls: [] },
-        package: { completed: [], pending: [] },
-        decision: {},
-      };
-    }
-
-    // Update package data
-    systems[systemIndex].phases.authorization.package = {
-      ...systems[systemIndex].phases.authorization.package,
-      ...packageData,
-    };
-    systems[systemIndex].updatedAt = getCurrentDate();
-
-    return systems[systemIndex].phases.authorization.package;
+    return put(`/authorization/${clientId}/${systemId}/package`, packageData);
   },
 
   updateAuthorizationDecision: async (clientId, systemId, decisionData) => {
-    await delay(500);
-    validateRequired({ clientId, systemId }, ['clientId', 'systemId']);
-    
-    const numericClientId = Number(clientId);
-    const systemIndex = systems.findIndex(s => 
-      s.clientId === numericClientId && 
-      s.id === systemId
-    );
-    
-    checkExists(systems[systemIndex], 'System');
-
-    // Ensure authorization data exists
-    if (!systems[systemIndex].phases) {
-      systems[systemIndex].phases = {};
-    }
-    if (!systems[systemIndex].phases.authorization) {
-      systems[systemIndex].phases.authorization = mockAuthData[clientId]?.[systemId] || {
-        riskAssessment: { risks: [], nonCompliantControls: [] },
-        package: { completed: [], pending: [] },
-        decision: {},
-      };
-    }
-
-    // Update decision data
-    systems[systemIndex].phases.authorization.decision = {
-      ...systems[systemIndex].phases.authorization.decision,
-      ...decisionData,
-    };
-    systems[systemIndex].updatedAt = getCurrentDate();
-
-    return systems[systemIndex].phases.authorization.decision;
+    return put(`/authorization/${clientId}/${systemId}/decision`, decisionData);
   },
 
   validateAuthorizationPackage: async (clientId, systemId) => {
-    await delay(1000);
-    validateRequired({ clientId, systemId }, ['clientId', 'systemId']);
+    await put(`/authorization/${clientId}/${systemId}/validate`);
     
-    const numericClientId = Number(clientId);
-    const system = systems.find(s => 
-      s.clientId === numericClientId && 
-      s.id === systemId
-    );
-    
-    checkExists(system, 'System');
-
-    // Simulate package validation
+    // Return validation results
     return {
       status: 'VALIDATED',
-      timestamp: getCurrentDate(),
+      timestamp: new Date().toISOString().split('T')[0],
       findings: [],
       recommendations: [
         'Ensure all POA&M items have detailed remediation plans',

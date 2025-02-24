@@ -1,22 +1,20 @@
-import { delay, validateRequired, checkExists } from '../apiHelpers';
-import { mockSystems } from '../mocks/systemMockData';
+import { validateRequired, checkExists } from '../apiHelpers';
 
-// In-memory storage for CRUD operations
-let systems = [...mockSystems];
+const API_URL = 'http://localhost:3001';
 
 const initialAssessmentApi = {
   // Get initial assessment data
   getInitialAssessment: async (clientId, systemId) => {
-    await delay(300);
     validateRequired({ clientId, systemId }, ['clientId', 'systemId']);
     
-    const numericClientId = Number(clientId);
-    const system = systems.find(s => 
-      s.clientId === numericClientId && 
-      s.id === systemId
-    );
+    const response = await fetch(`${API_URL}/systems/${systemId}?clientId=${clientId}`);
+    if (!response.ok) {
+      throw new Error('Failed to fetch system data');
+    }
     
+    const system = await response.json();
     checkExists(system, 'System');
+    
     return { 
       ...system.phases.initialAssessment,
       lastUpdated: system.updatedAt
@@ -25,7 +23,6 @@ const initialAssessmentApi = {
 
   // Update system discovery
   updateSystemDiscovery: async (clientId, systemId, discoveryData) => {
-    await delay(500);
     validateRequired({ 
       clientId, 
       systemId,
@@ -38,20 +35,22 @@ const initialAssessmentApi = {
       'informationLevel',
     ]);
 
-    const numericClientId = Number(clientId);
-    const index = systems.findIndex(s => 
-      s.clientId === numericClientId && 
-      s.id === systemId
-    );
+    const response = await fetch(`${API_URL}/systems/${systemId}`, {
+      method: 'GET'
+    });
+    if (!response.ok) {
+      throw new Error('Failed to fetch system data');
+    }
     
-    checkExists(systems[index], 'System');
+    const system = await response.json();
+    checkExists(system, 'System');
 
-    systems[index] = {
-      ...systems[index],
+    const updatedSystem = {
+      ...system,
       phases: {
-        ...systems[index].phases,
+        ...system.phases,
         initialAssessment: {
-          ...systems[index].phases.initialAssessment,
+          ...system.phases.initialAssessment,
           discovery: {
             ...discoveryData,
             status: 'completed',
@@ -61,15 +60,27 @@ const initialAssessmentApi = {
       }
     };
 
+    const updateResponse = await fetch(`${API_URL}/systems/${systemId}`, {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(updatedSystem)
+    });
+
+    if (!updateResponse.ok) {
+      throw new Error('Failed to update system discovery');
+    }
+
+    const result = await updateResponse.json();
     return {
       success: true,
-      data: systems[index].phases.initialAssessment.discovery
+      data: result.phases.initialAssessment.discovery
     };
   },
 
   // Update environment analysis
   updateEnvironmentAnalysis: async (clientId, systemId, environmentData) => {
-    await delay(500);
     validateRequired({ 
       clientId, 
       systemId,
@@ -84,20 +95,22 @@ const initialAssessmentApi = {
       'interfaces'
     ]);
 
-    const numericClientId = Number(clientId);
-    const index = systems.findIndex(s => 
-      s.clientId === numericClientId && 
-      s.id === systemId
-    );
+    const response = await fetch(`${API_URL}/systems/${systemId}`, {
+      method: 'GET'
+    });
+    if (!response.ok) {
+      throw new Error('Failed to fetch system data');
+    }
     
-    checkExists(systems[index], 'System');
+    const system = await response.json();
+    checkExists(system, 'System');
 
-    systems[index] = {
-      ...systems[index],
+    const updatedSystem = {
+      ...system,
       phases: {
-        ...systems[index].phases,
+        ...system.phases,
         initialAssessment: {
-          ...systems[index].phases.initialAssessment,
+          ...system.phases.initialAssessment,
           environment: {
             ...environmentData,
             status: 'completed',
@@ -107,15 +120,27 @@ const initialAssessmentApi = {
       }
     };
 
+    const updateResponse = await fetch(`${API_URL}/systems/${systemId}`, {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(updatedSystem)
+    });
+
+    if (!updateResponse.ok) {
+      throw new Error('Failed to update environment analysis');
+    }
+
+    const result = await updateResponse.json();
     return {
       success: true,
-      data: systems[index].phases.initialAssessment.environment
+      data: result.phases.initialAssessment.environment
     };
   },
 
   // Update network boundary
   updateNetworkBoundary: async (clientId, systemId, boundaryData) => {
-    await delay(500);
     validateRequired({ 
       clientId, 
       systemId,
@@ -129,20 +154,22 @@ const initialAssessmentApi = {
       'procedures'
     ]);
 
-    const numericClientId = Number(clientId);
-    const index = systems.findIndex(s => 
-      s.clientId === numericClientId && 
-      s.id === systemId
-    );
+    const response = await fetch(`${API_URL}/systems/${systemId}`, {
+      method: 'GET'
+    });
+    if (!response.ok) {
+      throw new Error('Failed to fetch system data');
+    }
     
-    checkExists(systems[index], 'System');
+    const system = await response.json();
+    checkExists(system, 'System');
 
-    systems[index] = {
-      ...systems[index],
+    const updatedSystem = {
+      ...system,
       phases: {
-        ...systems[index].phases,
+        ...system.phases,
         initialAssessment: {
-          ...systems[index].phases.initialAssessment,
+          ...system.phases.initialAssessment,
           boundary: {
             ...boundaryData,
             status: 'completed',
@@ -152,15 +179,27 @@ const initialAssessmentApi = {
       }
     };
 
+    const updateResponse = await fetch(`${API_URL}/systems/${systemId}`, {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(updatedSystem)
+    });
+
+    if (!updateResponse.ok) {
+      throw new Error('Failed to update network boundary');
+    }
+
+    const result = await updateResponse.json();
     return {
       success: true,
-      data: systems[index].phases.initialAssessment.boundary
+      data: result.phases.initialAssessment.boundary
     };
   },
 
   // Update stakeholders
   updateStakeholders: async (clientId, systemId, stakeholderData) => {
-    await delay(500);
     validateRequired({ 
       clientId, 
       systemId,
@@ -175,20 +214,22 @@ const initialAssessmentApi = {
       'communicationChannels'
     ]);
 
-    const numericClientId = Number(clientId);
-    const index = systems.findIndex(s => 
-      s.clientId === numericClientId && 
-      s.id === systemId
-    );
+    const response = await fetch(`${API_URL}/systems/${systemId}`, {
+      method: 'GET'
+    });
+    if (!response.ok) {
+      throw new Error('Failed to fetch system data');
+    }
     
-    checkExists(systems[index], 'System');
+    const system = await response.json();
+    checkExists(system, 'System');
 
-    systems[index] = {
-      ...systems[index],
+    const updatedSystem = {
+      ...system,
       phases: {
-        ...systems[index].phases,
+        ...system.phases,
         initialAssessment: {
-          ...systems[index].phases.initialAssessment,
+          ...system.phases.initialAssessment,
           stakeholders: {
             ...stakeholderData,
             status: 'completed',
@@ -198,23 +239,35 @@ const initialAssessmentApi = {
       }
     };
 
+    const updateResponse = await fetch(`${API_URL}/systems/${systemId}`, {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(updatedSystem)
+    });
+
+    if (!updateResponse.ok) {
+      throw new Error('Failed to update stakeholders');
+    }
+
+    const result = await updateResponse.json();
     return {
       success: true,
-      data: systems[index].phases.initialAssessment.stakeholders
+      data: result.phases.initialAssessment.stakeholders
     };
   },
 
   // Get initial assessment progress
   getProgress: async (clientId, systemId) => {
-    await delay(300);
     validateRequired({ clientId, systemId }, ['clientId', 'systemId']);
     
-    const numericClientId = Number(clientId);
-    const system = systems.find(s => 
-      s.clientId === numericClientId && 
-      s.id === systemId
-    );
+    const response = await fetch(`${API_URL}/systems/${systemId}?clientId=${clientId}`);
+    if (!response.ok) {
+      throw new Error('Failed to fetch system data');
+    }
     
+    const system = await response.json();
     checkExists(system, 'System');
 
     const sections = [

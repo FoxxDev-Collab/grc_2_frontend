@@ -1,4 +1,342 @@
 {
+  "0": {
+    "id": "sys-001",
+    "name": "Core Banking Platform",
+    "type": "Major Application",
+    "uploadDate": "2024-02-21T08:00:00Z",
+    "description": "Main database server hosting customer data",
+    "fileUrl": "/artifacts/system-architecture.pdf",
+    "fileType": "application/pdf",
+    "size": 2457600,
+    "uploadedBy": "John Smith",
+    "specifications": {
+      "manufacturer": "Dell",
+      "model": "PowerEdge R740",
+      "cpu": "Intel Xeon Gold 6248R",
+      "ram": "384GB",
+      "storage": "4TB SSD RAID-10"
+    },
+    "status": "IN_PROGRESS",
+    "lastUpdated": "2024-02-19T10:00:00Z",
+    "clientId": 1,
+    "category": "Mission Critical",
+    "securityLevel": "high",
+    "informationLevel": "confidential",
+    "atoStatus": "IN_PROGRESS",
+    "currentPhase": "initial_assessment",
+    "createdAt": "2025-02-20T10:00:00Z",
+    "updatedAt": "2025-02-20T10:30:00Z",
+    "lastAssessment": null,
+    "phaseProgress": {
+      "initial-assessment": 65,
+      "system-categorization": 30,
+      "security-controls": 10,
+      "assessment": 0,
+      "ato-authorization": 0,
+      "continuous-monitoring": 0
+    },
+    "phases": {
+      "initialAssessment": {
+        "discovery": {
+          "status": "in_progress",
+          "completedItems": [
+            "System inventory",
+            "System purpose documentation"
+          ],
+          "pendingItems": [
+            "Data flow mapping",
+            "System boundaries"
+          ]
+        },
+        "gapAnalysis": {
+          "status": "in_progress",
+          "completedItems": [
+            "Current state assessment"
+          ],
+          "pendingItems": [
+            "Control gap identification",
+            "Security practice review"
+          ]
+        },
+        "environment": {
+          "status": "completed",
+          "details": {
+            "hosting": "Hybrid",
+            "components": [
+              "Web Servers",
+              "Database Clusters",
+              "Load Balancers"
+            ]
+          }
+        },
+        "stakeholders": {
+          "status": "not_started",
+          "identified": [],
+          "pending": [
+            "System Owner",
+            "Security Officer",
+            "Operations Team"
+          ]
+        }
+      },
+      "systemCategorization": {
+        "infoTypes": {
+          "status": "in_progress",
+          "identified": [
+            "Customer Data",
+            "Transaction Records"
+          ],
+          "pending": [
+            "Audit Logs",
+            "Configuration Data"
+          ]
+        },
+        "impact": {
+          "status": "not_started",
+          "assessments": {
+            "confidentiality": null,
+            "integrity": null,
+            "availability": null
+          }
+        },
+        "objectives": {
+          "status": "not_started",
+          "defined": [],
+          "pending": [
+            "Data Protection Goals",
+            "System Availability Targets",
+            "Compliance Requirements"
+          ]
+        }
+      },
+      "securityControls": {
+        "baseline": {
+          "status": "not_started",
+          "selected": null,
+          "rationale": null
+        },
+        "tailoring": {
+          "status": "not_started",
+          "completedControls": [],
+          "pendingControls": []
+        },
+        "implementation": {
+          "status": "not_started",
+          "implemented": [],
+          "pending": []
+        },
+        "documentation": {
+          "status": "not_started",
+          "completed": [],
+          "pending": [
+            "Security Policies",
+            "Procedures",
+            "Training Materials"
+          ]
+        }
+      },
+      "assessment": {
+        "planning": {
+          "status": "not_started",
+          "completed": [],
+          "pending": [
+            "Assessment Plan",
+            "Test Procedures",
+            "Tool Selection"
+          ]
+        },
+        "testing": {
+          "status": "not_started",
+          "completed": [],
+          "pending": [
+            "Vulnerability Scans",
+            "Penetration Tests",
+            "Control Testing"
+          ]
+        },
+        "review": {
+          "status": "not_started",
+          "completed": [],
+          "pending": [
+            "Documentation Review",
+            "Evidence Validation",
+            "Findings Documentation"
+          ]
+        }
+      },
+      "authorization": {
+        "riskAssessment": {
+          "status": "not_started",
+          "completed": [],
+          "pending": [
+            "Risk Analysis",
+            "Mitigation Planning",
+            "Residual Risk Assessment"
+          ]
+        },
+        "package": {
+          "status": "not_started",
+          "completed": [],
+          "pending": [
+            "Package Assembly",
+            "Documentation Review",
+            "Executive Summary"
+          ]
+        },
+        "decision": {
+          "status": "not_started",
+          "result": null,
+          "conditions": []
+        }
+      },
+      "continuousMonitoring": {
+        "program": {
+          "status": "not_started",
+          "defined": [],
+          "pending": [
+            "Monitoring Strategy",
+            "Metrics Definition",
+            "Reporting Requirements"
+          ]
+        },
+        "assessment": {
+          "status": "not_started",
+          "completed": [],
+          "pending": [
+            "Control Effectiveness",
+            "Metric Collection",
+            "Risk Updates"
+          ]
+        },
+        "maintenance": {
+          "status": "not_started",
+          "completed": [],
+          "pending": [
+            "System Updates",
+            "Documentation Maintenance",
+            "Training Updates"
+          ]
+        }
+      }
+    },
+    "components": [],
+    "networks": [],
+    "ports": [],
+    "procedures": [],
+    "artifacts": [],
+    "boundaries": {
+      "physical": [],
+      "network": [],
+      "security": []
+    },
+    "compliance": {
+      "nist": 0,
+      "hipaa": 0,
+      "pci": 0
+    }
+  },
+  "1": {
+    "id": "2",
+    "name": "Web Application Server",
+    "type": "VIRTUAL",
+    "uploadDate": "2024-02-20T15:30:00Z",
+    "description": "Primary web application server",
+    "fileUrl": "/artifacts/security-policy-v1.docx",
+    "fileType": "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+    "size": 1048576,
+    "uploadedBy": "Sarah Johnson",
+    "specifications": {
+      "os": "Ubuntu 22.04 LTS",
+      "vcpus": 8,
+      "ram": "32GB",
+      "storage": "500GB"
+    },
+    "status": "ACTIVE",
+    "lastUpdated": "2024-02-19T10:00:00Z"
+  },
+  "2": {
+    "id": "3",
+    "name": "Core Switch",
+    "type": "NETWORK",
+    "uploadDate": "2024-02-19T11:15:00Z",
+    "description": "Primary network switch for data center",
+    "fileUrl": "/artifacts/vuln-scan-feb2024.pdf",
+    "fileType": "application/pdf",
+    "size": 3145728,
+    "uploadedBy": "Mike Wilson",
+    "specifications": {
+      "manufacturer": "Cisco",
+      "model": "Catalyst 9300",
+      "ports": "48x 10GbE",
+      "throughput": "960 Gbps"
+    },
+    "status": "ACTIVE",
+    "lastUpdated": "2024-02-19T10:00:00Z"
+  },
+  "3": {
+    "id": "art-004",
+    "name": "Network Diagram",
+    "type": "Technical Documentation",
+    "uploadDate": "2024-02-18T09:45:00Z",
+    "description": "Current network topology and configuration",
+    "fileUrl": "/artifacts/network-diagram.png",
+    "fileType": "image/png",
+    "size": 512000,
+    "uploadedBy": "John Smith"
+  },
+  "4": {
+    "id": "art-005",
+    "name": "Security Control Implementation",
+    "type": "Implementation Evidence",
+    "uploadDate": "2024-02-17T14:20:00Z",
+    "description": "Screenshots and configuration files showing security control implementation",
+    "fileUrl": "/artifacts/control-implementation.zip",
+    "fileType": "application/zip",
+    "size": 5242880,
+    "uploadedBy": "Sarah Johnson"
+  },
+  "artifactTypes": [
+    {
+      "id": "type-1",
+      "name": "Technical Documentation"
+    },
+    {
+      "id": "type-2",
+      "name": "Policy Documentation"
+    },
+    {
+      "id": "type-3",
+      "name": "Security Assessment"
+    },
+    {
+      "id": "type-4",
+      "name": "Implementation Evidence"
+    },
+    {
+      "id": "type-5",
+      "name": "Training Records"
+    },
+    {
+      "id": "type-6",
+      "name": "Audit Reports"
+    },
+    {
+      "id": "type-7",
+      "name": "Configuration Files"
+    },
+    {
+      "id": "type-8",
+      "name": "System Logs"
+    },
+    {
+      "id": "type-9",
+      "name": "Incident Reports"
+    },
+    {
+      "id": "type-10",
+      "name": "Other"
+    }
+  ],
   "advancesQuestions": [
     {
       "id": "AC-1-Q1",
@@ -1072,7 +1410,7 @@
       "role": "SENIOR_AO",
       "isActive": true,
       "lastLogin": "2024-02-19T12:00:00Z",
-      "lastActive": "2025-02-24T18:12:30.637Z",
+      "lastActive": "2025-02-24T20:13:54.771Z",
       "createdAt": "2024-01-01T00:00:00Z",
       "updatedAt": "2024-02-19T12:00:00Z",
       "profileImage": null,
@@ -1301,6 +1639,22 @@
     {
       "id": "pending_activation",
       "description": "User account awaiting activation"
+    },
+    {
+      "id": "1",
+      "name": "Planning"
+    },
+    {
+      "id": "2",
+      "name": "In Progress"
+    },
+    {
+      "id": "3",
+      "name": "Completed"
+    },
+    {
+      "id": "4",
+      "name": "On Hold"
     }
   ],
   "preferences": {
@@ -1992,6 +2346,22 @@
     {
       "id": "9",
       "name": "Cloud Services"
+    },
+    {
+      "id": "sys-type-1",
+      "name": "Major Application"
+    },
+    {
+      "id": "sys-type-2",
+      "name": "General Support System"
+    },
+    {
+      "id": "sys-type-3",
+      "name": "Minor Application"
+    },
+    {
+      "id": "sys-type-4",
+      "name": "Other"
     }
   ],
   "incidents": [
@@ -2141,6 +2511,924 @@
           "timestamp": "2024-02-19T11:45:00Z",
           "description": "Network monitoring analysis initiated",
           "performedBy": "Sarah Johnson"
+        }
+      ]
+    }
+  ],
+  "technical": [
+    {
+      "id": "AC-1",
+      "number": "AC-1",
+      "family": "Access Control",
+      "title": "Access Control Policy and Procedures",
+      "description": "The organization develops, documents, and disseminates an access control policy and procedures.",
+      "implementationStatus": "Partially Implemented",
+      "implementationDetails": "",
+      "baselineImpact": "LOW",
+      "evidence": [
+        {
+          "id": "ev-1",
+          "title": "Access Control Policy.pdf",
+          "dateAdded": "2024-02-19"
+        }
+      ],
+      "lastAssessed": "2024-02-19"
+    },
+    {
+      "id": "AC-2",
+      "number": "AC-2",
+      "family": "Access Control",
+      "title": "Account Management",
+      "description": "The organization manages information system accounts, including establishing, activating, modifying, reviewing, disabling, and removing accounts.",
+      "implementationStatus": "Implemented",
+      "implementationDetails": "",
+      "baselineImpact": "LOW",
+      "evidence": [],
+      "lastAssessed": "2024-02-19"
+    },
+    {
+      "id": "AC-3",
+      "number": "AC-3",
+      "family": "Access Control",
+      "title": "Access Enforcement",
+      "description": "The system enforces approved authorizations for logical access to information and system resources.",
+      "implementationStatus": "Not Implemented",
+      "implementationDetails": "",
+      "baselineImpact": "MODERATE",
+      "evidence": [],
+      "lastAssessed": "2024-02-19"
+    }
+  ],
+  "operational": [
+    {
+      "id": "AT-1",
+      "number": "AT-1",
+      "family": "Awareness and Training",
+      "title": "Security Awareness and Training Policy and Procedures",
+      "description": "The organization develops, documents, and disseminates security awareness and training policies and procedures.",
+      "implementationStatus": "Not Implemented",
+      "implementationDetails": "",
+      "baselineImpact": "LOW",
+      "evidence": [],
+      "lastAssessed": "2024-02-19"
+    },
+    {
+      "id": "AT-2",
+      "number": "AT-2",
+      "family": "Awareness and Training",
+      "title": "Security Awareness Training",
+      "description": "The organization provides basic security awareness training to information system users.",
+      "implementationStatus": "Not Implemented",
+      "implementationDetails": "",
+      "baselineImpact": "LOW",
+      "evidence": [],
+      "lastAssessed": "2024-02-19"
+    },
+    {
+      "id": "AT-3",
+      "number": "AT-3",
+      "family": "Awareness and Training",
+      "title": "Role-Based Security Training",
+      "description": "The organization provides role-based security training to personnel with assigned security roles and responsibilities.",
+      "implementationStatus": "Not Implemented",
+      "implementationDetails": "",
+      "baselineImpact": "MODERATE",
+      "evidence": [],
+      "lastAssessed": "2024-02-19"
+    }
+  ],
+  "management": [
+    {
+      "id": "CA-1",
+      "number": "CA-1",
+      "family": "Security Assessment",
+      "title": "Security Assessment and Authorization Policies and Procedures",
+      "description": "The organization develops, documents, and disseminates security assessment and authorization policies and procedures.",
+      "implementationStatus": "Not Implemented",
+      "implementationDetails": "",
+      "baselineImpact": "LOW",
+      "evidence": [],
+      "lastAssessed": "2024-02-19"
+    },
+    {
+      "id": "CA-2",
+      "number": "CA-2",
+      "family": "Security Assessment",
+      "title": "Security Assessments",
+      "description": "The organization develops a security assessment plan and conducts security assessments.",
+      "implementationStatus": "Not Implemented",
+      "implementationDetails": "",
+      "baselineImpact": "LOW",
+      "evidence": [],
+      "lastAssessed": "2024-02-19"
+    },
+    {
+      "id": "CA-3",
+      "number": "CA-3",
+      "family": "Security Assessment",
+      "title": "System Interconnections",
+      "description": "The organization documents and controls system interconnections.",
+      "implementationStatus": "Not Implemented",
+      "implementationDetails": "",
+      "baselineImpact": "MODERATE",
+      "evidence": [],
+      "lastAssessed": "2024-02-19"
+    }
+  ],
+  "families": [
+    {
+      "id": "AC",
+      "name": "Access Control"
+    },
+    {
+      "id": "AT",
+      "name": "Awareness and Training"
+    },
+    {
+      "id": "AU",
+      "name": "Audit and Accountability"
+    },
+    {
+      "id": "CA",
+      "name": "Security Assessment and Authorization"
+    },
+    {
+      "id": "CM",
+      "name": "Configuration Management"
+    },
+    {
+      "id": "CP",
+      "name": "Contingency Planning"
+    },
+    {
+      "id": "IA",
+      "name": "Identification and Authentication"
+    },
+    {
+      "id": "IR",
+      "name": "Incident Response"
+    },
+    {
+      "id": "MA",
+      "name": "Maintenance"
+    },
+    {
+      "id": "MP",
+      "name": "Media Protection"
+    },
+    {
+      "id": "PE",
+      "name": "Physical and Environmental Protection"
+    },
+    {
+      "id": "PL",
+      "name": "Planning"
+    },
+    {
+      "id": "PS",
+      "name": "Personnel Security"
+    },
+    {
+      "id": "RA",
+      "name": "Risk Assessment"
+    },
+    {
+      "id": "SA",
+      "name": "System and Services Acquisition"
+    },
+    {
+      "id": "SC",
+      "name": "System and Communications Protection"
+    },
+    {
+      "id": "SI",
+      "name": "System and Information Integrity"
+    }
+  ],
+  "overallProgress": 35,
+  "statusBreakdown": {
+    "Implemented": 12,
+    "Partially Implemented": 24,
+    "Not Implemented": 45,
+    "Not Applicable": 8
+  },
+  "securityObjectives": [
+    {
+      "id": "1",
+      "name": "Implement Zero Trust Architecture",
+      "description": "Establish a comprehensive zero trust security model across all systems",
+      "progress": 45,
+      "status": "In Progress",
+      "priority": "High",
+      "dueDate": "2025-12-31",
+      "metrics": {
+        "successCriteria": [
+          "Identity verification for all access requests",
+          "Microsegmentation implemented",
+          "Continuous monitoring and logging in place"
+        ],
+        "currentMetrics": [
+          "Identity management system deployed",
+          "Network segmentation 45% complete"
+        ]
+      }
+    },
+    {
+      "id": "2",
+      "name": "Security Awareness Training Program",
+      "description": "Develop and implement comprehensive security awareness training for all employees",
+      "progress": 75,
+      "status": "In Progress",
+      "priority": "Medium",
+      "dueDate": "2025-06-30",
+      "metrics": {
+        "successCriteria": [
+          "90% employee completion rate",
+          "Reduced phishing success rate",
+          "Monthly security updates distributed"
+        ],
+        "currentMetrics": [
+          "75% employees completed training",
+          "Phishing success rate reduced by 40%"
+        ]
+      }
+    },
+    {
+      "id": "3",
+      "name": "Cloud Security Enhancement",
+      "description": "Strengthen security controls for cloud infrastructure and services",
+      "progress": 30,
+      "status": "Planning",
+      "priority": "High",
+      "dueDate": "2025-09-30",
+      "metrics": {
+        "successCriteria": [
+          "Cloud security baseline established",
+          "Automated security scanning implemented",
+          "Data encryption at rest and in transit"
+        ],
+        "currentMetrics": [
+          "Baseline documentation in progress",
+          "Initial security scan completed"
+        ]
+      }
+    }
+  ],
+  "priorityLevels": [
+    {
+      "id": "1",
+      "name": "Low"
+    },
+    {
+      "id": "2",
+      "name": "Medium"
+    },
+    {
+      "id": "3",
+      "name": "High"
+    },
+    {
+      "id": "4",
+      "name": "Critical"
+    }
+  ],
+  "sys-001": {
+    "phases": [
+      {
+        "id": 1,
+        "title": "Initial Assessment",
+        "description": "System discovery and initial evaluation",
+        "progress": 65,
+        "sections": [
+          {
+            "title": "System Discovery",
+            "tasks": [
+              {
+                "description": "Conduct initial system inventory",
+                "completed": true
+              },
+              {
+                "description": "Document system purpose and functions",
+                "completed": true
+              },
+              {
+                "description": "Identify system components and boundaries",
+                "completed": false
+              },
+              {
+                "description": "Map data flows and interconnections",
+                "completed": false
+              },
+              {
+                "description": "Review existing security documentation",
+                "completed": true
+              }
+            ]
+          },
+          {
+            "title": "Gap Analysis",
+            "tasks": [
+              {
+                "description": "Compare current state against required controls",
+                "completed": true
+              },
+              {
+                "description": "Document existing security measures",
+                "completed": false
+              },
+              {
+                "description": "Identify missing controls and documentation",
+                "completed": false
+              },
+              {
+                "description": "Assess current security practices",
+                "completed": true
+              },
+              {
+                "description": "Review existing policies and procedures",
+                "completed": true
+              }
+            ]
+          },
+          {
+            "title": "Environment Analysis",
+            "tasks": [
+              {
+                "description": "Evaluate hosting environment (Cloud/On-Prem/Hybrid)",
+                "completed": true
+              },
+              {
+                "description": "Document infrastructure components",
+                "completed": true
+              },
+              {
+                "description": "Review network architecture",
+                "completed": false
+              },
+              {
+                "description": "Assess system dependencies",
+                "completed": true
+              },
+              {
+                "description": "Identify critical system interfaces",
+                "completed": false
+              }
+            ]
+          },
+          {
+            "title": "Stakeholder Analysis",
+            "tasks": [
+              {
+                "description": "Identify key system stakeholders",
+                "completed": true
+              },
+              {
+                "description": "Document system owners and operators",
+                "completed": true
+              },
+              {
+                "description": "Map security responsibilities",
+                "completed": false
+              },
+              {
+                "description": "Establish points of contact",
+                "completed": true
+              },
+              {
+                "description": "Define communication channels",
+                "completed": false
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "informationTypes": {
+      "types": [],
+      "customTypes": "",
+      "sensitivity": "",
+      "regulations": [],
+      "ownership": "",
+      "dataFlows": "",
+      "dataLifecycle": "",
+      "privacyRequirements": ""
+    },
+    "impactAnalysis": {
+      "confidentiality": "",
+      "integrity": "",
+      "availability": "",
+      "rationale": "",
+      "categorization": ""
+    },
+    "securityObjectives": {
+      "objectives": [],
+      "requirements": [],
+      "criticalFunctions": [],
+      "businessImpact": "",
+      "priorities": []
+    },
+    "progress": {
+      "progress": 30,
+      "sections": {
+        "informationTypes": "not_started",
+        "impactAnalysis": "not_started",
+        "securityObjectives": "not_started"
+      }
+    }
+  },
+  "client-1": {
+    "sys-001": {
+      "riskAssessment": {
+        "risks": [
+          {
+            "id": "RISK-001",
+            "description": "Insufficient access controls",
+            "likelihood": "high",
+            "impact": "high",
+            "status": "open"
+          }
+        ],
+        "nonCompliantControls": [
+          {
+            "controlId": "AC-2",
+            "title": "Account Management",
+            "status": "non-compliant",
+            "findings": "Missing automated account management procedures"
+          }
+        ]
+      },
+      "package": {
+        "completed": [
+          "System Security Plan",
+          "Risk Assessment Report"
+        ],
+        "pending": [
+          "Privacy Impact Assessment",
+          "Contingency Plan"
+        ],
+        "executiveSummary": "System implements moderate security controls with some gaps identified.",
+        "status": "in-progress",
+        "validationStatus": "pending",
+        "completionPercentage": 65
+      },
+      "decision": {
+        "result": "pending",
+        "official": "",
+        "date": "",
+        "expirationDate": "",
+        "justification": "",
+        "conditions": [],
+        "boundary": "System includes all components within the development network segment."
+      }
+    }
+  },
+  "componentTypes": [
+    {
+      "id": "type-1",
+      "name": "PHYSICAL"
+    },
+    {
+      "id": "type-2",
+      "name": "VIRTUAL"
+    },
+    {
+      "id": "type-3",
+      "name": "NETWORK"
+    },
+    {
+      "id": "type-4",
+      "name": "SECURITY_APPLIANCE"
+    },
+    {
+      "id": "comp-1",
+      "name": "Server"
+    },
+    {
+      "id": "comp-2",
+      "name": "Database"
+    },
+    {
+      "id": "comp-3",
+      "name": "Application"
+    },
+    {
+      "id": "comp-4",
+      "name": "Network Device"
+    },
+    {
+      "id": "comp-5",
+      "name": "Security Appliance"
+    }
+  ],
+  "componentStatuses": [
+    {
+      "id": "status-1",
+      "name": "ACTIVE"
+    },
+    {
+      "id": "status-2",
+      "name": "INACTIVE"
+    },
+    {
+      "id": "status-3",
+      "name": "MAINTENANCE"
+    },
+    {
+      "id": "status-4",
+      "name": "DECOMMISSIONED"
+    }
+  ],
+  "systemStatus": [
+    {
+      "id": "status-1",
+      "name": "DRAFT"
+    },
+    {
+      "id": "status-2",
+      "name": "IN_PROGRESS"
+    },
+    {
+      "id": "status-3",
+      "name": "COMPLETED"
+    },
+    {
+      "id": "status-4",
+      "name": "ARCHIVED"
+    }
+  ],
+  "atoStatus": [
+    {
+      "id": "ato-1",
+      "name": "NOT_STARTED"
+    },
+    {
+      "id": "ato-2",
+      "name": "IN_PROGRESS"
+    },
+    {
+      "id": "ato-3",
+      "name": "APPROVED"
+    },
+    {
+      "id": "ato-4",
+      "name": "DENIED"
+    },
+    {
+      "id": "ato-5",
+      "name": "EXPIRED"
+    }
+  ],
+  "securityLevel": [
+    {
+      "id": "sec-1",
+      "name": "low"
+    },
+    {
+      "id": "sec-2",
+      "name": "moderate"
+    },
+    {
+      "id": "sec-3",
+      "name": "high"
+    }
+  ],
+  "informationLevel": [
+    {
+      "id": "info-1",
+      "name": "public"
+    },
+    {
+      "id": "info-2",
+      "name": "internal"
+    },
+    {
+      "id": "info-3",
+      "name": "confidential"
+    },
+    {
+      "id": "info-4",
+      "name": "restricted"
+    }
+  ],
+  "systemCategory": [
+    {
+      "id": "cat-1",
+      "name": "Mission Critical"
+    },
+    {
+      "id": "cat-2",
+      "name": "Business Critical"
+    },
+    {
+      "id": "cat-3",
+      "name": "Business Operational"
+    },
+    {
+      "id": "cat-4",
+      "name": "Business Support"
+    }
+  ],
+  "networkTypes": [
+    {
+      "id": "net-1",
+      "name": "LAN"
+    },
+    {
+      "id": "net-2",
+      "name": "WAN"
+    },
+    {
+      "id": "net-3",
+      "name": "VPN"
+    },
+    {
+      "id": "net-4",
+      "name": "Cloud"
+    },
+    {
+      "id": "net-5",
+      "name": "Hybrid"
+    }
+  ],
+  "procedureTypes": [
+    {
+      "id": "proc-1",
+      "name": "Backup"
+    },
+    {
+      "id": "proc-2",
+      "name": "Recovery"
+    },
+    {
+      "id": "proc-3",
+      "name": "Maintenance"
+    },
+    {
+      "id": "proc-4",
+      "name": "Security"
+    },
+    {
+      "id": "proc-5",
+      "name": "Compliance"
+    }
+  ],
+  "commonPorts": [
+    {
+      "id": "1",
+      "port": 80,
+      "service": "HTTP"
+    },
+    {
+      "id": "2",
+      "port": 443,
+      "service": "HTTPS"
+    },
+    {
+      "id": "3",
+      "port": 22,
+      "service": "SSH"
+    },
+    {
+      "id": "4",
+      "port": 3306,
+      "service": "MySQL"
+    },
+    {
+      "id": "5",
+      "port": 5432,
+      "service": "PostgreSQL"
+    }
+  ],
+  "processSteps": [
+    {
+      "id": "1",
+      "title": "Initial Assessment",
+      "description": "System discovery and initial evaluation",
+      "sections": [
+        {
+          "title": "System Discovery",
+          "tasks": [
+            "Conduct initial system inventory",
+            "Document system purpose and functions",
+            "Identify system components and boundaries",
+            "Map data flows and interconnections",
+            "Review existing security documentation"
+          ]
+        },
+        {
+          "title": "Gap Analysis",
+          "tasks": [
+            "Compare current state against required controls",
+            "Document existing security measures",
+            "Identify missing controls and documentation",
+            "Assess current security practices",
+            "Review existing policies and procedures"
+          ]
+        },
+        {
+          "title": "Environment Analysis",
+          "tasks": [
+            "Evaluate hosting environment (Cloud/On-Prem/Hybrid)",
+            "Document infrastructure components",
+            "Review network architecture",
+            "Assess system dependencies",
+            "Identify critical system interfaces"
+          ]
+        },
+        {
+          "title": "Stakeholder Analysis",
+          "tasks": [
+            "Identify key system stakeholders",
+            "Document system owners and operators",
+            "Map security responsibilities",
+            "Establish points of contact",
+            "Define communication channels"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "2",
+      "title": "System Categorization",
+      "description": "Information classification and impact analysis",
+      "sections": [
+        {
+          "title": "Information Types",
+          "tasks": [
+            "Identify all information types",
+            "Document data sensitivity levels",
+            "Map regulatory requirements",
+            "Define data ownership",
+            "Document data flows"
+          ]
+        },
+        {
+          "title": "Impact Analysis",
+          "tasks": [
+            "Assess confidentiality impact",
+            "Evaluate integrity impact",
+            "Determine availability impact",
+            "Document impact rationale",
+            "Define system categorization"
+          ]
+        },
+        {
+          "title": "Security Objectives",
+          "tasks": [
+            "Document security objectives",
+            "Define protection requirements",
+            "Identify critical functions",
+            "Map business impact",
+            "Establish security priorities"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "3",
+      "title": "Security Controls",
+      "description": "Control selection and implementation",
+      "sections": [
+        {
+          "title": "Baseline Selection",
+          "tasks": [
+            "Select security control baseline",
+            "Document baseline rationale",
+            "Map regulatory requirements",
+            "Identify applicable overlays",
+            "Define supplemental controls"
+          ]
+        },
+        {
+          "title": "Control Implementation",
+          "tasks": [
+            "Configure security settings",
+            "Deploy security tools",
+            "Implement procedures",
+            "Document configurations",
+            "Validate implementations"
+          ]
+        },
+        {
+          "title": "System Security Plan",
+          "tasks": [
+            "Document system description",
+            "Detail control implementations",
+            "Map security responsibilities",
+            "Document architecture",
+            "Define boundaries"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "4",
+      "title": "Assessment",
+      "description": "Security testing and evaluation",
+      "sections": [
+        {
+          "title": "Assessment Planning",
+          "tasks": [
+            "Develop assessment plan",
+            "Define testing procedures",
+            "Identify assessment tools",
+            "Create test cases",
+            "Document methodology"
+          ]
+        },
+        {
+          "title": "Security Testing",
+          "tasks": [
+            "Conduct vulnerability scans",
+            "Perform penetration testing",
+            "Test control effectiveness",
+            "Document test results",
+            "Validate configurations"
+          ]
+        },
+        {
+          "title": "Control Assessment",
+          "tasks": [
+            "Review control evidence",
+            "Test control effectiveness",
+            "Document findings",
+            "Identify gaps",
+            "Assess residual risk"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "5",
+      "title": "Authorization",
+      "description": "ATO package and decision",
+      "sections": [
+        {
+          "title": "Risk Assessment",
+          "tasks": [
+            "Analyze assessment results",
+            "Document identified risks",
+            "Assess risk levels",
+            "Define mitigations",
+            "Create POA&M"
+          ]
+        },
+        {
+          "title": "Package Preparation",
+          "tasks": [
+            "Compile authorization package",
+            "Review documentation",
+            "Validate completeness",
+            "Prepare executive summary",
+            "Document recommendations"
+          ]
+        },
+        {
+          "title": "Authorization Decision",
+          "tasks": [
+            "Present to authorizing official",
+            "Review residual risks",
+            "Document decision",
+            "Define conditions",
+            "Establish authorization boundary"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "6",
+      "title": "Continuous Monitoring",
+      "description": "Ongoing security maintenance",
+      "sections": [
+        {
+          "title": "Monitoring Program",
+          "tasks": [
+            "Define monitoring strategy",
+            "Select security metrics",
+            "Establish frequency",
+            "Document procedures",
+            "Define roles"
+          ]
+        },
+        {
+          "title": "Change Management",
+          "tasks": [
+            "Document change procedures",
+            "Review security impact",
+            "Update documentation",
+            "Track modifications",
+            "Maintain baseline"
+          ]
+        },
+        {
+          "title": "Maintenance",
+          "tasks": [
+            "Review security posture",
+            "Update documentation",
+            "Maintain evidence",
+            "Track compliance",
+            "Report status"
+          ]
         }
       ]
     }
@@ -2314,32 +3602,5 @@
         "name": "Monitoring"
       }
     ]
-  },
-  "commonPorts": [
-    {
-      "id": "1",
-      "port": 80,
-      "service": "HTTP"
-    },
-    {
-      "id": "2",
-      "port": 443,
-      "service": "HTTPS"
-    },
-    {
-      "id": "3",
-      "port": 22,
-      "service": "SSH"
-    },
-    {
-      "id": "4",
-      "port": 3306,
-      "service": "MySQL"
-    },
-    {
-      "id": "5",
-      "port": 5432,
-      "service": "PostgreSQL"
-    }
-  ]
+  }
 }

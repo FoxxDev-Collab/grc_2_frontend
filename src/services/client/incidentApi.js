@@ -1,6 +1,6 @@
 import { validateRequired } from '../apiHelpers';
 
-const BASE_URL = '/api';
+const API_URL = 'http://localhost:3001';
 
 const DEFAULT_STATS = {
   total: 0,
@@ -19,14 +19,14 @@ const DEFAULT_STATS = {
 const incidentApi = {
   // Get all incidents
   getIncidents: async (clientId) => {
-    const response = await fetch(`${BASE_URL}/incidents?clientId=${clientId}`);
+    const response = await fetch(`${API_URL}/incidents?clientId=${clientId}`);
     if (!response.ok) throw new Error('Failed to fetch incidents');
     return response.json();
   },
 
   // Get single incident
   getIncident: async (clientId, incidentId) => {
-    const response = await fetch(`${BASE_URL}/incidents/${incidentId}?clientId=${clientId}`);
+    const response = await fetch(`${API_URL}/incidents/${incidentId}?clientId=${clientId}`);
     if (!response.ok) {
       if (response.status === 404) throw new Error('Incident not found');
       throw new Error('Failed to fetch incident');
@@ -38,7 +38,7 @@ const incidentApi = {
   createIncident: async (clientId, incidentData) => {
     validateRequired(incidentData, ['title', 'type', 'severity', 'priority', 'description']);
 
-    const response = await fetch(`${BASE_URL}/incidents`, {
+    const response = await fetch(`${API_URL}/incidents`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -60,7 +60,7 @@ const incidentApi = {
 
   // Update incident
   updateIncident: async (clientId, incidentId, updates) => {
-    const response = await fetch(`${BASE_URL}/incidents/${incidentId}`, {
+    const response = await fetch(`${API_URL}/incidents/${incidentId}`, {
       method: 'PATCH',
       headers: {
         'Content-Type': 'application/json',
@@ -92,7 +92,7 @@ const incidentApi = {
       ...actionData
     };
 
-    const response = await fetch(`${BASE_URL}/incidents/${incidentId}`, {
+    const response = await fetch(`${API_URL}/incidents/${incidentId}`, {
       method: 'PATCH',
       headers: {
         'Content-Type': 'application/json',
@@ -109,49 +109,49 @@ const incidentApi = {
 
   // Get incident types
   getIncidentTypes: async () => {
-    const response = await fetch(`${BASE_URL}/incidentTypes`);
+    const response = await fetch(`${API_URL}/incidentTypes`);
     if (!response.ok) throw new Error('Failed to fetch incident types');
     return response.json();
   },
 
   // Get incident severities
   getIncidentSeverities: async () => {
-    const response = await fetch(`${BASE_URL}/incidentSeverities`);
+    const response = await fetch(`${API_URL}/incidentSeverities`);
     if (!response.ok) throw new Error('Failed to fetch incident severities');
     return response.json();
   },
 
   // Get incident statuses
   getIncidentStatuses: async () => {
-    const response = await fetch(`${BASE_URL}/incidentStatuses`);
+    const response = await fetch(`${API_URL}/incidentStatuses`);
     if (!response.ok) throw new Error('Failed to fetch incident statuses');
     return response.json();
   },
 
   // Get incident priorities
   getIncidentPriorities: async () => {
-    const response = await fetch(`${BASE_URL}/incidentPriorities`);
+    const response = await fetch(`${API_URL}/incidentPriorities`);
     if (!response.ok) throw new Error('Failed to fetch incident priorities');
     return response.json();
   },
 
   // Get action types
   getActionTypes: async () => {
-    const response = await fetch(`${BASE_URL}/actionTypes`);
+    const response = await fetch(`${API_URL}/actionTypes`);
     if (!response.ok) throw new Error('Failed to fetch action types');
     return response.json();
   },
 
   // Get teams
   getTeams: async () => {
-    const response = await fetch(`${BASE_URL}/teams`);
+    const response = await fetch(`${API_URL}/teams`);
     if (!response.ok) throw new Error('Failed to fetch teams');
     return response.json();
   },
 
   // Get system types
   getSystemTypes: async () => {
-    const response = await fetch(`${BASE_URL}/systemTypes`);
+    const response = await fetch(`${API_URL}/systemTypes`);
     if (!response.ok) throw new Error('Failed to fetch system types');
     return response.json();
   },

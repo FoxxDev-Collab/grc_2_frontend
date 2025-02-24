@@ -1,10 +1,10 @@
 import { validateRequired, validateEmail, ApiError } from '../apiHelpers';
 
-const API_BASE_URL = 'http://localhost:3001';
+const API_URL = 'http://localhost:3001';
 
 // Helper function for API calls
 const fetchApi = async (endpoint, options = {}) => {
-  const response = await fetch(`${API_BASE_URL}/${endpoint}`, {
+  const response = await fetch(`${API_URL}/${endpoint}`, {
     headers: {
       'Content-Type': 'application/json',
       ...options.headers

@@ -1,0 +1,42 @@
+{
+  "client-1": {
+    "sys-001": {
+      "riskAssessment": {
+        "risks": [
+          {
+            "id": "RISK-001",
+            "description": "Insufficient access controls",
+            "likelihood": "high",
+            "impact": "high",
+            "status": "open"
+          }
+        ],
+        "nonCompliantControls": [
+          {
+            "controlId": "AC-2",
+            "title": "Account Management",
+            "status": "non-compliant",
+            "findings": "Missing automated account management procedures"
+          }
+        ]
+      },
+      "package": {
+        "completed": ["System Security Plan", "Risk Assessment Report"],
+        "pending": ["Privacy Impact Assessment", "Contingency Plan"],
+        "executiveSummary": "System implements moderate security controls with some gaps identified.",
+        "status": "in-progress",
+        "validationStatus": "pending",
+        "completionPercentage": 65
+      },
+      "decision": {
+        "result": "pending",
+        "official": "",
+        "date": "",
+        "expirationDate": "",
+        "justification": "",
+        "conditions": [],
+        "boundary": "System includes all components within the development network segment."
+      }
+    }
+  }
+}

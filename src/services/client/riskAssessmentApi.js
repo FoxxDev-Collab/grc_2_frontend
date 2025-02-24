@@ -1,33 +1,41 @@
-import { delay, getCurrentDate, validateRequired, checkExists } from '../apiHelpers';
-import { mockRisks } from '../mocks/riskMockData';
+import { validateRequired, checkExists } from '../apiHelpers';
 
-// In-memory storage
-let risks = [...mockRisks];
+const API_URL = 'http://localhost:3001';
 
 export const riskAssessmentApi = {
   // Get all risks
   getRisks: async (clientId) => {
-    await delay(500);
-    return risks.filter(risk => risk.clientId === Number(clientId));
+    validateRequired({ clientId }, ['clientId']);
+    
+    const response = await fetch(`${API_URL}/risks?clientId=${Number(clientId)}`);
+    if (!response.ok) {
+      throw new Error('Failed to fetch risks');
+    }
+    
+    return await response.json();
   },
 
   // Get risk by ID
   getRisk: async (clientId, riskId) => {
-    await delay(300);
-    const risk = risks.find(r => r.clientId === Number(clientId) && r.id === riskId);
+    validateRequired({ clientId, riskId }, ['clientId', 'riskId']);
+    
+    const response = await fetch(`${API_URL}/risks/${riskId}?clientId=${Number(clientId)}`);
+    if (!response.ok) {
+      throw new Error('Risk not found');
+    }
+    
+    const risk = await response.json();
     checkExists(risk, 'Risk');
-    return { ...risk };
+    return risk;
   },
 
   // Create new risk
   createRisk: async (clientId, riskData) => {
-    await delay(800);
     validateRequired(riskData, ['name', 'description', 'impact', 'likelihood', 'category']);
 
     const newRisk = {
-      id: `r-${Date.now()}`,
       clientId: Number(clientId),
-      lastAssessed: getCurrentDate(),
+      lastAssessed: new Date().toISOString(),
       sourceFindings: [],
       businessImpact: {
         financial: '',
@@ -44,117 +52,289 @@ export const riskAssessmentApi = {
       ...riskData
     };
 
-    risks.push(newRisk);
-    return { ...newRisk };
+    const response = await fetch(`${API_URL}/risks`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(newRisk)
+    });
+
+    if (!response.ok) {
+      throw new Error('Failed to create risk');
+    }
+
+    return await response.json();
   },
 
   // Update risk
   updateRisk: async (clientId, riskId, updates) => {
-    await delay(500);
-    const index = risks.findIndex(r => r.clientId === Number(clientId) && r.id === riskId);
-    checkExists(risks[index], 'Risk');
+    validateRequired({ clientId, riskId }, ['clientId', 'riskId']);
 
-    risks[index] = {
-      ...risks[index],
+    // First get the existing risk
+    const riskResponse = await fetch(`${API_URL}/risks/${riskId}?clientId=${Number(clientId)}`);
+    if (!riskResponse.ok) {
+      throw new Error('Risk not found');
+    }
+    
+    const existingRisk = await riskResponse.json();
+    checkExists(existingRisk, 'Risk');
+
+    // Prepare updated risk data
+    const updatedRisk = {
+      ...existingRisk,
       ...updates,
-      lastAssessed: getCurrentDate()
+      lastAssessed: new Date().toISOString()
     };
 
-    return { ...risks[index] };
+    // Send the update
+    const updateResponse = await fetch(`${API_URL}/risks/${riskId}`, {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(updatedRisk)
+    });
+
+    if (!updateResponse.ok) {
+      throw new Error('Failed to update risk');
+    }
+
+    return await updateResponse.json();
   },
 
   // Delete risk
   deleteRisk: async (clientId, riskId) => {
-    await delay(800);
-    const index = risks.findIndex(r => r.clientId === Number(clientId) && r.id === riskId);
-    checkExists(risks[index], 'Risk');
+    validateRequired({ clientId, riskId }, ['clientId', 'riskId']);
 
-    risks = risks.filter(r => !(r.clientId === Number(clientId) && r.id === riskId));
+    const response = await fetch(`${API_URL}/risks/${riskId}?clientId=${Number(clientId)}`, {
+      method: 'DELETE'
+    });
+
+    if (!response.ok) {
+      throw new Error('Failed to delete risk');
+    }
+
     return { success: true };
   },
 
   // Add finding to risk
   addFindingToRisk: async (clientId, riskId, findingData) => {
-    await delay(500);
-    const index = risks.findIndex(r => r.clientId === Number(clientId) && r.id === riskId);
-    checkExists(risks[index], 'Risk');
-
     validateRequired(findingData, ['findingId', 'title', 'sourceType']);
 
-    risks[index].sourceFindings = [
-      ...(risks[index].sourceFindings || []),
-      {
-        ...findingData,
-        date: getCurrentDate()
-      }
-    ];
+    // First get the existing risk
+    const riskResponse = await fetch(`${API_URL}/risks/${riskId}?clientId=${Number(clientId)}`);
+    if (!riskResponse.ok) {
+      throw new Error('Risk not found');
+    }
+    
+    const existingRisk = await riskResponse.json();
+    checkExists(existingRisk, 'Risk');
 
-    return { ...risks[index] };
+    // Add the finding
+    const updatedRisk = {
+      ...existingRisk,
+      sourceFindings: [
+        ...(existingRisk.sourceFindings || []),
+        {
+          ...findingData,
+          date: new Date().toISOString()
+        }
+      ]
+    };
+
+    // Send the update
+    const updateResponse = await fetch(`${API_URL}/risks/${riskId}`, {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(updatedRisk)
+    });
+
+    if (!updateResponse.ok) {
+      throw new Error('Failed to add finding to risk');
+    }
+
+    return await updateResponse.json();
   },
 
   // Remove finding from risk
   removeFindingFromRisk: async (clientId, riskId, findingId) => {
-    await delay(500);
-    const index = risks.findIndex(r => r.clientId === Number(clientId) && r.id === riskId);
-    checkExists(risks[index], 'Risk');
+    validateRequired({ clientId, riskId, findingId }, ['clientId', 'riskId', 'findingId']);
 
-    risks[index].sourceFindings = risks[index].sourceFindings.filter(f => f.findingId !== findingId);
+    // First get the existing risk
+    const riskResponse = await fetch(`${API_URL}/risks/${riskId}?clientId=${Number(clientId)}`);
+    if (!riskResponse.ok) {
+      throw new Error('Risk not found');
+    }
+    
+    const existingRisk = await riskResponse.json();
+    checkExists(existingRisk, 'Risk');
 
-    return { ...risks[index] };
+    // Remove the finding
+    const updatedRisk = {
+      ...existingRisk,
+      sourceFindings: existingRisk.sourceFindings.filter(f => f.findingId !== findingId)
+    };
+
+    // Send the update
+    const updateResponse = await fetch(`${API_URL}/risks/${riskId}`, {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(updatedRisk)
+    });
+
+    if (!updateResponse.ok) {
+      throw new Error('Failed to remove finding from risk');
+    }
+
+    return await updateResponse.json();
   },
 
   // Update risk treatment
   updateRiskTreatment: async (clientId, riskId, treatmentData) => {
-    await delay(500);
-    const index = risks.findIndex(r => r.clientId === Number(clientId) && r.id === riskId);
-    checkExists(risks[index], 'Risk');
-
     validateRequired(treatmentData, ['approach', 'plan']);
 
-    risks[index].treatment = {
-      ...risks[index].treatment,
-      ...treatmentData,
-      lastUpdated: getCurrentDate()
+    // First get the existing risk
+    const riskResponse = await fetch(`${API_URL}/risks/${riskId}?clientId=${Number(clientId)}`);
+    if (!riskResponse.ok) {
+      throw new Error('Risk not found');
+    }
+    
+    const existingRisk = await riskResponse.json();
+    checkExists(existingRisk, 'Risk');
+
+    // Update the treatment
+    const updatedRisk = {
+      ...existingRisk,
+      treatment: {
+        ...existingRisk.treatment,
+        ...treatmentData,
+        lastUpdated: new Date().toISOString()
+      }
     };
 
-    return { ...risks[index] };
+    // Send the update
+    const updateResponse = await fetch(`${API_URL}/risks/${riskId}`, {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(updatedRisk)
+    });
+
+    if (!updateResponse.ok) {
+      throw new Error('Failed to update risk treatment');
+    }
+
+    return await updateResponse.json();
   },
 
   // Link objective to risk treatment
   linkObjectiveToRisk: async (clientId, riskId, objectiveId) => {
-    await delay(500);
-    const index = risks.findIndex(r => r.clientId === Number(clientId) && r.id === riskId);
-    checkExists(risks[index], 'Risk');
+    validateRequired({ clientId, riskId, objectiveId }, ['clientId', 'riskId', 'objectiveId']);
 
-    if (!risks[index].treatment.objectives) {
-      risks[index].treatment.objectives = [];
+    // First get the existing risk
+    const riskResponse = await fetch(`${API_URL}/risks/${riskId}?clientId=${Number(clientId)}`);
+    if (!riskResponse.ok) {
+      throw new Error('Risk not found');
+    }
+    
+    const existingRisk = await riskResponse.json();
+    checkExists(existingRisk, 'Risk');
+
+    // Initialize objectives array if it doesn't exist
+    if (!existingRisk.treatment.objectives) {
+      existingRisk.treatment.objectives = [];
     }
 
-    if (!risks[index].treatment.objectives.includes(objectiveId)) {
-      risks[index].treatment.objectives.push(objectiveId);
+    // Add the objective if it doesn't already exist
+    if (!existingRisk.treatment.objectives.includes(objectiveId)) {
+      const updatedRisk = {
+        ...existingRisk,
+        treatment: {
+          ...existingRisk.treatment,
+          objectives: [...existingRisk.treatment.objectives, objectiveId]
+        }
+      };
+
+      // Send the update
+      const updateResponse = await fetch(`${API_URL}/risks/${riskId}`, {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(updatedRisk)
+      });
+
+      if (!updateResponse.ok) {
+        throw new Error('Failed to link objective to risk');
+      }
+
+      return await updateResponse.json();
     }
 
-    return { ...risks[index] };
+    return existingRisk;
   },
 
   // Unlink objective from risk treatment
   unlinkObjectiveFromRisk: async (clientId, riskId, objectiveId) => {
-    await delay(500);
-    const index = risks.findIndex(r => r.clientId === Number(clientId) && r.id === riskId);
-    checkExists(risks[index], 'Risk');
+    validateRequired({ clientId, riskId, objectiveId }, ['clientId', 'riskId', 'objectiveId']);
 
-    if (risks[index].treatment.objectives) {
-      risks[index].treatment.objectives = risks[index].treatment.objectives.filter(id => id !== objectiveId);
+    // First get the existing risk
+    const riskResponse = await fetch(`${API_URL}/risks/${riskId}?clientId=${Number(clientId)}`);
+    if (!riskResponse.ok) {
+      throw new Error('Risk not found');
+    }
+    
+    const existingRisk = await riskResponse.json();
+    checkExists(existingRisk, 'Risk');
+
+    // Filter out the objective
+    if (existingRisk.treatment.objectives) {
+      const updatedRisk = {
+        ...existingRisk,
+        treatment: {
+          ...existingRisk.treatment,
+          objectives: existingRisk.treatment.objectives.filter(id => id !== objectiveId)
+        }
+      };
+
+      // Send the update
+      const updateResponse = await fetch(`${API_URL}/risks/${riskId}`, {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(updatedRisk)
+      });
+
+      if (!updateResponse.ok) {
+        throw new Error('Failed to unlink objective from risk');
+      }
+
+      return await updateResponse.json();
     }
 
-    return { ...risks[index] };
+    return existingRisk;
   },
 
   // Get risk statistics
   getRiskStats: async (clientId) => {
-    await delay(400);
-    const clientRisks = risks.filter(risk => risk.clientId === Number(clientId));
+    validateRequired({ clientId }, ['clientId']);
+    
+    // Get all risks for the client
+    const response = await fetch(`${API_URL}/risks?clientId=${Number(clientId)}`);
+    if (!response.ok) {
+      throw new Error('Failed to fetch risks');
+    }
+    
+    const clientRisks = await response.json();
 
+    // Calculate statistics
     return {
       total: clientRisks.length,
       byImpact: {
@@ -199,9 +379,17 @@ export const riskAssessmentApi = {
 
   // Get framework progress
   getFrameworkProgress: async (clientId) => {
-    await delay(400);
-    const clientRisks = risks.filter(risk => risk.clientId === Number(clientId));
+    validateRequired({ clientId }, ['clientId']);
+    
+    // Get all risks for the client
+    const response = await fetch(`${API_URL}/risks?clientId=${Number(clientId)}`);
+    if (!response.ok) {
+      throw new Error('Failed to fetch risks');
+    }
+    
+    const clientRisks = await response.json();
 
+    // Calculate progress
     return {
       riskManagement: {
         identified: clientRisks.length,

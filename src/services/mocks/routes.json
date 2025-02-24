@@ -44,5 +44,74 @@
   "/incidentPriorities": "/incidentPriorities",
   "/actionTypes": "/actionTypes",
   "/teams": "/teams",
-  "/systemTypes": "/systemTypes"
+  "/systemTypes": "/systemTypes",
+
+  "/artifacts": "/artifacts",
+  "/artifacts/:id": "/artifacts/:id",
+  "/artifactTypes": "/artifactTypes",
+
+  "/systems": "/systems",
+  "/systems/:id": "/systems/:id",
+  "/systems?clientId=:clientId": "/systems?clientId=:clientId",
+  
+  "/system-enums": "/enums",
+  "/system-types": "/systemTypes",
+  "/network-types": "/networkTypes",
+  "/component-types": "/componentTypes",
+  "/procedure-types": "/procedureTypes",
+  "/common-ports": "/commonPorts",
+  "/system-statuses": "/systemStatus",
+  "/ato-statuses": "/atoStatus",
+  "/security-levels": "/securityLevel",
+  "/information-levels": "/informationLevel",
+  "/system-categories": "/systemCategory",
+
+  "/authorization/:clientId/:systemId": "/authorization/:clientId/:systemId",
+  "/authorization/:clientId/:systemId/risk-assessment": "/authorization/:clientId/:systemId/riskAssessment",
+  "/authorization/:clientId/:systemId/package": "/authorization/:clientId/:systemId/package",
+  "/authorization/:clientId/:systemId/decision": "/authorization/:clientId/:systemId/decision",
+  "/authorization/:clientId/:systemId/poam": "/authorization/:clientId/:systemId/riskAssessment/risks",
+  "/authorization/:clientId/:systemId/validate": {
+    "target": "/authorization/:clientId/:systemId/package",
+    "method": "PATCH",
+    "data": { "validationStatus": "validated", "completionPercentage": 100 }
+  },
+
+  "/ato/process-steps": "/processSteps",
+  "/ato/tracker/:systemId": "/ato_tracker/:systemId",
+  "/ato/tracker/:systemId/phase/:phaseId": "/ato_tracker/:systemId/phases/:phaseId",
+  "/ato/tracker/:systemId/phase/:phaseId/task": {
+    "target": "/ato_tracker/:systemId",
+    "method": "PATCH"
+  },
+
+  "/security-controls": "/controls",
+  "/security-controls/technical": "/controls/technical",
+  "/security-controls/operational": "/controls/operational",
+  "/security-controls/management": "/controls/management",
+  "/security-controls/:id": "/controls/:id",
+  "/security-controls/:id/status": {
+    "target": "/controls/:id",
+    "method": "PATCH"
+  },
+  "/security-controls/:id/evidence": "/controls/:id/evidence",
+  "/security-controls/:id/evidence/:evidenceId": "/controls/:id/evidence/:evidenceId",
+  "/security-control-families": "/families",
+  "/security-control-stats": "/stats",
+
+  "/categorization/:systemId": "/categorization/:systemId",
+  "/categorization/:systemId/information-types": "/categorization/:systemId/informationTypes",
+  "/categorization/:systemId/impact-analysis": "/categorization/:systemId/impactAnalysis",
+  "/categorization/:systemId/security-objectives": "/categorization/:systemId/securityObjectives",
+  "/categorization/:systemId/progress": "/categorization/:systemId/progress",
+
+  "/system-components": "/components",
+  "/system-components/:id": "/components/:id",
+  "/system-component-types": "/components/types",
+  "/system-component-statuses": "/components/statuses",
+
+  "/security-objectives": "/securityObjectives",
+  "/security-objectives/:id": "/securityObjectives/:id",
+  "/security-objectives/statuses": "/statuses",
+  "/security-objectives/priority-levels": "/priorityLevels"
 }
