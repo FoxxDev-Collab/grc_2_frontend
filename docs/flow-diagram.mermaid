@@ -1,0 +1,29 @@
+flowchart TD
+    A[Security Assessment] -->|Generates| B[Findings]
+    B -->|Collected in| C[Audit System]
+    C -->|Promote| D[Risk]
+    D -->|Manual Addition Possible| D
+    D -->|Risk Treatment| E[Security Strategy]
+    E -->|Becomes| F[Security Objective]
+    F -->|Implemented via| G[Security Initiative]
+    G -->|Results in| H[Plan of Action & Milestones]
+    
+    subgraph Assessment Process
+    A
+    end
+    
+    subgraph Audit System
+    B
+    C
+    end
+    
+    subgraph Risk Management
+    D
+    E
+    end
+    
+    subgraph Implementation
+    F
+    G
+    H
+    end

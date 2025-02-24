@@ -1,0 +1,21 @@
+{
+  "assessmentPlans": [
+    {
+      "id": "ap-001",
+      "assessmentTitle": "Annual Security Assessment 2025",
+      "assessmentType": "Annual Assessment",
+      "startDate": "2025-01-01",
+      "endDate": "2025-03-31",
+      "assessmentTeam": "Security Team A\nExternal Auditor: SecureAudit Inc.",
+      "objectives": "Evaluate system security controls\nValidate compliance with security requirements\nIdentify potential vulnerabilities",
+      "methodology": "NIST SP 800-53A Rev 5\nAutomated scanning\nManual testing\nDocument review",
+      "scope": "All production systems\nNetwork infrastructure\nAccess controls\nSecurity policies",
+      "requirements": "NIST 800-53 Low baseline\nOrganizational security policies\nRegulatory requirements",
+      "status": "in-progress",
+      "clientId": 1,
+      "systemId": "sys-001",
+      "createdAt": "2025-01-01T00:00:00Z",
+      "updatedAt": "2025-02-19T10:00:00Z"
+    }
+  ]
+}

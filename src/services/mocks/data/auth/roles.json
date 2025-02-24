@@ -1,0 +1,77 @@
+{
+  "roles": {
+    "SENIOR_AO": {
+      "name": "Senior Authorizing Official",
+      "description": "Top-level authorization authority with full system access",
+      "permissions": [
+        "all"
+      ],
+      "level": 1
+    },
+    "SUBORDINATE_AO": {
+      "name": "Subordinate Authorizing Official",
+      "description": "Secondary authorization authority with approval capabilities",
+      "permissions": [
+        "view",
+        "edit",
+        "approve"
+      ],
+      "level": 2
+    },
+    "AODR": {
+      "name": "Authorizing Official Designated Representative",
+      "description": "Acts on behalf of authorizing officials for reviews and assessments",
+      "permissions": [
+        "view",
+        "edit",
+        "review"
+      ],
+      "level": 3
+    },
+    "SCA": {
+      "name": "Security Control Assessor",
+      "description": "Performs comprehensive security control assessments",
+      "permissions": [
+        "view",
+        "assess",
+        "review"
+      ],
+      "level": 3
+    },
+    "SCAR": {
+      "name": "Security Control Assessor Representative",
+      "description": "Assists in security control assessments and documentation",
+      "permissions": [
+        "view",
+        "assess"
+      ],
+      "level": 4
+    }
+  },
+  "permissions": [
+    {
+      "id": "all",
+      "description": "Full system access with no restrictions"
+    },
+    {
+      "id": "view",
+      "description": "Read-only access to system information"
+    },
+    {
+      "id": "edit",
+      "description": "Ability to modify system information"
+    },
+    {
+      "id": "approve",
+      "description": "Authority to approve system changes and assessments"
+    },
+    {
+      "id": "review",
+      "description": "Ability to review and comment on system documentation"
+    },
+    {
+      "id": "assess",
+      "description": "Permission to perform security assessments"
+    }
+  ]
+}

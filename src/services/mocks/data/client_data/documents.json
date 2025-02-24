@@ -1,0 +1,54 @@
+{
+  "documents": [
+    {
+      "id": 1,
+      "clientId": 1,
+      "name": "Security Policy.pdf",
+      "type": "PDF",
+      "lastUpdated": "2024-02-19T10:00:00Z",
+      "category": "Policies",
+      "size": 2500000,
+      "uploadedBy": "John Smith"
+    },
+    {
+      "id": 2,
+      "clientId": 1,
+      "name": "Incident Response Plan.docx",
+      "type": "DOCX",
+      "lastUpdated": "2024-02-18T10:00:00Z",
+      "category": "Procedures",
+      "size": 1800000,
+      "uploadedBy": "Alice Brown"
+    },
+    {
+      "id": 3,
+      "clientId": 1,
+      "name": "Risk Assessment Report.pdf",
+      "type": "PDF",
+      "lastUpdated": "2024-02-19T09:00:00Z",
+      "category": "Reports",
+      "size": 3200000,
+      "uploadedBy": "Michael Chen"
+    },
+    {
+      "id": 4,
+      "clientId": 1,
+      "name": "Network Security Architecture.pptx",
+      "type": "PPT",
+      "lastUpdated": "2024-02-17T14:00:00Z",
+      "category": "Documentation",
+      "size": 4500000,
+      "uploadedBy": "Sarah Johnson"
+    },
+    {
+      "id": 5,
+      "clientId": 1,
+      "name": "Security Training Materials.zip",
+      "type": "ZIP",
+      "lastUpdated": "2024-02-16T11:00:00Z",
+      "category": "Training",
+      "size": 15000000,
+      "uploadedBy": "David Wilson"
+    }
+  ]
+}

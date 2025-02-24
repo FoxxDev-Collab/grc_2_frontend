@@ -1,0 +1,69 @@
+Client Pages
+- Implement the in-depth Audit component, this should look deeply within the organization.
+-- Requires documentation, artifacts, etc.
+
+System/ATO Pages:
+- Enhance "Components" with HW/SW list with custom fields or from a database/prefilled options.
+- NIST RMF will be the focus.
+-- Starting with creating database files for Low/Medium/High categories in the CIA Triad.
+-- This will require heavy backend configuration. We will start with a catalog that clients will
+map their system to, or import the catalog.
+-- Hybrid approach of grc_system database and client databases
+
+ATO Phases need forms:
+src\components\system_ato
+- Initial Assessment needs to be broken down into forms
+-- Components, Software, Hardware
+-- Ports, Protocols, Procedures
+
+GRC_System Database configuration
+/grc_database
+  /clients.sqlite
+  /grc_users.sqlite
+  /nist_catalog_rev5_low.sqlite
+  /nist_catalog_rev5_medium.sqlite
+  /nist_catalot_rev5_high.sqlite
+
+Client Database configuration         # This should be the baseline, each client should be structured lik this
+/databases
+  /client_123/
+    client.sqlite      # Client-specific data
+    systems.sqlite     # Systems for this client
+    users.sqlite       # Users for this client
+    artifacts.sqlite   # Artifacts for this client
+    system-ato.sqlite  # ATO specific, mapping artifacts and controls
+
+
+Storage configuration
+/storage            # S3 to MinIO
+  /clients
+    /client_123
+      /documents          # Client-level documents
+        /policies
+        /procedures
+        /contracts
+      /systems
+        /system_456      # System-specific artifacts
+          /artifacts
+          /controls
+          /assessments
+    /client_789
+      /documents
+      /systems
+          ..
+
+
+
+
+/systemId
+  /Overview
+  /ATO Process
+  /Initial Assessment
+  /System Categorization
+  /Security controls
+    /Overview
+    /Baseline Selection = contains selection and justification (currently focusing on LOW for now)
+    /Control Details = move the component with tabs to here, this will be an information page with the nist_catalog_rev5_low/ components
+    /Implentation = this is where the user will mark the status of the control (Compliant, Non-Compliant, Not-Applicable, Pending Review), provide less than 200 characters of the testing, map artifacts to the control.
+  /Artifacts
+  /Assessment

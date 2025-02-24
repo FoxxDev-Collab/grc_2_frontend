@@ -1,0 +1,48 @@
+{
+  "/clients": "/clients",
+  "/clients/:id": "/clients/:id",
+  "/clients/:id/departments": "/departments?clientId=:id",
+  "/clients/:id/documents": "/documents?clientId=:id",
+  
+  "/departments": "/departments",
+  "/departments/:id": "/departments/:id",
+  "/departments/:id/positions": "/departments/:id/positions",
+  
+  "/documents": "/documents",
+  "/documents/:id": "/documents/:id",
+  "/documentCategories": "/documentCategories",
+  "/documentTypes": "/documentTypes",
+  
+  "/industries": "/industries",
+  "/clientSizes": "/clientSizes",
+  "/clientStatuses": "/clientStatuses",
+  
+  "/auth/login": "/users?email=:email",
+  "/auth/me": "/users/:id",
+  
+  "/assessments/questions/basic": "/basicQuestions",
+  "/assessments/questions/advanced": "/advancesQuestions",
+  
+  "/assessments": "/assessmentHistory",
+  "/assessments/:id": "/assessmentHistory/:id",
+  "/assessments/client/:clientId": "/assessmentHistory?clientId=:clientId",
+  "/assessments/system/:systemId": "/assessmentHistory?systemId=:systemId",
+  
+  "/findings": "/assessmentHistory",
+  "/findings/:id": "/assessmentHistory/:id",
+  "/findings/:id/promote": {
+    "target": "/assessmentHistory/:id",
+    "method": "PATCH"
+  },
+
+  "/incidents": "/incidents",
+  "/incidents/:id": "/incidents/:id",
+  "/incidents?clientId=:clientId": "/incidents?clientId=:clientId",
+  "/incidentTypes": "/incidentTypes",
+  "/incidentSeverities": "/incidentSeverities",
+  "/incidentStatuses": "/incidentStatuses",
+  "/incidentPriorities": "/incidentPriorities",
+  "/actionTypes": "/actionTypes",
+  "/teams": "/teams",
+  "/systemTypes": "/systemTypes"
+}

@@ -1,0 +1,28 @@
+{
+  "authorizationRisks": [
+    {
+      "id": "RISK-001",
+      "systemId": "sys-001",
+      "clientId": 1,
+      "description": "Insufficient access controls",
+      "likelihood": "high",
+      "impact": "high",
+      "status": "open",
+      "createdAt": "2024-02-10",
+      "updatedAt": "2024-02-10"
+    }
+  ],
+  "nonCompliantControls": [
+    {
+      "id": 1,
+      "systemId": "sys-001",
+      "clientId": 1,
+      "controlId": "AC-2",
+      "title": "Account Management",
+      "status": "non-compliant",
+      "findings": "Missing automated account management procedures",
+      "createdAt": "2024-02-10",
+      "updatedAt": "2024-02-10"
+    }
+  ]
+}
