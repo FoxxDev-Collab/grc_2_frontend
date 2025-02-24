@@ -2,7 +2,7 @@
 
 A comprehensive Governance, Risk, and Compliance (GRC) platform designed to help organizations manage security compliance, track Authorization to Operate (ATO) processes, and implement security controls based on NIST frameworks. *THIS IS A CONCEPT* and a huge work in progress at this time.
 
-![client overview](/screenshots/screenshot_1.png)
+![client overview](/screenshots/screenshot_1.PNG)
 
 ## Overview
 
