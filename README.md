@@ -2,14 +2,14 @@
 
 A comprehensive Governance, Risk, and Compliance (GRC) platform designed to help organizations manage security compliance, track Authorization to Operate (ATO) processes, and implement security controls based on NIST frameworks. *THIS IS A CONCEPT* and a huge work in progress at this time.
 
-![Description](/screenshots/screenshot_1.png)
+![client overview](/screenshots/screenshot_1.png)
 
 ## Overview
 
 This application provides a full-featured GRC solution that enables organizations to:
 
 - Manage multiple client organizations
-- Track systems through the ATO process
+- Track systems through the ATO process (ATO as a Service, https://foxxcyber.com)
 - Implement and monitor security controls
 - Manage security assessments and audits
 - Track and mitigate security risks
@@ -24,6 +24,8 @@ This application provides a full-featured GRC solution that enables organization
 - Client dashboard with security posture overview
 - Company structure and stakeholder management
 - User management with role-based access control
+- TODO: total asset inventory
+- TODO: cyber security program/training program
 
 ### System Management
 - Inventory of systems and components
@@ -100,6 +102,7 @@ The application is built with a modern React-based frontend using Material-UI co
 - REST API integration for data management
 - Role-based access control
 - Component-based UI architecture
+- JSON Server for mocking a complete backend for HTTP requests.
 
 ## Technical Stack
 
@@ -113,7 +116,7 @@ The application is built with a modern React-based frontend using Material-UI co
 
 ### Prerequisites
 
-- Node.js (v14 or higher)
+- Node.js (v20.18)
 - npm or yarn
 
 ### Installation
@@ -143,14 +146,9 @@ The application includes a mock data server for development:
 npm run generate-db
 ```
 
-2. Start the mock server:
+2. Start the mock server for JSON HTTP requests:
 ```bash
 npm run mock-server
-```
-
-3. Or do both with one command:
-```bash
-npm run mock
 ```
 
 ## User Roles
