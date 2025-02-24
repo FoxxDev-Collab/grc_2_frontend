@@ -624,7 +624,7 @@
   ],
   "authorizationPackages": [
     {
-      "id": 1,
+      "id": "1",
       "systemId": "sys-001",
       "clientId": 1,
       "completed": [
@@ -645,7 +645,7 @@
   ],
   "authorizationDecisions": [
     {
-      "id": 1,
+      "id": "1",
       "systemId": "sys-001",
       "clientId": 1,
       "result": "pending",
@@ -674,7 +674,7 @@
   ],
   "nonCompliantControls": [
     {
-      "id": 1,
+      "id": "1",
       "systemId": "sys-001",
       "clientId": 1,
       "controlId": "AC-2",
@@ -687,7 +687,7 @@
   ],
   "basicQuestions": [
     {
-      "id": 1,
+      "id": "1",
       "text": "Is antivirus software installed and updated on all systems?",
       "impact": "Antivirus helps protect against malware and cyber threats",
       "category": "System Security",
@@ -700,7 +700,7 @@
       }
     },
     {
-      "id": 2,
+      "id": "2",
       "text": "Are firewalls configured and maintained on all network boundaries?",
       "impact": "Firewalls help prevent unauthorized network access",
       "category": "Network Security",
@@ -713,7 +713,7 @@
       }
     },
     {
-      "id": 3,
+      "id": "3",
       "text": "Is multi-factor authentication (MFA) enabled for all critical systems?",
       "impact": "MFA significantly reduces the risk of unauthorized access",
       "category": "Access Control",
@@ -726,7 +726,7 @@
       }
     },
     {
-      "id": 4,
+      "id": "4",
       "text": "Are password policies enforced across all systems?",
       "impact": "Strong password policies are essential for access security",
       "category": "Access Control",
@@ -739,7 +739,7 @@
       }
     },
     {
-      "id": 5,
+      "id": "5",
       "text": "Is security awareness training provided regularly?",
       "impact": "Training helps prevent social engineering attacks",
       "category": "Security Awareness",
@@ -752,7 +752,7 @@
       }
     },
     {
-      "id": 6,
+      "id": "6",
       "text": "Are regular backups performed and tested?",
       "impact": "Backups are critical for business continuity",
       "category": "Data Protection",
@@ -765,7 +765,7 @@
       }
     },
     {
-      "id": 7,
+      "id": "7",
       "text": "Is sensitive data encrypted at rest and in transit?",
       "impact": "Encryption protects data from unauthorized access",
       "category": "Data Protection",
@@ -778,7 +778,7 @@
       }
     },
     {
-      "id": 8,
+      "id": "8",
       "text": "Is patch management performed regularly?",
       "impact": "Regular patching prevents exploitation of known vulnerabilities",
       "category": "System Security",
@@ -1064,7 +1064,7 @@
   ],
   "users": [
     {
-      "id": 1,
+      "id": "1",
       "email": "senior.ao@example.com",
       "password": "password123",
       "firstName": "John",
@@ -1072,7 +1072,7 @@
       "role": "SENIOR_AO",
       "isActive": true,
       "lastLogin": "2024-02-19T12:00:00Z",
-      "lastActive": "2024-02-19T12:00:00Z",
+      "lastActive": "2025-02-24T18:12:30.637Z",
       "createdAt": "2024-01-01T00:00:00Z",
       "updatedAt": "2024-02-19T12:00:00Z",
       "profileImage": null,
@@ -1089,7 +1089,7 @@
       }
     },
     {
-      "id": 2,
+      "id": "2",
       "email": "sao@example.com",
       "password": "password123",
       "firstName": "Jane",
@@ -1114,7 +1114,7 @@
       }
     },
     {
-      "id": 3,
+      "id": "3",
       "email": "aodr@example.com",
       "password": "password123",
       "firstName": "Mike",
@@ -1139,7 +1139,7 @@
       }
     },
     {
-      "id": 4,
+      "id": "4",
       "email": "sca@example.com",
       "password": "password123",
       "firstName": "Sarah",
@@ -1164,7 +1164,7 @@
       }
     },
     {
-      "id": 5,
+      "id": "5",
       "email": "scar@example.com",
       "password": "password123",
       "firstName": "David",
@@ -1189,7 +1189,7 @@
       }
     },
     {
-      "id": 1,
+      "id": "1",
       "username": "john.smith",
       "email": "john.smith@acme.com",
       "role": "PROGRAM_MANAGER",
@@ -1209,7 +1209,7 @@
       ]
     },
     {
-      "id": 2,
+      "id": "2",
       "username": "sarah.johnson",
       "email": "sarah.johnson@acme.com",
       "role": "ISSM",
@@ -1229,7 +1229,7 @@
       ]
     },
     {
-      "id": 3,
+      "id": "3",
       "username": "mike.wilson",
       "email": "mike.wilson@acme.com",
       "role": "ISSO",
@@ -1248,7 +1248,7 @@
       ]
     },
     {
-      "id": 4,
+      "id": "4",
       "username": "alice.brown",
       "email": "alice.brown@healthcareplus.com",
       "role": "PROGRAM_MANAGER",
@@ -1268,7 +1268,7 @@
       ]
     },
     {
-      "id": 5,
+      "id": "5",
       "username": "admin",
       "email": "admin@grc.com",
       "role": "SYSTEM_ADMIN",
@@ -1353,7 +1353,7 @@
   },
   "clients": [
     {
-      "id": 1,
+      "id": "1",
       "name": "Acme Corporation",
       "industry": "Technology",
       "email": "contact@acme.com",
@@ -1443,7 +1443,7 @@
       "name": "Executive"
     },
     {
-      "id": 1,
+      "id": "1",
       "clientId": 1,
       "name": "Information Technology",
       "head": "David Wilson",
@@ -1466,7 +1466,7 @@
       "lastUpdated": "2024-02-19T10:00:00Z"
     },
     {
-      "id": 2,
+      "id": "2",
       "clientId": 1,
       "name": "Security Operations",
       "head": "Alice Brown",
@@ -1489,7 +1489,7 @@
       "lastUpdated": "2024-02-19T10:00:00Z"
     },
     {
-      "id": 3,
+      "id": "3",
       "clientId": 1,
       "name": "Risk & Compliance",
       "head": "Michael Chen",
@@ -1512,7 +1512,7 @@
       "lastUpdated": "2024-02-19T10:00:00Z"
     },
     {
-      "id": 4,
+      "id": "4",
       "clientId": 1,
       "name": "Network Operations",
       "head": "Sarah Johnson",
@@ -1589,7 +1589,7 @@
   ],
   "documents": [
     {
-      "id": 1,
+      "id": "1",
       "clientId": 1,
       "name": "Security Policy.pdf",
       "type": "PDF",
@@ -1599,7 +1599,7 @@
       "uploadedBy": "John Smith"
     },
     {
-      "id": 2,
+      "id": "2",
       "clientId": 1,
       "name": "Incident Response Plan.docx",
       "type": "DOCX",
@@ -1609,7 +1609,7 @@
       "uploadedBy": "Alice Brown"
     },
     {
-      "id": 3,
+      "id": "3",
       "clientId": 1,
       "name": "Risk Assessment Report.pdf",
       "type": "PDF",
@@ -1619,7 +1619,7 @@
       "uploadedBy": "Michael Chen"
     },
     {
-      "id": 4,
+      "id": "4",
       "clientId": 1,
       "name": "Network Security Architecture.pptx",
       "type": "PPT",
@@ -1629,7 +1629,7 @@
       "uploadedBy": "Sarah Johnson"
     },
     {
-      "id": 5,
+      "id": "5",
       "clientId": 1,
       "name": "Security Training Materials.zip",
       "type": "ZIP",
@@ -1641,7 +1641,7 @@
   ],
   "keyPersonnel": [
     {
-      "id": 1,
+      "id": "1",
       "clientId": 1,
       "departmentId": null,
       "name": "John Smith",
@@ -1650,7 +1650,7 @@
       "title": "CEO"
     },
     {
-      "id": 2,
+      "id": "2",
       "clientId": 1,
       "departmentId": 1,
       "name": "David Wilson",
@@ -1659,7 +1659,7 @@
       "title": "CTO"
     },
     {
-      "id": 3,
+      "id": "3",
       "clientId": 1,
       "departmentId": 2,
       "name": "Alice Brown",
@@ -1668,7 +1668,7 @@
       "title": "CISO"
     },
     {
-      "id": 4,
+      "id": "4",
       "clientId": 1,
       "departmentId": 3,
       "name": "Michael Chen",
@@ -1677,7 +1677,7 @@
       "title": "Risk Director"
     },
     {
-      "id": 5,
+      "id": "5",
       "clientId": 1,
       "departmentId": 4,
       "name": "Sarah Johnson",
@@ -1688,315 +1688,315 @@
   ],
   "industries": [
     {
-      "id": 1,
+      "id": "1",
       "name": "Technology"
     },
     {
-      "id": 2,
+      "id": "2",
       "name": "Healthcare"
     },
     {
-      "id": 3,
+      "id": "3",
       "name": "Financial Services"
     },
     {
-      "id": 4,
+      "id": "4",
       "name": "Manufacturing"
     },
     {
-      "id": 5,
+      "id": "5",
       "name": "Retail"
     },
     {
-      "id": 6,
+      "id": "6",
       "name": "Energy"
     },
     {
-      "id": 7,
+      "id": "7",
       "name": "Education"
     },
     {
-      "id": 8,
+      "id": "8",
       "name": "Government"
     },
     {
-      "id": 9,
+      "id": "9",
       "name": "Non-Profit"
     }
   ],
   "clientSizes": [
     {
-      "id": 1,
+      "id": "1",
       "name": "Small"
     },
     {
-      "id": 2,
+      "id": "2",
       "name": "Medium"
     },
     {
-      "id": 3,
+      "id": "3",
       "name": "Large"
     },
     {
-      "id": 4,
+      "id": "4",
       "name": "Enterprise"
     }
   ],
   "clientStatuses": [
     {
-      "id": 1,
+      "id": "1",
       "name": "active"
     },
     {
-      "id": 2,
+      "id": "2",
       "name": "inactive"
     },
     {
-      "id": 3,
+      "id": "3",
       "name": "suspended"
     },
     {
-      "id": 4,
+      "id": "4",
       "name": "pending"
     }
   ],
   "documentCategories": [
     {
-      "id": 1,
+      "id": "1",
       "name": "Policies"
     },
     {
-      "id": 2,
+      "id": "2",
       "name": "Procedures"
     },
     {
-      "id": 3,
+      "id": "3",
       "name": "Compliance"
     },
     {
-      "id": 4,
+      "id": "4",
       "name": "Reports"
     },
     {
-      "id": 5,
+      "id": "5",
       "name": "Training"
     },
     {
-      "id": 6,
+      "id": "6",
       "name": "Documentation"
     },
     {
-      "id": 7,
+      "id": "7",
       "name": "General"
     }
   ],
   "documentTypes": [
     {
-      "id": 1,
+      "id": "1",
       "name": "PDF"
     },
     {
-      "id": 2,
+      "id": "2",
       "name": "DOCX"
     },
     {
-      "id": 3,
+      "id": "3",
       "name": "XLSX"
     },
     {
-      "id": 4,
+      "id": "4",
       "name": "PPT"
     },
     {
-      "id": 5,
+      "id": "5",
       "name": "TXT"
     },
     {
-      "id": 6,
+      "id": "6",
       "name": "ZIP"
     }
   ],
   "incidentTypes": [
     {
-      "id": 1,
+      "id": "1",
       "name": "security"
     },
     {
-      "id": 2,
+      "id": "2",
       "name": "system"
     },
     {
-      "id": 3,
+      "id": "3",
       "name": "network"
     },
     {
-      "id": 4,
+      "id": "4",
       "name": "application"
     },
     {
-      "id": 5,
+      "id": "5",
       "name": "hardware"
     },
     {
-      "id": 6,
+      "id": "6",
       "name": "software"
     },
     {
-      "id": 7,
+      "id": "7",
       "name": "data"
     },
     {
-      "id": 8,
+      "id": "8",
       "name": "user"
     },
     {
-      "id": 9,
+      "id": "9",
       "name": "other"
     }
   ],
   "incidentSeverities": [
     {
-      "id": 1,
+      "id": "1",
       "name": "critical"
     },
     {
-      "id": 2,
+      "id": "2",
       "name": "high"
     },
     {
-      "id": 3,
+      "id": "3",
       "name": "medium"
     },
     {
-      "id": 4,
+      "id": "4",
       "name": "low"
     }
   ],
   "incidentStatuses": [
     {
-      "id": 1,
+      "id": "1",
       "name": "active"
     },
     {
-      "id": 2,
+      "id": "2",
       "name": "investigating"
     },
     {
-      "id": 3,
+      "id": "3",
       "name": "mitigated"
     },
     {
-      "id": 4,
+      "id": "4",
       "name": "resolved"
     },
     {
-      "id": 5,
+      "id": "5",
       "name": "closed"
     }
   ],
   "incidentPriorities": [
     {
-      "id": 1,
+      "id": "1",
       "name": "critical"
     },
     {
-      "id": 2,
+      "id": "2",
       "name": "high"
     },
     {
-      "id": 3,
+      "id": "3",
       "name": "medium"
     },
     {
-      "id": 4,
+      "id": "4",
       "name": "low"
     }
   ],
   "actionTypes": [
     {
-      "id": 1,
+      "id": "1",
       "name": "detection"
     },
     {
-      "id": 2,
+      "id": "2",
       "name": "investigation"
     },
     {
-      "id": 3,
+      "id": "3",
       "name": "mitigation"
     },
     {
-      "id": 4,
+      "id": "4",
       "name": "resolution"
     },
     {
-      "id": 5,
+      "id": "5",
       "name": "communication"
     },
     {
-      "id": 6,
+      "id": "6",
       "name": "escalation"
     }
   ],
   "teams": [
     {
-      "id": 1,
+      "id": "1",
       "name": "Information Technology"
     },
     {
-      "id": 2,
+      "id": "2",
       "name": "Security Operations"
     },
     {
-      "id": 3,
+      "id": "3",
       "name": "Risk & Compliance"
     },
     {
-      "id": 4,
+      "id": "4",
       "name": "Network Operations"
     }
   ],
   "systemTypes": [
     {
-      "id": 1,
+      "id": "1",
       "name": "Web Server"
     },
     {
-      "id": 2,
+      "id": "2",
       "name": "Database Server"
     },
     {
-      "id": 3,
+      "id": "3",
       "name": "Authentication Server"
     },
     {
-      "id": 4,
+      "id": "4",
       "name": "Network Infrastructure"
     },
     {
-      "id": 5,
+      "id": "5",
       "name": "Storage System"
     },
     {
-      "id": 6,
+      "id": "6",
       "name": "Backup System"
     },
     {
-      "id": 7,
+      "id": "7",
       "name": "End User Systems"
     },
     {
-      "id": 8,
+      "id": "8",
       "name": "Security Systems"
     },
     {
-      "id": 9,
+      "id": "9",
       "name": "Cloud Services"
     }
   ],
   "incidents": [
     {
-      "id": 1,
+      "id": "1",
       "clientId": 1,
       "title": "Unauthorized Access Attempt",
       "type": "security",
@@ -2037,7 +2037,7 @@
       ]
     },
     {
-      "id": 2,
+      "id": "2",
       "clientId": 1,
       "title": "Data Backup Failure",
       "type": "system",
@@ -2078,7 +2078,7 @@
       ]
     },
     {
-      "id": 3,
+      "id": "3",
       "clientId": 1,
       "title": "SSL Certificate Expiration",
       "type": "security",
@@ -2111,7 +2111,7 @@
       ]
     },
     {
-      "id": 4,
+      "id": "4",
       "clientId": 1,
       "title": "Network Performance Degradation",
       "type": "network",
@@ -2317,27 +2317,27 @@
   },
   "commonPorts": [
     {
-      "id": 1,
+      "id": "1",
       "port": 80,
       "service": "HTTP"
     },
     {
-      "id": 2,
+      "id": "2",
       "port": 443,
       "service": "HTTPS"
     },
     {
-      "id": 3,
+      "id": "3",
       "port": 22,
       "service": "SSH"
     },
     {
-      "id": 4,
+      "id": "4",
       "port": 3306,
       "service": "MySQL"
     },
     {
-      "id": 5,
+      "id": "5",
       "port": 5432,
       "service": "PostgreSQL"
     }

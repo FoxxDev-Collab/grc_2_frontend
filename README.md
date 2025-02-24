@@ -1,6 +1,8 @@
 # GRC System - Governance, Risk, and Compliance Platform
 
-A comprehensive Governance, Risk, and Compliance (GRC) platform designed to help organizations manage security compliance, track Authorization to Operate (ATO) processes, and implement security controls based on NIST frameworks.
+A comprehensive Governance, Risk, and Compliance (GRC) platform designed to help organizations manage security compliance, track Authorization to Operate (ATO) processes, and implement security controls based on NIST frameworks. *THIS IS A CONCEPT* and a huge work in progress at this time.
+
+[[screenshot_1.PNG]]
 
 ## Overview
 
