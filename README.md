@@ -168,7 +168,12 @@ For demonstration purposes, use:
 
 ## Screenshots
 
-[Insert screenshot images here]
+![client overview](/screenshots/screenshot_3.PNG)
+---
+![system management](/screenshots/screenshot_5.PNG)
+---
+![system ATO process](/screenshots/screenshot_9.PNG)
+---
 
 ## Contributing
 
