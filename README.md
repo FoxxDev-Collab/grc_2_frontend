@@ -17,6 +17,17 @@ This application provides a full-featured GRC solution that enables organization
 - Handle security incidents
 - Track compliance with security frameworks
 
+## Stages of Development
+- Fronten + JSON Server = complete and total API development
+-- This ensures the front end is complete before backend dev.
+- Decision for backend still pending
+-- Nextjs or Golang
+
+### Current Notes
+- Fixing "risk" data to ensure flow:
+-- "Security Assessments (discover findings)" -> "Audits (manage findings, CRUD, promote to risk)" -> "Security Strategy (CRUD, manage risks, objectives, initiatives).
+-- Security strategy = risks -> objectives -> initiatives (Road Map)
+
 ## Key Features
 
 ### Client Management
