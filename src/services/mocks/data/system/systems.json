@@ -1,216 +1,218 @@
-[
-  {
-    "id": "sys-001",
-    "clientId": 1,
-    "name": "Core Banking Platform",
-    "type": "Major Application",
-    "category": "Mission Critical",
-    "securityLevel": "high",
-    "informationLevel": "confidential",
-    "status": "IN_PROGRESS",
-    "atoStatus": "IN_PROGRESS",
-    "currentPhase": "initial_assessment",
-    "createdAt": "2025-02-20T10:00:00Z",
-    "updatedAt": "2025-02-20T10:30:00Z",
-    "lastAssessment": null,
-    "phaseProgress": {
-      "initial-assessment": 65,
-      "system-categorization": 30,
-      "security-controls": 10,
-      "assessment": 0,
-      "ato-authorization": 0,
-      "continuous-monitoring": 0
-    },
-    "phases": {
-      "initialAssessment": {
-        "discovery": {
-          "status": "in_progress",
-          "completedItems": [
-            "System inventory",
-            "System purpose documentation"
-          ],
-          "pendingItems": [
-            "Data flow mapping",
-            "System boundaries"
-          ]
-        },
-        "gapAnalysis": {
-          "status": "in_progress",
-          "completedItems": [
-            "Current state assessment"
-          ],
-          "pendingItems": [
-            "Control gap identification",
-            "Security practice review"
-          ]
-        },
-        "environment": {
-          "status": "completed",
-          "details": {
-            "hosting": "Hybrid",
-            "components": ["Web Servers", "Database Clusters", "Load Balancers"]
+{
+  "systems": [
+    {
+      "id": "sys-001",
+      "clientId": 1,
+      "name": "Core Banking Platform",
+      "type": "Major Application",
+      "category": "Mission Critical",
+      "securityLevel": "high",
+      "informationLevel": "confidential",
+      "status": "IN_PROGRESS",
+      "atoStatus": "IN_PROGRESS",
+      "currentPhase": "initial_assessment",
+      "createdAt": "2025-02-20T10:00:00Z",
+      "updatedAt": "2025-02-20T10:30:00Z",
+      "lastAssessment": null,
+      "phaseProgress": {
+        "initial-assessment": 65,
+        "system-categorization": 30,
+        "security-controls": 10,
+        "assessment": 0,
+        "ato-authorization": 0,
+        "continuous-monitoring": 0
+      },
+      "phases": {
+        "initialAssessment": {
+          "discovery": {
+            "status": "in_progress",
+            "completedItems": [
+              "System inventory",
+              "System purpose documentation"
+            ],
+            "pendingItems": [
+              "Data flow mapping",
+              "System boundaries"
+            ]
+          },
+          "gapAnalysis": {
+            "status": "in_progress",
+            "completedItems": [
+              "Current state assessment"
+            ],
+            "pendingItems": [
+              "Control gap identification",
+              "Security practice review"
+            ]
+          },
+          "environment": {
+            "status": "completed",
+            "details": {
+              "hosting": "Hybrid",
+              "components": ["Web Servers", "Database Clusters", "Load Balancers"]
+            }
+          },
+          "stakeholders": {
+            "status": "not_started",
+            "identified": [],
+            "pending": ["System Owner", "Security Officer", "Operations Team"]
           }
         },
-        "stakeholders": {
-          "status": "not_started",
-          "identified": [],
-          "pending": ["System Owner", "Security Officer", "Operations Team"]
-        }
-      },
-      "systemCategorization": {
-        "infoTypes": {
-          "status": "in_progress",
-          "identified": [
-            "Customer Data",
-            "Transaction Records"
-          ],
-          "pending": [
-            "Audit Logs",
-            "Configuration Data"
-          ]
-        },
-        "impact": {
-          "status": "not_started",
-          "assessments": {
-            "confidentiality": null,
-            "integrity": null,
-            "availability": null
+        "systemCategorization": {
+          "infoTypes": {
+            "status": "in_progress",
+            "identified": [
+              "Customer Data",
+              "Transaction Records"
+            ],
+            "pending": [
+              "Audit Logs",
+              "Configuration Data"
+            ]
+          },
+          "impact": {
+            "status": "not_started",
+            "assessments": {
+              "confidentiality": null,
+              "integrity": null,
+              "availability": null
+            }
+          },
+          "objectives": {
+            "status": "not_started",
+            "defined": [],
+            "pending": [
+              "Data Protection Goals",
+              "System Availability Targets",
+              "Compliance Requirements"
+            ]
           }
         },
-        "objectives": {
-          "status": "not_started",
-          "defined": [],
-          "pending": [
-            "Data Protection Goals",
-            "System Availability Targets",
-            "Compliance Requirements"
-          ]
-        }
-      },
-      "securityControls": {
-        "baseline": {
-          "status": "not_started",
-          "selected": null,
-          "rationale": null
-        },
-        "tailoring": {
-          "status": "not_started",
-          "completedControls": [],
-          "pendingControls": []
-        },
-        "implementation": {
-          "status": "not_started",
-          "implemented": [],
-          "pending": []
-        },
-        "documentation": {
-          "status": "not_started",
-          "completed": [],
-          "pending": [
-            "Security Policies",
-            "Procedures",
-            "Training Materials"
-          ]
-        }
-      },
-      "assessment": {
-        "planning": {
-          "status": "not_started",
-          "completed": [],
-          "pending": [
-            "Assessment Plan",
-            "Test Procedures",
-            "Tool Selection"
-          ]
-        },
-        "testing": {
-          "status": "not_started",
-          "completed": [],
-          "pending": [
-            "Vulnerability Scans",
-            "Penetration Tests",
-            "Control Testing"
-          ]
-        },
-        "review": {
-          "status": "not_started",
-          "completed": [],
-          "pending": [
-            "Documentation Review",
-            "Evidence Validation",
-            "Findings Documentation"
-          ]
-        }
-      },
-      "authorization": {
-        "riskAssessment": {
-          "status": "not_started",
-          "completed": [],
-          "pending": [
-            "Risk Analysis",
-            "Mitigation Planning",
-            "Residual Risk Assessment"
-          ]
-        },
-        "package": {
-          "status": "not_started",
-          "completed": [],
-          "pending": [
-            "Package Assembly",
-            "Documentation Review",
-            "Executive Summary"
-          ]
-        },
-        "decision": {
-          "status": "not_started",
-          "result": null,
-          "conditions": []
-        }
-      },
-      "continuousMonitoring": {
-        "program": {
-          "status": "not_started",
-          "defined": [],
-          "pending": [
-            "Monitoring Strategy",
-            "Metrics Definition",
-            "Reporting Requirements"
-          ]
+        "securityControls": {
+          "baseline": {
+            "status": "not_started",
+            "selected": null,
+            "rationale": null
+          },
+          "tailoring": {
+            "status": "not_started",
+            "completedControls": [],
+            "pendingControls": []
+          },
+          "implementation": {
+            "status": "not_started",
+            "implemented": [],
+            "pending": []
+          },
+          "documentation": {
+            "status": "not_started",
+            "completed": [],
+            "pending": [
+              "Security Policies",
+              "Procedures",
+              "Training Materials"
+            ]
+          }
         },
         "assessment": {
-          "status": "not_started",
-          "completed": [],
-          "pending": [
-            "Control Effectiveness",
-            "Metric Collection",
-            "Risk Updates"
-          ]
+          "planning": {
+            "status": "not_started",
+            "completed": [],
+            "pending": [
+              "Assessment Plan",
+              "Test Procedures",
+              "Tool Selection"
+            ]
+          },
+          "testing": {
+            "status": "not_started",
+            "completed": [],
+            "pending": [
+              "Vulnerability Scans",
+              "Penetration Tests",
+              "Control Testing"
+            ]
+          },
+          "review": {
+            "status": "not_started",
+            "completed": [],
+            "pending": [
+              "Documentation Review",
+              "Evidence Validation",
+              "Findings Documentation"
+            ]
+          }
         },
-        "maintenance": {
-          "status": "not_started",
-          "completed": [],
-          "pending": [
-            "System Updates",
-            "Documentation Maintenance",
-            "Training Updates"
-          ]
+        "authorization": {
+          "riskAssessment": {
+            "status": "not_started",
+            "completed": [],
+            "pending": [
+              "Risk Analysis",
+              "Mitigation Planning",
+              "Residual Risk Assessment"
+            ]
+          },
+          "package": {
+            "status": "not_started",
+            "completed": [],
+            "pending": [
+              "Package Assembly",
+              "Documentation Review",
+              "Executive Summary"
+            ]
+          },
+          "decision": {
+            "status": "not_started",
+            "result": null,
+            "conditions": []
+          }
+        },
+        "continuousMonitoring": {
+          "program": {
+            "status": "not_started",
+            "defined": [],
+            "pending": [
+              "Monitoring Strategy",
+              "Metrics Definition",
+              "Reporting Requirements"
+            ]
+          },
+          "assessment": {
+            "status": "not_started",
+            "completed": [],
+            "pending": [
+              "Control Effectiveness",
+              "Metric Collection",
+              "Risk Updates"
+            ]
+          },
+          "maintenance": {
+            "status": "not_started",
+            "completed": [],
+            "pending": [
+              "System Updates",
+              "Documentation Maintenance",
+              "Training Updates"
+            ]
+          }
         }
+      },
+      "components": [],
+      "networks": [],
+      "ports": [],
+      "procedures": [],
+      "artifacts": [],
+      "boundaries": {
+        "physical": [],
+        "network": [],
+        "security": []
+      },
+      "compliance": {
+        "nist": 0,
+        "hipaa": 0,
+        "pci": 0
       }
-    },
-    "components": [],
-    "networks": [],
-    "ports": [],
-    "procedures": [],
-    "artifacts": [],
-    "boundaries": {
-      "physical": [],
-      "network": [],
-      "security": []
-    },
-    "compliance": {
-      "nist": 0,
-      "hipaa": 0,
-      "pci": 0
     }
-  }
-]
+  ]
+}

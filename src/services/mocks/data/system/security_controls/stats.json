@@ -1,5 +1,7 @@
 {
-  "overallProgress": 35,
+  "overallProgress": {
+    "value": 35
+  },
   "statusBreakdown": {
     "Implemented": 12,
     "Partially Implemented": 24,

@@ -1,54 +1,85 @@
 {
-  "documents": [
+  "assessmentDocuments": [
     {
-      "id": 1,
+      "id": "doc-001",
+      "name": "System Security Plan",
+      "expirationDate": "2026-02-20",
+      "lastReviewed": "2025-02-15",
+      "validationNotes": "Annual review completed. Updates required for new controls.",
+      "reviewHistory": [
+        {
+          "id": 1,
+          "date": "2025-02-15",
+          "notes": "Annual review completed. Updates required for new controls."
+        },
+        {
+          "id": 2,
+          "date": "2024-02-15",
+          "notes": "Initial review completed."
+        }
+      ],
       "clientId": 1,
-      "name": "Security Policy.pdf",
-      "type": "PDF",
-      "lastUpdated": "2024-02-19T10:00:00Z",
-      "category": "Policies",
-      "size": 2500000,
-      "uploadedBy": "John Smith"
+      "systemId": "sys-001",
+      "assessmentPlanId": "ap-001",
+      "createdAt": "2024-02-15T00:00:00Z",
+      "updatedAt": "2025-02-15T00:00:00Z"
     },
     {
-      "id": 2,
+      "id": "doc-002",
+      "name": "Incident Response Plan",
+      "expirationDate": "2025-03-15",
+      "lastReviewed": "2024-03-15",
+      "validationNotes": "Review needed before expiration",
+      "reviewHistory": [
+        {
+          "id": 1,
+          "date": "2024-03-15",
+          "notes": "Annual review completed. No major changes required."
+        }
+      ],
       "clientId": 1,
-      "name": "Incident Response Plan.docx",
-      "type": "DOCX",
-      "lastUpdated": "2024-02-18T10:00:00Z",
-      "category": "Procedures",
-      "size": 1800000,
-      "uploadedBy": "Alice Brown"
+      "systemId": "sys-001",
+      "assessmentPlanId": "ap-001",
+      "createdAt": "2024-03-15T00:00:00Z",
+      "updatedAt": "2024-03-15T00:00:00Z"
     },
     {
-      "id": 3,
+      "id": "doc-003",
+      "name": "Contingency Plan",
+      "expirationDate": "2025-01-10",
+      "lastReviewed": "2024-01-10",
+      "validationNotes": "Document expired. Immediate review required.",
+      "reviewHistory": [
+        {
+          "id": 1,
+          "date": "2024-01-10",
+          "notes": "Annual review completed. Updated recovery procedures."
+        }
+      ],
       "clientId": 1,
-      "name": "Risk Assessment Report.pdf",
-      "type": "PDF",
-      "lastUpdated": "2024-02-19T09:00:00Z",
-      "category": "Reports",
-      "size": 3200000,
-      "uploadedBy": "Michael Chen"
+      "systemId": "sys-001",
+      "assessmentPlanId": "ap-001",
+      "createdAt": "2024-01-10T00:00:00Z",
+      "updatedAt": "2024-01-10T00:00:00Z"
     },
     {
-      "id": 4,
+      "id": "doc-004",
+      "name": "Configuration Management Plan",
+      "expirationDate": "2025-06-30",
+      "lastReviewed": "2024-06-30",
+      "validationNotes": "Current and valid",
+      "reviewHistory": [
+        {
+          "id": 1,
+          "date": "2024-06-30",
+          "notes": "Updated to include new system components."
+        }
+      ],
       "clientId": 1,
-      "name": "Network Security Architecture.pptx",
-      "type": "PPT",
-      "lastUpdated": "2024-02-17T14:00:00Z",
-      "category": "Documentation",
-      "size": 4500000,
-      "uploadedBy": "Sarah Johnson"
-    },
-    {
-      "id": 5,
-      "clientId": 1,
-      "name": "Security Training Materials.zip",
-      "type": "ZIP",
-      "lastUpdated": "2024-02-16T11:00:00Z",
-      "category": "Training",
-      "size": 15000000,
-      "uploadedBy": "David Wilson"
+      "systemId": "sys-001",
+      "assessmentPlanId": "ap-001",
+      "createdAt": "2024-06-30T00:00:00Z",
+      "updatedAt": "2024-06-30T00:00:00Z"
     }
   ]
 }

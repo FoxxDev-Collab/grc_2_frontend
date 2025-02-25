@@ -1,8 +1,8 @@
 {
   "0": {
-    "id": "sys-001",
-    "name": "Core Banking Platform",
-    "type": "Major Application",
+    "id": "1",
+    "name": "Primary Database Server",
+    "type": "PHYSICAL",
     "uploadDate": "2024-02-21T08:00:00Z",
     "description": "Main database server hosting customer data",
     "fileUrl": "/artifacts/system-architecture.pdf",
@@ -16,224 +16,8 @@
       "ram": "384GB",
       "storage": "4TB SSD RAID-10"
     },
-    "status": "IN_PROGRESS",
-    "lastUpdated": "2024-02-19T10:00:00Z",
-    "clientId": 1,
-    "category": "Mission Critical",
-    "securityLevel": "high",
-    "informationLevel": "confidential",
-    "atoStatus": "IN_PROGRESS",
-    "currentPhase": "initial_assessment",
-    "createdAt": "2025-02-20T10:00:00Z",
-    "updatedAt": "2025-02-20T10:30:00Z",
-    "lastAssessment": null,
-    "phaseProgress": {
-      "initial-assessment": 65,
-      "system-categorization": 30,
-      "security-controls": 10,
-      "assessment": 0,
-      "ato-authorization": 0,
-      "continuous-monitoring": 0
-    },
-    "phases": {
-      "initialAssessment": {
-        "discovery": {
-          "status": "in_progress",
-          "completedItems": [
-            "System inventory",
-            "System purpose documentation"
-          ],
-          "pendingItems": [
-            "Data flow mapping",
-            "System boundaries"
-          ]
-        },
-        "gapAnalysis": {
-          "status": "in_progress",
-          "completedItems": [
-            "Current state assessment"
-          ],
-          "pendingItems": [
-            "Control gap identification",
-            "Security practice review"
-          ]
-        },
-        "environment": {
-          "status": "completed",
-          "details": {
-            "hosting": "Hybrid",
-            "components": [
-              "Web Servers",
-              "Database Clusters",
-              "Load Balancers"
-            ]
-          }
-        },
-        "stakeholders": {
-          "status": "not_started",
-          "identified": [],
-          "pending": [
-            "System Owner",
-            "Security Officer",
-            "Operations Team"
-          ]
-        }
-      },
-      "systemCategorization": {
-        "infoTypes": {
-          "status": "in_progress",
-          "identified": [
-            "Customer Data",
-            "Transaction Records"
-          ],
-          "pending": [
-            "Audit Logs",
-            "Configuration Data"
-          ]
-        },
-        "impact": {
-          "status": "not_started",
-          "assessments": {
-            "confidentiality": null,
-            "integrity": null,
-            "availability": null
-          }
-        },
-        "objectives": {
-          "status": "not_started",
-          "defined": [],
-          "pending": [
-            "Data Protection Goals",
-            "System Availability Targets",
-            "Compliance Requirements"
-          ]
-        }
-      },
-      "securityControls": {
-        "baseline": {
-          "status": "not_started",
-          "selected": null,
-          "rationale": null
-        },
-        "tailoring": {
-          "status": "not_started",
-          "completedControls": [],
-          "pendingControls": []
-        },
-        "implementation": {
-          "status": "not_started",
-          "implemented": [],
-          "pending": []
-        },
-        "documentation": {
-          "status": "not_started",
-          "completed": [],
-          "pending": [
-            "Security Policies",
-            "Procedures",
-            "Training Materials"
-          ]
-        }
-      },
-      "assessment": {
-        "planning": {
-          "status": "not_started",
-          "completed": [],
-          "pending": [
-            "Assessment Plan",
-            "Test Procedures",
-            "Tool Selection"
-          ]
-        },
-        "testing": {
-          "status": "not_started",
-          "completed": [],
-          "pending": [
-            "Vulnerability Scans",
-            "Penetration Tests",
-            "Control Testing"
-          ]
-        },
-        "review": {
-          "status": "not_started",
-          "completed": [],
-          "pending": [
-            "Documentation Review",
-            "Evidence Validation",
-            "Findings Documentation"
-          ]
-        }
-      },
-      "authorization": {
-        "riskAssessment": {
-          "status": "not_started",
-          "completed": [],
-          "pending": [
-            "Risk Analysis",
-            "Mitigation Planning",
-            "Residual Risk Assessment"
-          ]
-        },
-        "package": {
-          "status": "not_started",
-          "completed": [],
-          "pending": [
-            "Package Assembly",
-            "Documentation Review",
-            "Executive Summary"
-          ]
-        },
-        "decision": {
-          "status": "not_started",
-          "result": null,
-          "conditions": []
-        }
-      },
-      "continuousMonitoring": {
-        "program": {
-          "status": "not_started",
-          "defined": [],
-          "pending": [
-            "Monitoring Strategy",
-            "Metrics Definition",
-            "Reporting Requirements"
-          ]
-        },
-        "assessment": {
-          "status": "not_started",
-          "completed": [],
-          "pending": [
-            "Control Effectiveness",
-            "Metric Collection",
-            "Risk Updates"
-          ]
-        },
-        "maintenance": {
-          "status": "not_started",
-          "completed": [],
-          "pending": [
-            "System Updates",
-            "Documentation Maintenance",
-            "Training Updates"
-          ]
-        }
-      }
-    },
-    "components": [],
-    "networks": [],
-    "ports": [],
-    "procedures": [],
-    "artifacts": [],
-    "boundaries": {
-      "physical": [],
-      "network": [],
-      "security": []
-    },
-    "compliance": {
-      "nist": 0,
-      "hipaa": 0,
-      "pci": 0
-    }
+    "status": "ACTIVE",
+    "lastUpdated": "2024-02-19T10:00:00Z"
   },
   "1": {
     "id": "2",
@@ -295,48 +79,388 @@
     "size": 5242880,
     "uploadedBy": "Sarah Johnson"
   },
-  "artifactTypes": [
+  "roles": [
     {
-      "id": "type-1",
-      "name": "Technical Documentation"
+      "id": "PROGRAM_MANAGER",
+      "name": "PROGRAM_MANAGER"
     },
     {
-      "id": "type-2",
-      "name": "Policy Documentation"
+      "id": "ISSM",
+      "name": "ISSM"
     },
     {
-      "id": "type-3",
-      "name": "Security Assessment"
+      "id": "ISSO",
+      "name": "ISSO"
     },
     {
-      "id": "type-4",
-      "name": "Implementation Evidence"
+      "id": "ISSE",
+      "name": "ISSE"
     },
     {
-      "id": "type-5",
-      "name": "Training Records"
-    },
-    {
-      "id": "type-6",
-      "name": "Audit Reports"
-    },
-    {
-      "id": "type-7",
-      "name": "Configuration Files"
-    },
-    {
-      "id": "type-8",
-      "name": "System Logs"
-    },
-    {
-      "id": "type-9",
-      "name": "Incident Reports"
-    },
-    {
-      "id": "type-10",
-      "name": "Other"
+      "id": "SYSTEM_ADMIN",
+      "name": "SYSTEM_ADMIN"
     }
   ],
+  "permissions": [
+    {
+      "id": "all",
+      "description": "Full system access with no restrictions",
+      "name": "all"
+    },
+    {
+      "id": "view",
+      "description": "Read-only access to system information"
+    },
+    {
+      "id": "edit",
+      "description": "Ability to modify system information"
+    },
+    {
+      "id": "approve",
+      "description": "Authority to approve system changes and assessments"
+    },
+    {
+      "id": "review",
+      "description": "Ability to review and comment on system documentation"
+    },
+    {
+      "id": "assess",
+      "description": "Permission to perform security assessments"
+    },
+    {
+      "id": "manage_users",
+      "name": "manage_users"
+    },
+    {
+      "id": "view_users",
+      "name": "view_users"
+    },
+    {
+      "id": "manage_systems",
+      "name": "manage_systems"
+    },
+    {
+      "id": "view_systems",
+      "name": "view_systems"
+    },
+    {
+      "id": "manage_audits",
+      "name": "manage_audits"
+    },
+    {
+      "id": "view_audits",
+      "name": "view_audits"
+    },
+    {
+      "id": "manage_strategy",
+      "name": "manage_strategy"
+    }
+  ],
+  "users": [
+    {
+      "id": 1,
+      "email": "senior.ao@example.com",
+      "password": "password123",
+      "firstName": "John",
+      "lastName": "Smith",
+      "role": "SENIOR_AO",
+      "isActive": true,
+      "lastLogin": "2024-02-19T12:00:00Z",
+      "lastActive": "2024-02-19T12:00:00Z",
+      "createdAt": "2024-01-01T00:00:00Z",
+      "updatedAt": "2024-02-19T12:00:00Z",
+      "profileImage": null,
+      "phoneNumber": "+1-555-0123",
+      "department": "Executive",
+      "title": "Senior Authorizing Official",
+      "status": "active",
+      "failedLoginAttempts": 0,
+      "lastPasswordChange": "2024-01-01T00:00:00Z",
+      "preferences": {
+        "notifications": true,
+        "theme": "light",
+        "language": "en"
+      }
+    },
+    {
+      "id": 2,
+      "email": "sao@example.com",
+      "password": "password123",
+      "firstName": "Jane",
+      "lastName": "Doe",
+      "role": "SUBORDINATE_AO",
+      "isActive": true,
+      "lastLogin": "2024-02-19T12:00:00Z",
+      "lastActive": "2024-02-19T12:00:00Z",
+      "createdAt": "2024-01-01T00:00:00Z",
+      "updatedAt": "2024-02-19T12:00:00Z",
+      "profileImage": null,
+      "phoneNumber": "+1-555-0124",
+      "department": "Authorization",
+      "title": "Subordinate Authorizing Official",
+      "status": "active",
+      "failedLoginAttempts": 0,
+      "lastPasswordChange": "2024-01-01T00:00:00Z",
+      "preferences": {
+        "notifications": true,
+        "theme": "light",
+        "language": "en"
+      }
+    },
+    {
+      "id": 3,
+      "email": "aodr@example.com",
+      "password": "password123",
+      "firstName": "Mike",
+      "lastName": "Johnson",
+      "role": "AODR",
+      "isActive": true,
+      "lastLogin": "2024-02-19T12:00:00Z",
+      "lastActive": "2024-02-19T12:00:00Z",
+      "createdAt": "2024-01-01T00:00:00Z",
+      "updatedAt": "2024-02-19T12:00:00Z",
+      "profileImage": null,
+      "phoneNumber": "+1-555-0125",
+      "department": "Authorization",
+      "title": "AO Designated Representative",
+      "status": "active",
+      "failedLoginAttempts": 0,
+      "lastPasswordChange": "2024-01-01T00:00:00Z",
+      "preferences": {
+        "notifications": true,
+        "theme": "dark",
+        "language": "en"
+      }
+    },
+    {
+      "id": 4,
+      "email": "sca@example.com",
+      "password": "password123",
+      "firstName": "Sarah",
+      "lastName": "Wilson",
+      "role": "SCA",
+      "isActive": true,
+      "lastLogin": "2024-02-19T12:00:00Z",
+      "lastActive": "2024-02-19T12:00:00Z",
+      "createdAt": "2024-01-01T00:00:00Z",
+      "updatedAt": "2024-02-19T12:00:00Z",
+      "profileImage": null,
+      "phoneNumber": "+1-555-0126",
+      "department": "Security Assessment",
+      "title": "Security Control Assessor",
+      "status": "active",
+      "failedLoginAttempts": 0,
+      "lastPasswordChange": "2024-01-01T00:00:00Z",
+      "preferences": {
+        "notifications": true,
+        "theme": "light",
+        "language": "en"
+      }
+    },
+    {
+      "id": 5,
+      "email": "scar@example.com",
+      "password": "password123",
+      "firstName": "David",
+      "lastName": "Brown",
+      "role": "SCAR",
+      "isActive": true,
+      "lastLogin": "2024-02-19T12:00:00Z",
+      "lastActive": "2024-02-19T12:00:00Z",
+      "createdAt": "2024-01-01T00:00:00Z",
+      "updatedAt": "2024-02-19T12:00:00Z",
+      "profileImage": null,
+      "phoneNumber": "+1-555-0127",
+      "department": "Security Assessment",
+      "title": "Security Control Assessor Representative",
+      "status": "active",
+      "failedLoginAttempts": 0,
+      "lastPasswordChange": "2024-01-01T00:00:00Z",
+      "preferences": {
+        "notifications": true,
+        "theme": "dark",
+        "language": "en"
+      }
+    },
+    {
+      "id": 1,
+      "username": "john.smith",
+      "email": "john.smith@acme.com",
+      "role": "PROGRAM_MANAGER",
+      "clientId": 1,
+      "firstName": "John",
+      "lastName": "Smith",
+      "title": "Program Manager",
+      "department": "Security",
+      "phone": "(555) 123-4567",
+      "isActive": true,
+      "lastActive": "2024-02-19T10:00:00Z",
+      "permissions": [
+        "manage_users",
+        "manage_systems",
+        "view_audits",
+        "manage_strategy"
+      ]
+    },
+    {
+      "id": 2,
+      "username": "sarah.johnson",
+      "email": "sarah.johnson@acme.com",
+      "role": "ISSM",
+      "clientId": 1,
+      "firstName": "Sarah",
+      "lastName": "Johnson",
+      "title": "Information System Security Manager",
+      "department": "Security",
+      "phone": "(555) 234-5678",
+      "isActive": true,
+      "lastActive": "2024-02-19T09:00:00Z",
+      "permissions": [
+        "manage_users",
+        "manage_systems",
+        "manage_audits",
+        "manage_strategy"
+      ]
+    },
+    {
+      "id": 3,
+      "username": "mike.wilson",
+      "email": "mike.wilson@acme.com",
+      "role": "ISSO",
+      "clientId": 1,
+      "firstName": "Mike",
+      "lastName": "Wilson",
+      "title": "Information System Security Officer",
+      "department": "IT",
+      "phone": "(555) 345-6789",
+      "isActive": true,
+      "lastActive": "2024-02-19T08:00:00Z",
+      "permissions": [
+        "view_users",
+        "manage_systems",
+        "manage_audits"
+      ]
+    },
+    {
+      "id": 4,
+      "username": "alice.brown",
+      "email": "alice.brown@healthcareplus.com",
+      "role": "PROGRAM_MANAGER",
+      "clientId": 2,
+      "firstName": "Alice",
+      "lastName": "Brown",
+      "title": "Security Program Manager",
+      "department": "Security",
+      "phone": "(555) 456-7890",
+      "isActive": true,
+      "lastActive": "2024-02-19T11:00:00Z",
+      "permissions": [
+        "manage_users",
+        "manage_systems",
+        "view_audits",
+        "manage_strategy"
+      ]
+    },
+    {
+      "id": 5,
+      "username": "admin",
+      "email": "admin@grc.com",
+      "role": "SYSTEM_ADMIN",
+      "clientId": null,
+      "firstName": "System",
+      "lastName": "Administrator",
+      "title": "System Administrator",
+      "department": "IT",
+      "phone": "(555) 999-9999",
+      "isActive": true,
+      "lastActive": "2024-02-19T12:00:00Z",
+      "permissions": [
+        "all"
+      ]
+    }
+  ],
+  "statuses": [
+    {
+      "id": "active",
+      "description": "User account is active and accessible"
+    },
+    {
+      "id": "inactive",
+      "description": "User account has been deactivated"
+    },
+    {
+      "id": "suspended",
+      "description": "User account has been temporarily suspended"
+    },
+    {
+      "id": "pending_activation",
+      "description": "User account awaiting activation"
+    },
+    {
+      "id": 1,
+      "name": "Planning"
+    },
+    {
+      "id": 2,
+      "name": "In Progress"
+    },
+    {
+      "id": 3,
+      "name": "Completed"
+    },
+    {
+      "id": 4,
+      "name": "On Hold"
+    }
+  ],
+  "preferences": {
+    "themes": [
+      {
+        "id": "light",
+        "name": "Light Theme",
+        "description": "Default light color scheme"
+      },
+      {
+        "id": "dark",
+        "name": "Dark Theme",
+        "description": "Dark color scheme for low-light environments"
+      }
+    ],
+    "languages": [
+      {
+        "id": "en",
+        "name": "English",
+        "code": "en-US"
+      },
+      {
+        "id": "es",
+        "name": "Spanish",
+        "code": "es-ES"
+      },
+      {
+        "id": "fr",
+        "name": "French",
+        "code": "fr-FR"
+      }
+    ],
+    "notificationTypes": [
+      {
+        "id": "email",
+        "name": "Email Notifications",
+        "description": "Receive notifications via email"
+      },
+      {
+        "id": "in-app",
+        "name": "In-App Notifications",
+        "description": "Receive notifications within the application"
+      },
+      {
+        "id": "sms",
+        "name": "SMS Notifications",
+        "description": "Receive notifications via text message"
+      }
+    ]
+  },
   "advancesQuestions": [
     {
       "id": "AC-1-Q1",
@@ -962,7 +1086,7 @@
   ],
   "authorizationPackages": [
     {
-      "id": "1",
+      "id": 1,
       "systemId": "sys-001",
       "clientId": 1,
       "completed": [
@@ -983,7 +1107,7 @@
   ],
   "authorizationDecisions": [
     {
-      "id": "1",
+      "id": 1,
       "systemId": "sys-001",
       "clientId": 1,
       "result": "pending",
@@ -1012,7 +1136,7 @@
   ],
   "nonCompliantControls": [
     {
-      "id": "1",
+      "id": 1,
       "systemId": "sys-001",
       "clientId": 1,
       "controlId": "AC-2",
@@ -1025,7 +1149,7 @@
   ],
   "basicQuestions": [
     {
-      "id": "1",
+      "id": 1,
       "text": "Is antivirus software installed and updated on all systems?",
       "impact": "Antivirus helps protect against malware and cyber threats",
       "category": "System Security",
@@ -1038,7 +1162,7 @@
       }
     },
     {
-      "id": "2",
+      "id": 2,
       "text": "Are firewalls configured and maintained on all network boundaries?",
       "impact": "Firewalls help prevent unauthorized network access",
       "category": "Network Security",
@@ -1051,7 +1175,7 @@
       }
     },
     {
-      "id": "3",
+      "id": 3,
       "text": "Is multi-factor authentication (MFA) enabled for all critical systems?",
       "impact": "MFA significantly reduces the risk of unauthorized access",
       "category": "Access Control",
@@ -1064,7 +1188,7 @@
       }
     },
     {
-      "id": "4",
+      "id": 4,
       "text": "Are password policies enforced across all systems?",
       "impact": "Strong password policies are essential for access security",
       "category": "Access Control",
@@ -1077,7 +1201,7 @@
       }
     },
     {
-      "id": "5",
+      "id": 5,
       "text": "Is security awareness training provided regularly?",
       "impact": "Training helps prevent social engineering attacks",
       "category": "Security Awareness",
@@ -1090,7 +1214,7 @@
       }
     },
     {
-      "id": "6",
+      "id": 6,
       "text": "Are regular backups performed and tested?",
       "impact": "Backups are critical for business continuity",
       "category": "Data Protection",
@@ -1103,7 +1227,7 @@
       }
     },
     {
-      "id": "7",
+      "id": 7,
       "text": "Is sensitive data encrypted at rest and in transit?",
       "impact": "Encryption protects data from unauthorized access",
       "category": "Data Protection",
@@ -1116,7 +1240,7 @@
       }
     },
     {
-      "id": "8",
+      "id": 8,
       "text": "Is patch management performed regularly?",
       "impact": "Regular patching prevents exploitation of known vulnerabilities",
       "category": "System Security",
@@ -1127,6 +1251,242 @@
         "recommendation": "Implement regular patch management process",
         "category": "System Security"
       }
+    }
+  ],
+  "clients": [
+    {
+      "id": 1,
+      "name": "Acme Corporation",
+      "industry": "Technology",
+      "email": "contact@acme.com",
+      "phone": "(555) 123-4567",
+      "primaryContact": "John Smith",
+      "createdAt": "2024-01-01T10:00:00Z",
+      "lastActivity": "2024-02-19T10:00:00Z",
+      "complianceScore": 85,
+      "status": "active",
+      "address": {
+        "street": "123 Tech Lane",
+        "city": "San Francisco",
+        "state": "CA",
+        "zip": "94105",
+        "country": "USA"
+      },
+      "size": "Enterprise",
+      "employeeCount": 5000,
+      "website": "www.acme.com"
+    }
+  ],
+  "rolePermissions": [
+    {
+      "id": "PROGRAM_MANAGER",
+      "permissions": [
+        "manage_users",
+        "manage_systems",
+        "view_audits",
+        "manage_strategy"
+      ]
+    },
+    {
+      "id": "ISSM",
+      "permissions": [
+        "manage_users",
+        "manage_systems",
+        "manage_audits",
+        "manage_strategy"
+      ]
+    },
+    {
+      "id": "ISSO",
+      "permissions": [
+        "view_users",
+        "manage_systems",
+        "manage_audits"
+      ]
+    },
+    {
+      "id": "ISSE",
+      "permissions": [
+        "view_users",
+        "view_systems",
+        "view_audits"
+      ]
+    },
+    {
+      "id": "SYSTEM_ADMIN",
+      "permissions": [
+        "all"
+      ]
+    }
+  ],
+  "departments": [
+    {
+      "id": "Security",
+      "name": "Security"
+    },
+    {
+      "id": "IT",
+      "name": "IT"
+    },
+    {
+      "id": "Compliance",
+      "name": "Compliance"
+    },
+    {
+      "id": "Risk Management",
+      "name": "Risk Management"
+    },
+    {
+      "id": "Operations",
+      "name": "Operations"
+    },
+    {
+      "id": "Executive",
+      "name": "Executive"
+    },
+    {
+      "id": 1,
+      "clientId": 1,
+      "name": "Information Technology",
+      "head": "David Wilson",
+      "headTitle": "CTO",
+      "employeeCount": 150,
+      "positions": [
+        {
+          "id": 1,
+          "name": "Software Engineer"
+        },
+        {
+          "id": 2,
+          "name": "System Administrator"
+        },
+        {
+          "id": 3,
+          "name": "Security Analyst"
+        }
+      ],
+      "lastUpdated": "2024-02-19T10:00:00Z"
+    },
+    {
+      "id": 2,
+      "clientId": 1,
+      "name": "Security Operations",
+      "head": "Alice Brown",
+      "headTitle": "CISO",
+      "employeeCount": 50,
+      "positions": [
+        {
+          "id": 1,
+          "name": "Security Engineer"
+        },
+        {
+          "id": 2,
+          "name": "Incident Responder"
+        },
+        {
+          "id": 3,
+          "name": "Security Analyst"
+        }
+      ],
+      "lastUpdated": "2024-02-19T10:00:00Z"
+    },
+    {
+      "id": 3,
+      "clientId": 1,
+      "name": "Risk & Compliance",
+      "head": "Michael Chen",
+      "headTitle": "Risk Director",
+      "employeeCount": 35,
+      "positions": [
+        {
+          "id": 1,
+          "name": "Risk Analyst"
+        },
+        {
+          "id": 2,
+          "name": "Compliance Officer"
+        },
+        {
+          "id": 3,
+          "name": "Auditor"
+        }
+      ],
+      "lastUpdated": "2024-02-19T10:00:00Z"
+    },
+    {
+      "id": 4,
+      "clientId": 1,
+      "name": "Network Operations",
+      "head": "Sarah Johnson",
+      "headTitle": "Network Director",
+      "employeeCount": 45,
+      "positions": [
+        {
+          "id": 1,
+          "name": "Network Engineer"
+        },
+        {
+          "id": 2,
+          "name": "Infrastructure Specialist"
+        },
+        {
+          "id": 3,
+          "name": "Cloud Architect"
+        }
+      ],
+      "lastUpdated": "2024-02-19T10:00:00Z"
+    }
+  ],
+  "titles": [
+    {
+      "id": "Program Manager",
+      "name": "Program Manager"
+    },
+    {
+      "id": "Information System Security Manager",
+      "name": "Information System Security Manager"
+    },
+    {
+      "id": "Information System Security Officer",
+      "name": "Information System Security Officer"
+    },
+    {
+      "id": "Security Engineer",
+      "name": "Security Engineer"
+    },
+    {
+      "id": "System Administrator",
+      "name": "System Administrator"
+    },
+    {
+      "id": "Security Analyst",
+      "name": "Security Analyst"
+    },
+    {
+      "id": "Compliance Officer",
+      "name": "Compliance Officer"
+    },
+    {
+      "id": "Risk Manager",
+      "name": "Risk Manager"
+    }
+  ],
+  "userStatus": [
+    {
+      "id": "active",
+      "name": "active"
+    },
+    {
+      "id": "inactive",
+      "name": "inactive"
+    },
+    {
+      "id": "suspended",
+      "name": "suspended"
+    },
+    {
+      "id": "pending",
+      "name": "pending"
     }
   ],
   "controls": [
@@ -1266,1085 +1626,181 @@
       "updatedAt": "2024-06-30T00:00:00Z"
     }
   ],
-  "assessmentPlans": [
-    {
-      "id": "ap-001",
-      "assessmentTitle": "Annual Security Assessment 2025",
-      "assessmentType": "Annual Assessment",
-      "startDate": "2025-01-01",
-      "endDate": "2025-03-31",
-      "assessmentTeam": "Security Team A\nExternal Auditor: SecureAudit Inc.",
-      "objectives": "Evaluate system security controls\nValidate compliance with security requirements\nIdentify potential vulnerabilities",
-      "methodology": "NIST SP 800-53A Rev 5\nAutomated scanning\nManual testing\nDocument review",
-      "scope": "All production systems\nNetwork infrastructure\nAccess controls\nSecurity policies",
-      "requirements": "NIST 800-53 Low baseline\nOrganizational security policies\nRegulatory requirements",
-      "status": "in-progress",
-      "clientId": 1,
-      "systemId": "sys-001",
-      "createdAt": "2025-01-01T00:00:00Z",
-      "updatedAt": "2025-02-19T10:00:00Z"
-    }
-  ],
-  "scanResults": [
-    {
-      "id": "scan-001",
-      "type": "STIG Scan",
-      "date": "2025-02-15T10:00:00Z",
-      "findings": {
-        "high": 2,
-        "medium": 5,
-        "low": 8
-      },
-      "status": "Completed",
-      "downloadUrl": "#",
-      "detailsUrl": "#",
-      "clientId": 1,
-      "systemId": "sys-001",
-      "assessmentPlanId": "ap-001",
-      "createdAt": "2025-02-15T10:00:00Z",
-      "updatedAt": "2025-02-15T10:00:00Z"
-    },
-    {
-      "id": "scan-002",
-      "type": "SCAP Scan",
-      "date": "2025-02-01T14:30:00Z",
-      "findings": {
-        "high": 1,
-        "medium": 3,
-        "low": 6
-      },
-      "status": "Completed",
-      "downloadUrl": "#",
-      "detailsUrl": "#",
-      "clientId": 1,
-      "systemId": "sys-001",
-      "assessmentPlanId": "ap-001",
-      "createdAt": "2025-02-01T14:30:00Z",
-      "updatedAt": "2025-02-01T14:30:00Z"
-    }
-  ],
-  "roles": [
-    {
-      "id": "PROGRAM_MANAGER",
-      "name": "PROGRAM_MANAGER"
-    },
-    {
-      "id": "ISSM",
-      "name": "ISSM"
-    },
-    {
-      "id": "ISSO",
-      "name": "ISSO"
-    },
-    {
-      "id": "ISSE",
-      "name": "ISSE"
-    },
-    {
-      "id": "SYSTEM_ADMIN",
-      "name": "SYSTEM_ADMIN"
-    }
-  ],
-  "permissions": [
-    {
-      "id": "all",
-      "description": "Full system access with no restrictions",
-      "name": "all"
-    },
-    {
-      "id": "view",
-      "description": "Read-only access to system information"
-    },
-    {
-      "id": "edit",
-      "description": "Ability to modify system information"
-    },
-    {
-      "id": "approve",
-      "description": "Authority to approve system changes and assessments"
-    },
-    {
-      "id": "review",
-      "description": "Ability to review and comment on system documentation"
-    },
-    {
-      "id": "assess",
-      "description": "Permission to perform security assessments"
-    },
-    {
-      "id": "manage_users",
-      "name": "manage_users"
-    },
-    {
-      "id": "view_users",
-      "name": "view_users"
-    },
-    {
-      "id": "manage_systems",
-      "name": "manage_systems"
-    },
-    {
-      "id": "view_systems",
-      "name": "view_systems"
-    },
-    {
-      "id": "manage_audits",
-      "name": "manage_audits"
-    },
-    {
-      "id": "view_audits",
-      "name": "view_audits"
-    },
-    {
-      "id": "manage_strategy",
-      "name": "manage_strategy"
-    }
-  ],
-  "users": [
-    {
-      "id": "1",
-      "email": "senior.ao@example.com",
-      "password": "password123",
-      "firstName": "John",
-      "lastName": "Smith",
-      "role": "SENIOR_AO",
-      "isActive": true,
-      "lastLogin": "2024-02-19T12:00:00Z",
-      "lastActive": "2025-02-24T20:13:54.771Z",
-      "createdAt": "2024-01-01T00:00:00Z",
-      "updatedAt": "2024-02-19T12:00:00Z",
-      "profileImage": null,
-      "phoneNumber": "+1-555-0123",
-      "department": "Executive",
-      "title": "Senior Authorizing Official",
-      "status": "active",
-      "failedLoginAttempts": 0,
-      "lastPasswordChange": "2024-01-01T00:00:00Z",
-      "preferences": {
-        "notifications": true,
-        "theme": "light",
-        "language": "en"
-      }
-    },
-    {
-      "id": "2",
-      "email": "sao@example.com",
-      "password": "password123",
-      "firstName": "Jane",
-      "lastName": "Doe",
-      "role": "SUBORDINATE_AO",
-      "isActive": true,
-      "lastLogin": "2024-02-19T12:00:00Z",
-      "lastActive": "2024-02-19T12:00:00Z",
-      "createdAt": "2024-01-01T00:00:00Z",
-      "updatedAt": "2024-02-19T12:00:00Z",
-      "profileImage": null,
-      "phoneNumber": "+1-555-0124",
-      "department": "Authorization",
-      "title": "Subordinate Authorizing Official",
-      "status": "active",
-      "failedLoginAttempts": 0,
-      "lastPasswordChange": "2024-01-01T00:00:00Z",
-      "preferences": {
-        "notifications": true,
-        "theme": "light",
-        "language": "en"
-      }
-    },
-    {
-      "id": "3",
-      "email": "aodr@example.com",
-      "password": "password123",
-      "firstName": "Mike",
-      "lastName": "Johnson",
-      "role": "AODR",
-      "isActive": true,
-      "lastLogin": "2024-02-19T12:00:00Z",
-      "lastActive": "2024-02-19T12:00:00Z",
-      "createdAt": "2024-01-01T00:00:00Z",
-      "updatedAt": "2024-02-19T12:00:00Z",
-      "profileImage": null,
-      "phoneNumber": "+1-555-0125",
-      "department": "Authorization",
-      "title": "AO Designated Representative",
-      "status": "active",
-      "failedLoginAttempts": 0,
-      "lastPasswordChange": "2024-01-01T00:00:00Z",
-      "preferences": {
-        "notifications": true,
-        "theme": "dark",
-        "language": "en"
-      }
-    },
-    {
-      "id": "4",
-      "email": "sca@example.com",
-      "password": "password123",
-      "firstName": "Sarah",
-      "lastName": "Wilson",
-      "role": "SCA",
-      "isActive": true,
-      "lastLogin": "2024-02-19T12:00:00Z",
-      "lastActive": "2024-02-19T12:00:00Z",
-      "createdAt": "2024-01-01T00:00:00Z",
-      "updatedAt": "2024-02-19T12:00:00Z",
-      "profileImage": null,
-      "phoneNumber": "+1-555-0126",
-      "department": "Security Assessment",
-      "title": "Security Control Assessor",
-      "status": "active",
-      "failedLoginAttempts": 0,
-      "lastPasswordChange": "2024-01-01T00:00:00Z",
-      "preferences": {
-        "notifications": true,
-        "theme": "light",
-        "language": "en"
-      }
-    },
-    {
-      "id": "5",
-      "email": "scar@example.com",
-      "password": "password123",
-      "firstName": "David",
-      "lastName": "Brown",
-      "role": "SCAR",
-      "isActive": true,
-      "lastLogin": "2024-02-19T12:00:00Z",
-      "lastActive": "2024-02-19T12:00:00Z",
-      "createdAt": "2024-01-01T00:00:00Z",
-      "updatedAt": "2024-02-19T12:00:00Z",
-      "profileImage": null,
-      "phoneNumber": "+1-555-0127",
-      "department": "Security Assessment",
-      "title": "Security Control Assessor Representative",
-      "status": "active",
-      "failedLoginAttempts": 0,
-      "lastPasswordChange": "2024-01-01T00:00:00Z",
-      "preferences": {
-        "notifications": true,
-        "theme": "dark",
-        "language": "en"
-      }
-    },
-    {
-      "id": "1",
-      "username": "john.smith",
-      "email": "john.smith@acme.com",
-      "role": "PROGRAM_MANAGER",
-      "clientId": 1,
-      "firstName": "John",
-      "lastName": "Smith",
-      "title": "Program Manager",
-      "department": "Security",
-      "phone": "(555) 123-4567",
-      "isActive": true,
-      "lastActive": "2024-02-19T10:00:00Z",
-      "permissions": [
-        "manage_users",
-        "manage_systems",
-        "view_audits",
-        "manage_strategy"
-      ]
-    },
-    {
-      "id": "2",
-      "username": "sarah.johnson",
-      "email": "sarah.johnson@acme.com",
-      "role": "ISSM",
-      "clientId": 1,
-      "firstName": "Sarah",
-      "lastName": "Johnson",
-      "title": "Information System Security Manager",
-      "department": "Security",
-      "phone": "(555) 234-5678",
-      "isActive": true,
-      "lastActive": "2024-02-19T09:00:00Z",
-      "permissions": [
-        "manage_users",
-        "manage_systems",
-        "manage_audits",
-        "manage_strategy"
-      ]
-    },
-    {
-      "id": "3",
-      "username": "mike.wilson",
-      "email": "mike.wilson@acme.com",
-      "role": "ISSO",
-      "clientId": 1,
-      "firstName": "Mike",
-      "lastName": "Wilson",
-      "title": "Information System Security Officer",
-      "department": "IT",
-      "phone": "(555) 345-6789",
-      "isActive": true,
-      "lastActive": "2024-02-19T08:00:00Z",
-      "permissions": [
-        "view_users",
-        "manage_systems",
-        "manage_audits"
-      ]
-    },
-    {
-      "id": "4",
-      "username": "alice.brown",
-      "email": "alice.brown@healthcareplus.com",
-      "role": "PROGRAM_MANAGER",
-      "clientId": 2,
-      "firstName": "Alice",
-      "lastName": "Brown",
-      "title": "Security Program Manager",
-      "department": "Security",
-      "phone": "(555) 456-7890",
-      "isActive": true,
-      "lastActive": "2024-02-19T11:00:00Z",
-      "permissions": [
-        "manage_users",
-        "manage_systems",
-        "view_audits",
-        "manage_strategy"
-      ]
-    },
-    {
-      "id": "5",
-      "username": "admin",
-      "email": "admin@grc.com",
-      "role": "SYSTEM_ADMIN",
-      "clientId": null,
-      "firstName": "System",
-      "lastName": "Administrator",
-      "title": "System Administrator",
-      "department": "IT",
-      "phone": "(555) 999-9999",
-      "isActive": true,
-      "lastActive": "2024-02-19T12:00:00Z",
-      "permissions": [
-        "all"
-      ]
-    }
-  ],
-  "statuses": [
-    {
-      "id": "active",
-      "description": "User account is active and accessible"
-    },
-    {
-      "id": "inactive",
-      "description": "User account has been deactivated"
-    },
-    {
-      "id": "suspended",
-      "description": "User account has been temporarily suspended"
-    },
-    {
-      "id": "pending_activation",
-      "description": "User account awaiting activation"
-    },
-    {
-      "id": "1",
-      "name": "Planning"
-    },
-    {
-      "id": "2",
-      "name": "In Progress"
-    },
-    {
-      "id": "3",
-      "name": "Completed"
-    },
-    {
-      "id": "4",
-      "name": "On Hold"
-    }
-  ],
-  "preferences": {
-    "themes": [
-      {
-        "id": "light",
-        "name": "Light Theme",
-        "description": "Default light color scheme"
-      },
-      {
-        "id": "dark",
-        "name": "Dark Theme",
-        "description": "Dark color scheme for low-light environments"
-      }
-    ],
-    "languages": [
-      {
-        "id": "en",
-        "name": "English",
-        "code": "en-US"
-      },
-      {
-        "id": "es",
-        "name": "Spanish",
-        "code": "es-ES"
-      },
-      {
-        "id": "fr",
-        "name": "French",
-        "code": "fr-FR"
-      }
-    ],
-    "notificationTypes": [
-      {
-        "id": "email",
-        "name": "Email Notifications",
-        "description": "Receive notifications via email"
-      },
-      {
-        "id": "in-app",
-        "name": "In-App Notifications",
-        "description": "Receive notifications within the application"
-      },
-      {
-        "id": "sms",
-        "name": "SMS Notifications",
-        "description": "Receive notifications via text message"
-      }
-    ]
-  },
-  "clients": [
-    {
-      "id": "1",
-      "name": "Acme Corporation",
-      "industry": "Technology",
-      "email": "contact@acme.com",
-      "phone": "(555) 123-4567",
-      "primaryContact": "John Smith",
-      "createdAt": "2024-01-01T10:00:00Z",
-      "lastActivity": "2024-02-19T10:00:00Z",
-      "complianceScore": 85,
-      "status": "active",
-      "address": {
-        "street": "123 Tech Lane",
-        "city": "San Francisco",
-        "state": "CA",
-        "zip": "94105",
-        "country": "USA"
-      },
-      "size": "Enterprise",
-      "employeeCount": 5000,
-      "website": "www.acme.com"
-    }
-  ],
-  "rolePermissions": [
-    {
-      "id": "PROGRAM_MANAGER",
-      "permissions": [
-        "manage_users",
-        "manage_systems",
-        "view_audits",
-        "manage_strategy"
-      ]
-    },
-    {
-      "id": "ISSM",
-      "permissions": [
-        "manage_users",
-        "manage_systems",
-        "manage_audits",
-        "manage_strategy"
-      ]
-    },
-    {
-      "id": "ISSO",
-      "permissions": [
-        "view_users",
-        "manage_systems",
-        "manage_audits"
-      ]
-    },
-    {
-      "id": "ISSE",
-      "permissions": [
-        "view_users",
-        "view_systems",
-        "view_audits"
-      ]
-    },
-    {
-      "id": "SYSTEM_ADMIN",
-      "permissions": [
-        "all"
-      ]
-    }
-  ],
-  "departments": [
-    {
-      "id": "Security",
-      "name": "Security"
-    },
-    {
-      "id": "IT",
-      "name": "IT"
-    },
-    {
-      "id": "Compliance",
-      "name": "Compliance"
-    },
-    {
-      "id": "Risk Management",
-      "name": "Risk Management"
-    },
-    {
-      "id": "Operations",
-      "name": "Operations"
-    },
-    {
-      "id": "Executive",
-      "name": "Executive"
-    },
-    {
-      "id": "1",
-      "clientId": 1,
-      "name": "Information Technology",
-      "head": "David Wilson",
-      "headTitle": "CTO",
-      "employeeCount": 150,
-      "positions": [
-        {
-          "id": 1,
-          "name": "Software Engineer"
-        },
-        {
-          "id": 2,
-          "name": "System Administrator"
-        },
-        {
-          "id": 3,
-          "name": "Security Analyst"
-        }
-      ],
-      "lastUpdated": "2024-02-19T10:00:00Z"
-    },
-    {
-      "id": "2",
-      "clientId": 1,
-      "name": "Security Operations",
-      "head": "Alice Brown",
-      "headTitle": "CISO",
-      "employeeCount": 50,
-      "positions": [
-        {
-          "id": 1,
-          "name": "Security Engineer"
-        },
-        {
-          "id": 2,
-          "name": "Incident Responder"
-        },
-        {
-          "id": 3,
-          "name": "Security Analyst"
-        }
-      ],
-      "lastUpdated": "2024-02-19T10:00:00Z"
-    },
-    {
-      "id": "3",
-      "clientId": 1,
-      "name": "Risk & Compliance",
-      "head": "Michael Chen",
-      "headTitle": "Risk Director",
-      "employeeCount": 35,
-      "positions": [
-        {
-          "id": 1,
-          "name": "Risk Analyst"
-        },
-        {
-          "id": 2,
-          "name": "Compliance Officer"
-        },
-        {
-          "id": 3,
-          "name": "Auditor"
-        }
-      ],
-      "lastUpdated": "2024-02-19T10:00:00Z"
-    },
-    {
-      "id": "4",
-      "clientId": 1,
-      "name": "Network Operations",
-      "head": "Sarah Johnson",
-      "headTitle": "Network Director",
-      "employeeCount": 45,
-      "positions": [
-        {
-          "id": 1,
-          "name": "Network Engineer"
-        },
-        {
-          "id": 2,
-          "name": "Infrastructure Specialist"
-        },
-        {
-          "id": 3,
-          "name": "Cloud Architect"
-        }
-      ],
-      "lastUpdated": "2024-02-19T10:00:00Z"
-    }
-  ],
-  "titles": [
-    {
-      "id": "Program Manager",
-      "name": "Program Manager"
-    },
-    {
-      "id": "Information System Security Manager",
-      "name": "Information System Security Manager"
-    },
-    {
-      "id": "Information System Security Officer",
-      "name": "Information System Security Officer"
-    },
-    {
-      "id": "Security Engineer",
-      "name": "Security Engineer"
-    },
-    {
-      "id": "System Administrator",
-      "name": "System Administrator"
-    },
-    {
-      "id": "Security Analyst",
-      "name": "Security Analyst"
-    },
-    {
-      "id": "Compliance Officer",
-      "name": "Compliance Officer"
-    },
-    {
-      "id": "Risk Manager",
-      "name": "Risk Manager"
-    }
-  ],
-  "userStatus": [
-    {
-      "id": "active",
-      "name": "active"
-    },
-    {
-      "id": "inactive",
-      "name": "inactive"
-    },
-    {
-      "id": "suspended",
-      "name": "suspended"
-    },
-    {
-      "id": "pending",
-      "name": "pending"
-    }
-  ],
-  "documents": [
-    {
-      "id": "1",
-      "clientId": 1,
-      "name": "Security Policy.pdf",
-      "type": "PDF",
-      "lastUpdated": "2024-02-19T10:00:00Z",
-      "category": "Policies",
-      "size": 2500000,
-      "uploadedBy": "John Smith"
-    },
-    {
-      "id": "2",
-      "clientId": 1,
-      "name": "Incident Response Plan.docx",
-      "type": "DOCX",
-      "lastUpdated": "2024-02-18T10:00:00Z",
-      "category": "Procedures",
-      "size": 1800000,
-      "uploadedBy": "Alice Brown"
-    },
-    {
-      "id": "3",
-      "clientId": 1,
-      "name": "Risk Assessment Report.pdf",
-      "type": "PDF",
-      "lastUpdated": "2024-02-19T09:00:00Z",
-      "category": "Reports",
-      "size": 3200000,
-      "uploadedBy": "Michael Chen"
-    },
-    {
-      "id": "4",
-      "clientId": 1,
-      "name": "Network Security Architecture.pptx",
-      "type": "PPT",
-      "lastUpdated": "2024-02-17T14:00:00Z",
-      "category": "Documentation",
-      "size": 4500000,
-      "uploadedBy": "Sarah Johnson"
-    },
-    {
-      "id": "5",
-      "clientId": 1,
-      "name": "Security Training Materials.zip",
-      "type": "ZIP",
-      "lastUpdated": "2024-02-16T11:00:00Z",
-      "category": "Training",
-      "size": 15000000,
-      "uploadedBy": "David Wilson"
-    }
-  ],
-  "keyPersonnel": [
-    {
-      "id": "1",
-      "clientId": 1,
-      "departmentId": null,
-      "name": "John Smith",
-      "role": "Primary Contact",
-      "department": "Executive",
-      "title": "CEO"
-    },
-    {
-      "id": "2",
-      "clientId": 1,
-      "departmentId": 1,
-      "name": "David Wilson",
-      "role": "Technology Lead",
-      "department": "Information Technology",
-      "title": "CTO"
-    },
-    {
-      "id": "3",
-      "clientId": 1,
-      "departmentId": 2,
-      "name": "Alice Brown",
-      "role": "Security Lead",
-      "department": "Security Operations",
-      "title": "CISO"
-    },
-    {
-      "id": "4",
-      "clientId": 1,
-      "departmentId": 3,
-      "name": "Michael Chen",
-      "role": "Risk Lead",
-      "department": "Risk & Compliance",
-      "title": "Risk Director"
-    },
-    {
-      "id": "5",
-      "clientId": 1,
-      "departmentId": 4,
-      "name": "Sarah Johnson",
-      "role": "Infrastructure Lead",
-      "department": "Network Operations",
-      "title": "Network Director"
-    }
-  ],
-  "industries": [
-    {
-      "id": "1",
-      "name": "Technology"
-    },
-    {
-      "id": "2",
-      "name": "Healthcare"
-    },
-    {
-      "id": "3",
-      "name": "Financial Services"
-    },
-    {
-      "id": "4",
-      "name": "Manufacturing"
-    },
-    {
-      "id": "5",
-      "name": "Retail"
-    },
-    {
-      "id": "6",
-      "name": "Energy"
-    },
-    {
-      "id": "7",
-      "name": "Education"
-    },
-    {
-      "id": "8",
-      "name": "Government"
-    },
-    {
-      "id": "9",
-      "name": "Non-Profit"
-    }
-  ],
-  "clientSizes": [
-    {
-      "id": "1",
-      "name": "Small"
-    },
-    {
-      "id": "2",
-      "name": "Medium"
-    },
-    {
-      "id": "3",
-      "name": "Large"
-    },
-    {
-      "id": "4",
-      "name": "Enterprise"
-    }
-  ],
-  "clientStatuses": [
-    {
-      "id": "1",
-      "name": "active"
-    },
-    {
-      "id": "2",
-      "name": "inactive"
-    },
-    {
-      "id": "3",
-      "name": "suspended"
-    },
-    {
-      "id": "4",
-      "name": "pending"
-    }
-  ],
-  "documentCategories": [
-    {
-      "id": "1",
-      "name": "Policies"
-    },
-    {
-      "id": "2",
-      "name": "Procedures"
-    },
-    {
-      "id": "3",
-      "name": "Compliance"
-    },
-    {
-      "id": "4",
-      "name": "Reports"
-    },
-    {
-      "id": "5",
-      "name": "Training"
-    },
-    {
-      "id": "6",
-      "name": "Documentation"
-    },
-    {
-      "id": "7",
-      "name": "General"
-    }
-  ],
-  "documentTypes": [
-    {
-      "id": "1",
-      "name": "PDF"
-    },
-    {
-      "id": "2",
-      "name": "DOCX"
-    },
-    {
-      "id": "3",
-      "name": "XLSX"
-    },
-    {
-      "id": "4",
-      "name": "PPT"
-    },
-    {
-      "id": "5",
-      "name": "TXT"
-    },
-    {
-      "id": "6",
-      "name": "ZIP"
-    }
-  ],
   "incidentTypes": [
     {
-      "id": "1",
+      "id": 1,
       "name": "security"
     },
     {
-      "id": "2",
+      "id": 2,
       "name": "system"
     },
     {
-      "id": "3",
+      "id": 3,
       "name": "network"
     },
     {
-      "id": "4",
+      "id": 4,
       "name": "application"
     },
     {
-      "id": "5",
+      "id": 5,
       "name": "hardware"
     },
     {
-      "id": "6",
+      "id": 6,
       "name": "software"
     },
     {
-      "id": "7",
+      "id": 7,
       "name": "data"
     },
     {
-      "id": "8",
+      "id": 8,
       "name": "user"
     },
     {
-      "id": "9",
+      "id": 9,
       "name": "other"
     }
   ],
   "incidentSeverities": [
     {
-      "id": "1",
+      "id": 1,
       "name": "critical"
     },
     {
-      "id": "2",
+      "id": 2,
       "name": "high"
     },
     {
-      "id": "3",
+      "id": 3,
       "name": "medium"
     },
     {
-      "id": "4",
+      "id": 4,
       "name": "low"
     }
   ],
   "incidentStatuses": [
     {
-      "id": "1",
+      "id": 1,
       "name": "active"
     },
     {
-      "id": "2",
+      "id": 2,
       "name": "investigating"
     },
     {
-      "id": "3",
+      "id": 3,
       "name": "mitigated"
     },
     {
-      "id": "4",
+      "id": 4,
       "name": "resolved"
     },
     {
-      "id": "5",
+      "id": 5,
       "name": "closed"
     }
   ],
   "incidentPriorities": [
     {
-      "id": "1",
+      "id": 1,
       "name": "critical"
     },
     {
-      "id": "2",
+      "id": 2,
       "name": "high"
     },
     {
-      "id": "3",
+      "id": 3,
       "name": "medium"
     },
     {
-      "id": "4",
+      "id": 4,
       "name": "low"
     }
   ],
   "actionTypes": [
     {
-      "id": "1",
+      "id": 1,
       "name": "detection"
     },
     {
-      "id": "2",
+      "id": 2,
       "name": "investigation"
     },
     {
-      "id": "3",
+      "id": 3,
       "name": "mitigation"
     },
     {
-      "id": "4",
+      "id": 4,
       "name": "resolution"
     },
     {
-      "id": "5",
+      "id": 5,
       "name": "communication"
     },
     {
-      "id": "6",
+      "id": 6,
       "name": "escalation"
     }
   ],
   "teams": [
     {
-      "id": "1",
+      "id": 1,
       "name": "Information Technology"
     },
     {
-      "id": "2",
+      "id": 2,
       "name": "Security Operations"
     },
     {
-      "id": "3",
+      "id": 3,
       "name": "Risk & Compliance"
     },
     {
-      "id": "4",
+      "id": 4,
       "name": "Network Operations"
     }
   ],
   "systemTypes": [
     {
-      "id": "1",
+      "id": 1,
       "name": "Web Server"
     },
     {
-      "id": "2",
+      "id": 2,
       "name": "Database Server"
     },
     {
-      "id": "3",
+      "id": 3,
       "name": "Authentication Server"
     },
     {
-      "id": "4",
+      "id": 4,
       "name": "Network Infrastructure"
     },
     {
-      "id": "5",
+      "id": 5,
       "name": "Storage System"
     },
     {
-      "id": "6",
+      "id": 6,
       "name": "Backup System"
     },
     {
-      "id": "7",
+      "id": 7,
       "name": "End User Systems"
     },
     {
-      "id": "8",
+      "id": 8,
       "name": "Security Systems"
     },
     {
-      "id": "9",
+      "id": 9,
       "name": "Cloud Services"
     },
     {
@@ -2366,7 +1822,7 @@
   ],
   "incidents": [
     {
-      "id": "1",
+      "id": 1,
       "clientId": 1,
       "title": "Unauthorized Access Attempt",
       "type": "security",
@@ -2407,7 +1863,7 @@
       ]
     },
     {
-      "id": "2",
+      "id": 2,
       "clientId": 1,
       "title": "Data Backup Failure",
       "type": "system",
@@ -2448,7 +1904,7 @@
       ]
     },
     {
-      "id": "3",
+      "id": 3,
       "clientId": 1,
       "title": "SSL Certificate Expiration",
       "type": "security",
@@ -2481,7 +1937,7 @@
       ]
     },
     {
-      "id": "4",
+      "id": 4,
       "clientId": 1,
       "title": "Network Performance Degradation",
       "type": "network",
@@ -2515,206 +1971,56 @@
       ]
     }
   ],
-  "technical": [
+  "keyPersonnel": [
     {
-      "id": "AC-1",
-      "number": "AC-1",
-      "family": "Access Control",
-      "title": "Access Control Policy and Procedures",
-      "description": "The organization develops, documents, and disseminates an access control policy and procedures.",
-      "implementationStatus": "Partially Implemented",
-      "implementationDetails": "",
-      "baselineImpact": "LOW",
-      "evidence": [
-        {
-          "id": "ev-1",
-          "title": "Access Control Policy.pdf",
-          "dateAdded": "2024-02-19"
-        }
-      ],
-      "lastAssessed": "2024-02-19"
+      "id": 1,
+      "clientId": 1,
+      "departmentId": null,
+      "name": "John Smith",
+      "role": "Primary Contact",
+      "department": "Executive",
+      "title": "CEO"
     },
     {
-      "id": "AC-2",
-      "number": "AC-2",
-      "family": "Access Control",
-      "title": "Account Management",
-      "description": "The organization manages information system accounts, including establishing, activating, modifying, reviewing, disabling, and removing accounts.",
-      "implementationStatus": "Implemented",
-      "implementationDetails": "",
-      "baselineImpact": "LOW",
-      "evidence": [],
-      "lastAssessed": "2024-02-19"
+      "id": 2,
+      "clientId": 1,
+      "departmentId": 1,
+      "name": "David Wilson",
+      "role": "Technology Lead",
+      "department": "Information Technology",
+      "title": "CTO"
     },
     {
-      "id": "AC-3",
-      "number": "AC-3",
-      "family": "Access Control",
-      "title": "Access Enforcement",
-      "description": "The system enforces approved authorizations for logical access to information and system resources.",
-      "implementationStatus": "Not Implemented",
-      "implementationDetails": "",
-      "baselineImpact": "MODERATE",
-      "evidence": [],
-      "lastAssessed": "2024-02-19"
+      "id": 3,
+      "clientId": 1,
+      "departmentId": 2,
+      "name": "Alice Brown",
+      "role": "Security Lead",
+      "department": "Security Operations",
+      "title": "CISO"
+    },
+    {
+      "id": 4,
+      "clientId": 1,
+      "departmentId": 3,
+      "name": "Michael Chen",
+      "role": "Risk Lead",
+      "department": "Risk & Compliance",
+      "title": "Risk Director"
+    },
+    {
+      "id": 5,
+      "clientId": 1,
+      "departmentId": 4,
+      "name": "Sarah Johnson",
+      "role": "Infrastructure Lead",
+      "department": "Network Operations",
+      "title": "Network Director"
     }
   ],
-  "operational": [
-    {
-      "id": "AT-1",
-      "number": "AT-1",
-      "family": "Awareness and Training",
-      "title": "Security Awareness and Training Policy and Procedures",
-      "description": "The organization develops, documents, and disseminates security awareness and training policies and procedures.",
-      "implementationStatus": "Not Implemented",
-      "implementationDetails": "",
-      "baselineImpact": "LOW",
-      "evidence": [],
-      "lastAssessed": "2024-02-19"
-    },
-    {
-      "id": "AT-2",
-      "number": "AT-2",
-      "family": "Awareness and Training",
-      "title": "Security Awareness Training",
-      "description": "The organization provides basic security awareness training to information system users.",
-      "implementationStatus": "Not Implemented",
-      "implementationDetails": "",
-      "baselineImpact": "LOW",
-      "evidence": [],
-      "lastAssessed": "2024-02-19"
-    },
-    {
-      "id": "AT-3",
-      "number": "AT-3",
-      "family": "Awareness and Training",
-      "title": "Role-Based Security Training",
-      "description": "The organization provides role-based security training to personnel with assigned security roles and responsibilities.",
-      "implementationStatus": "Not Implemented",
-      "implementationDetails": "",
-      "baselineImpact": "MODERATE",
-      "evidence": [],
-      "lastAssessed": "2024-02-19"
-    }
-  ],
-  "management": [
-    {
-      "id": "CA-1",
-      "number": "CA-1",
-      "family": "Security Assessment",
-      "title": "Security Assessment and Authorization Policies and Procedures",
-      "description": "The organization develops, documents, and disseminates security assessment and authorization policies and procedures.",
-      "implementationStatus": "Not Implemented",
-      "implementationDetails": "",
-      "baselineImpact": "LOW",
-      "evidence": [],
-      "lastAssessed": "2024-02-19"
-    },
-    {
-      "id": "CA-2",
-      "number": "CA-2",
-      "family": "Security Assessment",
-      "title": "Security Assessments",
-      "description": "The organization develops a security assessment plan and conducts security assessments.",
-      "implementationStatus": "Not Implemented",
-      "implementationDetails": "",
-      "baselineImpact": "LOW",
-      "evidence": [],
-      "lastAssessed": "2024-02-19"
-    },
-    {
-      "id": "CA-3",
-      "number": "CA-3",
-      "family": "Security Assessment",
-      "title": "System Interconnections",
-      "description": "The organization documents and controls system interconnections.",
-      "implementationStatus": "Not Implemented",
-      "implementationDetails": "",
-      "baselineImpact": "MODERATE",
-      "evidence": [],
-      "lastAssessed": "2024-02-19"
-    }
-  ],
-  "families": [
-    {
-      "id": "AC",
-      "name": "Access Control"
-    },
-    {
-      "id": "AT",
-      "name": "Awareness and Training"
-    },
-    {
-      "id": "AU",
-      "name": "Audit and Accountability"
-    },
-    {
-      "id": "CA",
-      "name": "Security Assessment and Authorization"
-    },
-    {
-      "id": "CM",
-      "name": "Configuration Management"
-    },
-    {
-      "id": "CP",
-      "name": "Contingency Planning"
-    },
-    {
-      "id": "IA",
-      "name": "Identification and Authentication"
-    },
-    {
-      "id": "IR",
-      "name": "Incident Response"
-    },
-    {
-      "id": "MA",
-      "name": "Maintenance"
-    },
-    {
-      "id": "MP",
-      "name": "Media Protection"
-    },
-    {
-      "id": "PE",
-      "name": "Physical and Environmental Protection"
-    },
-    {
-      "id": "PL",
-      "name": "Planning"
-    },
-    {
-      "id": "PS",
-      "name": "Personnel Security"
-    },
-    {
-      "id": "RA",
-      "name": "Risk Assessment"
-    },
-    {
-      "id": "SA",
-      "name": "System and Services Acquisition"
-    },
-    {
-      "id": "SC",
-      "name": "System and Communications Protection"
-    },
-    {
-      "id": "SI",
-      "name": "System and Information Integrity"
-    }
-  ],
-  "overallProgress": 35,
-  "statusBreakdown": {
-    "Implemented": 12,
-    "Partially Implemented": 24,
-    "Not Implemented": 45,
-    "Not Applicable": 8
-  },
   "securityObjectives": [
     {
-      "id": "1",
+      "id": 1,
       "name": "Implement Zero Trust Architecture",
       "description": "Establish a comprehensive zero trust security model across all systems",
       "progress": 45,
@@ -2734,7 +2040,7 @@
       }
     },
     {
-      "id": "2",
+      "id": 2,
       "name": "Security Awareness Training Program",
       "description": "Develop and implement comprehensive security awareness training for all employees",
       "progress": 75,
@@ -2754,7 +2060,7 @@
       }
     },
     {
-      "id": "3",
+      "id": 3,
       "name": "Cloud Security Enhancement",
       "description": "Strengthen security controls for cloud infrastructure and services",
       "progress": 30,
@@ -2776,20 +2082,249 @@
   ],
   "priorityLevels": [
     {
-      "id": "1",
+      "id": 1,
       "name": "Low"
     },
     {
-      "id": "2",
+      "id": 2,
       "name": "Medium"
     },
     {
-      "id": "3",
+      "id": 3,
       "name": "High"
     },
     {
-      "id": "4",
+      "id": 4,
       "name": "Critical"
+    }
+  ],
+  "assessmentPlans": [
+    {
+      "id": "ap-001",
+      "assessmentTitle": "Annual Security Assessment 2025",
+      "assessmentType": "Annual Assessment",
+      "startDate": "2025-01-01",
+      "endDate": "2025-03-31",
+      "assessmentTeam": "Security Team A\nExternal Auditor: SecureAudit Inc.",
+      "objectives": "Evaluate system security controls\nValidate compliance with security requirements\nIdentify potential vulnerabilities",
+      "methodology": "NIST SP 800-53A Rev 5\nAutomated scanning\nManual testing\nDocument review",
+      "scope": "All production systems\nNetwork infrastructure\nAccess controls\nSecurity policies",
+      "requirements": "NIST 800-53 Low baseline\nOrganizational security policies\nRegulatory requirements",
+      "status": "in-progress",
+      "clientId": 1,
+      "systemId": "sys-001",
+      "createdAt": "2025-01-01T00:00:00Z",
+      "updatedAt": "2025-02-19T10:00:00Z"
+    }
+  ],
+  "industries": [
+    {
+      "id": 1,
+      "name": "Technology"
+    },
+    {
+      "id": 2,
+      "name": "Healthcare"
+    },
+    {
+      "id": 3,
+      "name": "Financial Services"
+    },
+    {
+      "id": 4,
+      "name": "Manufacturing"
+    },
+    {
+      "id": 5,
+      "name": "Retail"
+    },
+    {
+      "id": 6,
+      "name": "Energy"
+    },
+    {
+      "id": 7,
+      "name": "Education"
+    },
+    {
+      "id": 8,
+      "name": "Government"
+    },
+    {
+      "id": 9,
+      "name": "Non-Profit"
+    }
+  ],
+  "clientSizes": [
+    {
+      "id": 1,
+      "name": "Small"
+    },
+    {
+      "id": 2,
+      "name": "Medium"
+    },
+    {
+      "id": 3,
+      "name": "Large"
+    },
+    {
+      "id": 4,
+      "name": "Enterprise"
+    }
+  ],
+  "clientStatuses": [
+    {
+      "id": 1,
+      "name": "active"
+    },
+    {
+      "id": 2,
+      "name": "inactive"
+    },
+    {
+      "id": 3,
+      "name": "suspended"
+    },
+    {
+      "id": 4,
+      "name": "pending"
+    }
+  ],
+  "documentCategories": [
+    {
+      "id": 1,
+      "name": "Policies"
+    },
+    {
+      "id": 2,
+      "name": "Procedures"
+    },
+    {
+      "id": 3,
+      "name": "Compliance"
+    },
+    {
+      "id": 4,
+      "name": "Reports"
+    },
+    {
+      "id": 5,
+      "name": "Training"
+    },
+    {
+      "id": 6,
+      "name": "Documentation"
+    },
+    {
+      "id": 7,
+      "name": "General"
+    }
+  ],
+  "documentTypes": [
+    {
+      "id": 1,
+      "name": "PDF"
+    },
+    {
+      "id": 2,
+      "name": "DOCX"
+    },
+    {
+      "id": 3,
+      "name": "XLSX"
+    },
+    {
+      "id": 4,
+      "name": "PPT"
+    },
+    {
+      "id": 5,
+      "name": "TXT"
+    },
+    {
+      "id": 6,
+      "name": "ZIP"
+    }
+  ],
+  "scanResults": [
+    {
+      "id": "scan-001",
+      "type": "STIG Scan",
+      "date": "2025-02-15T10:00:00Z",
+      "findings": {
+        "high": 2,
+        "medium": 5,
+        "low": 8
+      },
+      "status": "Completed",
+      "downloadUrl": "#",
+      "detailsUrl": "#",
+      "clientId": 1,
+      "systemId": "sys-001",
+      "assessmentPlanId": "ap-001",
+      "createdAt": "2025-02-15T10:00:00Z",
+      "updatedAt": "2025-02-15T10:00:00Z"
+    },
+    {
+      "id": "scan-002",
+      "type": "SCAP Scan",
+      "date": "2025-02-01T14:30:00Z",
+      "findings": {
+        "high": 1,
+        "medium": 3,
+        "low": 6
+      },
+      "status": "Completed",
+      "downloadUrl": "#",
+      "detailsUrl": "#",
+      "clientId": 1,
+      "systemId": "sys-001",
+      "assessmentPlanId": "ap-001",
+      "createdAt": "2025-02-01T14:30:00Z",
+      "updatedAt": "2025-02-01T14:30:00Z"
+    }
+  ],
+  "artifactTypes": [
+    {
+      "id": "type-1",
+      "name": "Technical Documentation"
+    },
+    {
+      "id": "type-2",
+      "name": "Policy Documentation"
+    },
+    {
+      "id": "type-3",
+      "name": "Security Assessment"
+    },
+    {
+      "id": "type-4",
+      "name": "Implementation Evidence"
+    },
+    {
+      "id": "type-5",
+      "name": "Training Records"
+    },
+    {
+      "id": "type-6",
+      "name": "Audit Reports"
+    },
+    {
+      "id": "type-7",
+      "name": "Configuration Files"
+    },
+    {
+      "id": "type-8",
+      "name": "System Logs"
+    },
+    {
+      "id": "type-9",
+      "name": "Incident Reports"
+    },
+    {
+      "id": "type-10",
+      "name": "Other"
     }
   ],
   "sys-001": {
@@ -3174,34 +2709,34 @@
   ],
   "commonPorts": [
     {
-      "id": "1",
+      "id": 1,
       "port": 80,
       "service": "HTTP"
     },
     {
-      "id": "2",
+      "id": 2,
       "port": 443,
       "service": "HTTPS"
     },
     {
-      "id": "3",
+      "id": 3,
       "port": 22,
       "service": "SSH"
     },
     {
-      "id": "4",
+      "id": 4,
       "port": 3306,
       "service": "MySQL"
     },
     {
-      "id": "5",
+      "id": 5,
       "port": 5432,
       "service": "PostgreSQL"
     }
   ],
   "processSteps": [
     {
-      "id": "1",
+      "id": 1,
       "title": "Initial Assessment",
       "description": "System discovery and initial evaluation",
       "sections": [
@@ -3248,7 +2783,7 @@
       ]
     },
     {
-      "id": "2",
+      "id": 2,
       "title": "System Categorization",
       "description": "Information classification and impact analysis",
       "sections": [
@@ -3285,7 +2820,7 @@
       ]
     },
     {
-      "id": "3",
+      "id": 3,
       "title": "Security Controls",
       "description": "Control selection and implementation",
       "sections": [
@@ -3322,7 +2857,7 @@
       ]
     },
     {
-      "id": "4",
+      "id": 4,
       "title": "Assessment",
       "description": "Security testing and evaluation",
       "sections": [
@@ -3359,7 +2894,7 @@
       ]
     },
     {
-      "id": "5",
+      "id": 5,
       "title": "Authorization",
       "description": "ATO package and decision",
       "sections": [
@@ -3396,7 +2931,7 @@
       ]
     },
     {
-      "id": "6",
+      "id": 6,
       "title": "Continuous Monitoring",
       "description": "Ongoing security maintenance",
       "sections": [
@@ -3433,16 +2968,427 @@
       ]
     }
   ],
+  "technical": [
+    {
+      "id": "AC-1",
+      "number": "AC-1",
+      "family": "Access Control",
+      "title": "Access Control Policy and Procedures",
+      "description": "The organization develops, documents, and disseminates an access control policy and procedures.",
+      "implementationStatus": "Partially Implemented",
+      "implementationDetails": "",
+      "baselineImpact": "LOW",
+      "evidence": [
+        {
+          "id": "ev-1",
+          "title": "Access Control Policy.pdf",
+          "dateAdded": "2024-02-19"
+        }
+      ],
+      "lastAssessed": "2024-02-19"
+    },
+    {
+      "id": "AC-2",
+      "number": "AC-2",
+      "family": "Access Control",
+      "title": "Account Management",
+      "description": "The organization manages information system accounts, including establishing, activating, modifying, reviewing, disabling, and removing accounts.",
+      "implementationStatus": "Implemented",
+      "implementationDetails": "",
+      "baselineImpact": "LOW",
+      "evidence": [],
+      "lastAssessed": "2024-02-19"
+    },
+    {
+      "id": "AC-3",
+      "number": "AC-3",
+      "family": "Access Control",
+      "title": "Access Enforcement",
+      "description": "The system enforces approved authorizations for logical access to information and system resources.",
+      "implementationStatus": "Not Implemented",
+      "implementationDetails": "",
+      "baselineImpact": "MODERATE",
+      "evidence": [],
+      "lastAssessed": "2024-02-19"
+    }
+  ],
+  "operational": [
+    {
+      "id": "AT-1",
+      "number": "AT-1",
+      "family": "Awareness and Training",
+      "title": "Security Awareness and Training Policy and Procedures",
+      "description": "The organization develops, documents, and disseminates security awareness and training policies and procedures.",
+      "implementationStatus": "Not Implemented",
+      "implementationDetails": "",
+      "baselineImpact": "LOW",
+      "evidence": [],
+      "lastAssessed": "2024-02-19"
+    },
+    {
+      "id": "AT-2",
+      "number": "AT-2",
+      "family": "Awareness and Training",
+      "title": "Security Awareness Training",
+      "description": "The organization provides basic security awareness training to information system users.",
+      "implementationStatus": "Not Implemented",
+      "implementationDetails": "",
+      "baselineImpact": "LOW",
+      "evidence": [],
+      "lastAssessed": "2024-02-19"
+    },
+    {
+      "id": "AT-3",
+      "number": "AT-3",
+      "family": "Awareness and Training",
+      "title": "Role-Based Security Training",
+      "description": "The organization provides role-based security training to personnel with assigned security roles and responsibilities.",
+      "implementationStatus": "Not Implemented",
+      "implementationDetails": "",
+      "baselineImpact": "MODERATE",
+      "evidence": [],
+      "lastAssessed": "2024-02-19"
+    }
+  ],
+  "management": [
+    {
+      "id": "CA-1",
+      "number": "CA-1",
+      "family": "Security Assessment",
+      "title": "Security Assessment and Authorization Policies and Procedures",
+      "description": "The organization develops, documents, and disseminates security assessment and authorization policies and procedures.",
+      "implementationStatus": "Not Implemented",
+      "implementationDetails": "",
+      "baselineImpact": "LOW",
+      "evidence": [],
+      "lastAssessed": "2024-02-19"
+    },
+    {
+      "id": "CA-2",
+      "number": "CA-2",
+      "family": "Security Assessment",
+      "title": "Security Assessments",
+      "description": "The organization develops a security assessment plan and conducts security assessments.",
+      "implementationStatus": "Not Implemented",
+      "implementationDetails": "",
+      "baselineImpact": "LOW",
+      "evidence": [],
+      "lastAssessed": "2024-02-19"
+    },
+    {
+      "id": "CA-3",
+      "number": "CA-3",
+      "family": "Security Assessment",
+      "title": "System Interconnections",
+      "description": "The organization documents and controls system interconnections.",
+      "implementationStatus": "Not Implemented",
+      "implementationDetails": "",
+      "baselineImpact": "MODERATE",
+      "evidence": [],
+      "lastAssessed": "2024-02-19"
+    }
+  ],
+  "families": [
+    {
+      "id": "AC",
+      "name": "Access Control"
+    },
+    {
+      "id": "AT",
+      "name": "Awareness and Training"
+    },
+    {
+      "id": "AU",
+      "name": "Audit and Accountability"
+    },
+    {
+      "id": "CA",
+      "name": "Security Assessment and Authorization"
+    },
+    {
+      "id": "CM",
+      "name": "Configuration Management"
+    },
+    {
+      "id": "CP",
+      "name": "Contingency Planning"
+    },
+    {
+      "id": "IA",
+      "name": "Identification and Authentication"
+    },
+    {
+      "id": "IR",
+      "name": "Incident Response"
+    },
+    {
+      "id": "MA",
+      "name": "Maintenance"
+    },
+    {
+      "id": "MP",
+      "name": "Media Protection"
+    },
+    {
+      "id": "PE",
+      "name": "Physical and Environmental Protection"
+    },
+    {
+      "id": "PL",
+      "name": "Planning"
+    },
+    {
+      "id": "PS",
+      "name": "Personnel Security"
+    },
+    {
+      "id": "RA",
+      "name": "Risk Assessment"
+    },
+    {
+      "id": "SA",
+      "name": "System and Services Acquisition"
+    },
+    {
+      "id": "SC",
+      "name": "System and Communications Protection"
+    },
+    {
+      "id": "SI",
+      "name": "System and Information Integrity"
+    }
+  ],
+  "overallProgress": {
+    "value": 35
+  },
+  "statusBreakdown": {
+    "Implemented": 12,
+    "Partially Implemented": 24,
+    "Not Implemented": 45,
+    "Not Applicable": 8
+  },
   "systems": [
     {
       "id": "sys-001",
       "clientId": 1,
-      "name": "Core Banking System",
-      "description": "Primary banking and transaction processing system",
+      "name": "Core Banking Platform",
       "type": "Major Application",
-      "status": "active",
-      "createdAt": "2024-01-15",
-      "updatedAt": "2024-02-10"
+      "category": "Mission Critical",
+      "securityLevel": "high",
+      "informationLevel": "confidential",
+      "status": "IN_PROGRESS",
+      "atoStatus": "IN_PROGRESS",
+      "currentPhase": "initial_assessment",
+      "createdAt": "2025-02-20T10:00:00Z",
+      "updatedAt": "2025-02-20T10:30:00Z",
+      "lastAssessment": null,
+      "phaseProgress": {
+        "initial-assessment": 65,
+        "system-categorization": 30,
+        "security-controls": 10,
+        "assessment": 0,
+        "ato-authorization": 0,
+        "continuous-monitoring": 0
+      },
+      "phases": {
+        "initialAssessment": {
+          "discovery": {
+            "status": "in_progress",
+            "completedItems": [
+              "System inventory",
+              "System purpose documentation"
+            ],
+            "pendingItems": [
+              "Data flow mapping",
+              "System boundaries"
+            ]
+          },
+          "gapAnalysis": {
+            "status": "in_progress",
+            "completedItems": [
+              "Current state assessment"
+            ],
+            "pendingItems": [
+              "Control gap identification",
+              "Security practice review"
+            ]
+          },
+          "environment": {
+            "status": "completed",
+            "details": {
+              "hosting": "Hybrid",
+              "components": [
+                "Web Servers",
+                "Database Clusters",
+                "Load Balancers"
+              ]
+            }
+          },
+          "stakeholders": {
+            "status": "not_started",
+            "identified": [],
+            "pending": [
+              "System Owner",
+              "Security Officer",
+              "Operations Team"
+            ]
+          }
+        },
+        "systemCategorization": {
+          "infoTypes": {
+            "status": "in_progress",
+            "identified": [
+              "Customer Data",
+              "Transaction Records"
+            ],
+            "pending": [
+              "Audit Logs",
+              "Configuration Data"
+            ]
+          },
+          "impact": {
+            "status": "not_started",
+            "assessments": {
+              "confidentiality": null,
+              "integrity": null,
+              "availability": null
+            }
+          },
+          "objectives": {
+            "status": "not_started",
+            "defined": [],
+            "pending": [
+              "Data Protection Goals",
+              "System Availability Targets",
+              "Compliance Requirements"
+            ]
+          }
+        },
+        "securityControls": {
+          "baseline": {
+            "status": "not_started",
+            "selected": null,
+            "rationale": null
+          },
+          "tailoring": {
+            "status": "not_started",
+            "completedControls": [],
+            "pendingControls": []
+          },
+          "implementation": {
+            "status": "not_started",
+            "implemented": [],
+            "pending": []
+          },
+          "documentation": {
+            "status": "not_started",
+            "completed": [],
+            "pending": [
+              "Security Policies",
+              "Procedures",
+              "Training Materials"
+            ]
+          }
+        },
+        "assessment": {
+          "planning": {
+            "status": "not_started",
+            "completed": [],
+            "pending": [
+              "Assessment Plan",
+              "Test Procedures",
+              "Tool Selection"
+            ]
+          },
+          "testing": {
+            "status": "not_started",
+            "completed": [],
+            "pending": [
+              "Vulnerability Scans",
+              "Penetration Tests",
+              "Control Testing"
+            ]
+          },
+          "review": {
+            "status": "not_started",
+            "completed": [],
+            "pending": [
+              "Documentation Review",
+              "Evidence Validation",
+              "Findings Documentation"
+            ]
+          }
+        },
+        "authorization": {
+          "riskAssessment": {
+            "status": "not_started",
+            "completed": [],
+            "pending": [
+              "Risk Analysis",
+              "Mitigation Planning",
+              "Residual Risk Assessment"
+            ]
+          },
+          "package": {
+            "status": "not_started",
+            "completed": [],
+            "pending": [
+              "Package Assembly",
+              "Documentation Review",
+              "Executive Summary"
+            ]
+          },
+          "decision": {
+            "status": "not_started",
+            "result": null,
+            "conditions": []
+          }
+        },
+        "continuousMonitoring": {
+          "program": {
+            "status": "not_started",
+            "defined": [],
+            "pending": [
+              "Monitoring Strategy",
+              "Metrics Definition",
+              "Reporting Requirements"
+            ]
+          },
+          "assessment": {
+            "status": "not_started",
+            "completed": [],
+            "pending": [
+              "Control Effectiveness",
+              "Metric Collection",
+              "Risk Updates"
+            ]
+          },
+          "maintenance": {
+            "status": "not_started",
+            "completed": [],
+            "pending": [
+              "System Updates",
+              "Documentation Maintenance",
+              "Training Updates"
+            ]
+          }
+        }
+      },
+      "components": [],
+      "networks": [],
+      "ports": [],
+      "procedures": [],
+      "artifacts": [],
+      "boundaries": {
+        "physical": [],
+        "network": [],
+        "security": []
+      },
+      "compliance": {
+        "nist": 0,
+        "hipaa": 0,
+        "pci": 0
+      }
     }
   ],
   "enums": {
