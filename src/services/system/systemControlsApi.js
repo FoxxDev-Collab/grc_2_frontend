@@ -1,4 +1,6 @@
-import { get, post, put, del } from '../apiHelpers';
+import { validateRequired, ApiError } from '../apiHelpers';
+
+const API_URL = 'http://localhost:3001';
 
 export const systemControlsApi = {
   // Get controls with filtering options
@@ -12,29 +14,74 @@ export const systemControlsApi = {
       endpoint = `/security-controls/${filters.type.toLowerCase()}`;
     }
 
-    const controls = await get(`${endpoint}?${queryParams}`);
-    return controls;
+    const response = await fetch(`${API_URL}${endpoint}?${queryParams}`);
+    if (!response.ok) {
+      throw new ApiError('Failed to fetch controls', response.status);
+    }
+    return await response.json();
   },
 
   // Create a new control
   createControl: async (controlData) => {
-    return post('/security-controls', controlData);
+    validateRequired(controlData, ['name', 'family', 'description']);
+    
+    const response = await fetch(`${API_URL}/security-controls`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(controlData),
+    });
+    
+    if (!response.ok) {
+      throw new ApiError('Failed to create control', response.status);
+    }
+    
+    return await response.json();
   },
 
   // Update a control
   updateControl: async (controlId, controlData) => {
-    return put(`/security-controls/${controlId}`, controlData);
+    const response = await fetch(`${API_URL}/security-controls/${controlId}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(controlData),
+    });
+    
+    if (!response.ok) {
+      throw new ApiError('Failed to update control', response.status);
+    }
+    
+    return await response.json();
   },
 
   // Update control implementation status
   updateControlStatus: async (controlId, status) => {
-    return put(`/security-controls/${controlId}/status`, { status });
+    const response = await fetch(`${API_URL}/security-controls/${controlId}/status`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ status }),
+    });
+    
+    if (!response.ok) {
+      throw new ApiError('Failed to update control status', response.status);
+    }
+    
+    return await response.json();
   },
 
   // Get control families
   getControlFamilies: async () => {
-    const response = await get('/security-control-families');
-    return response.families;
+    const response = await fetch(`${API_URL}/security-control-families`);
+    if (!response.ok) {
+      throw new ApiError('Failed to fetch control families', response.status);
+    }
+    const data = await response.json();
+    return data.families;
   },
 
   // Add evidence to a control
@@ -43,20 +90,55 @@ export const systemControlsApi = {
     if (evidence instanceof FormData) {
       const formData = new FormData();
       formData.append('evidence', evidence.get('evidence'));
-      return post(`/security-controls/${controlId}/evidence`, formData);
+      
+      const response = await fetch(`${API_URL}/security-controls/${controlId}/evidence`, {
+        method: 'POST',
+        body: formData,
+      });
+      
+      if (!response.ok) {
+        throw new ApiError('Failed to add control evidence', response.status);
+      }
+      
+      return await response.json();
     }
+    
     // If evidence is JSON data
-    return post(`/security-controls/${controlId}/evidence`, evidence);
+    const response = await fetch(`${API_URL}/security-controls/${controlId}/evidence`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(evidence),
+    });
+    
+    if (!response.ok) {
+      throw new ApiError('Failed to add control evidence', response.status);
+    }
+    
+    return await response.json();
   },
 
   // Delete evidence from a control
   deleteControlEvidence: async (controlId, evidenceId) => {
-    return del(`/security-controls/${controlId}/evidence/${evidenceId}`);
+    const response = await fetch(`${API_URL}/security-controls/${controlId}/evidence/${evidenceId}`, {
+      method: 'DELETE',
+    });
+    
+    if (!response.ok) {
+      throw new ApiError('Failed to delete control evidence', response.status);
+    }
+    
+    return await response.json();
   },
 
   // Get control implementation statistics
   getControlStats: async () => {
-    return get('/security-control-stats');
+    const response = await fetch(`${API_URL}/security-control-stats`);
+    if (!response.ok) {
+      throw new ApiError('Failed to fetch control stats', response.status);
+    }
+    return await response.json();
   }
 };
 

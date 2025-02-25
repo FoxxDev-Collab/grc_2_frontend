@@ -1,16 +1,25 @@
 /* eslint-disable no-unused-vars */
-import { get, put } from '../apiHelpers';
+import { ApiError } from '../apiHelpers';
+
+const API_URL = 'http://localhost:3001';
 
 const atoTrackerApi = {
   // Get ATO process data for a system
   getATOProcess: async (clientId, systemId) => {
     // Get the process steps template
-    const processSteps = await get('/ato/process-steps');
+    const processStepsResponse = await fetch(`${API_URL}/ato/process-steps`);
+    if (!processStepsResponse.ok) {
+      throw new ApiError('Failed to fetch process steps', processStepsResponse.status);
+    }
+    const processSteps = await processStepsResponse.json();
     
     try {
       // Try to get existing tracker data for the system
-      const trackerData = await get(`/ato/tracker/${systemId}`);
-      return trackerData;
+      const trackerResponse = await fetch(`${API_URL}/ato/tracker/${systemId}`);
+      if (!trackerResponse.ok) {
+        throw new ApiError('Tracker data not found', trackerResponse.status);
+      }
+      return await trackerResponse.json();
     } catch (error) {
       // If no tracker data exists, initialize it from process steps
       const initialData = {
@@ -28,14 +37,30 @@ const atoTrackerApi = {
       };
 
       // Create new tracker data for the system
-      return put(`/ato/tracker/${systemId}`, initialData);
+      const createResponse = await fetch(`${API_URL}/ato/tracker/${systemId}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(initialData),
+      });
+      
+      if (!createResponse.ok) {
+        throw new ApiError('Failed to create tracker data', createResponse.status);
+      }
+      
+      return await createResponse.json();
     }
   },
 
   // Update task status
   updateTaskStatus: async (clientId, systemId, phaseId, sectionTitle, taskIndex, completed) => {
     // Get current tracker data
-    const trackerData = await get(`/ato/tracker/${systemId}`);
+    const trackerResponse = await fetch(`${API_URL}/ato/tracker/${systemId}`);
+    if (!trackerResponse.ok) {
+      throw new ApiError('Failed to fetch tracker data', trackerResponse.status);
+    }
+    const trackerData = await trackerResponse.json();
     
     // Find and update the task
     const phase = trackerData.phases.find(p => p.id === phaseId);
@@ -53,12 +78,28 @@ const atoTrackerApi = {
     }
 
     // Update the tracker data
-    return put(`/ato/tracker/${systemId}`, trackerData);
+    const updateResponse = await fetch(`${API_URL}/ato/tracker/${systemId}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(trackerData),
+    });
+    
+    if (!updateResponse.ok) {
+      throw new ApiError('Failed to update tracker data', updateResponse.status);
+    }
+    
+    return await updateResponse.json();
   },
 
   // Get phase progress
   getPhaseProgress: async (clientId, systemId, phaseId) => {
-    const trackerData = await get(`/ato/tracker/${systemId}`);
+    const trackerResponse = await fetch(`${API_URL}/ato/tracker/${systemId}`);
+    if (!trackerResponse.ok) {
+      throw new ApiError('Failed to fetch tracker data', trackerResponse.status);
+    }
+    const trackerData = await trackerResponse.json();
     const phase = trackerData.phases.find(p => p.id === phaseId);
     return {
       value: phase ? phase.progress : 0
@@ -68,7 +109,11 @@ const atoTrackerApi = {
   // Reset process data (useful for testing)
   resetProcessData: async () => {
     // Get the process steps template
-    const processSteps = await get('/ato/process-steps');
+    const processStepsResponse = await fetch(`${API_URL}/ato/process-steps`);
+    if (!processStepsResponse.ok) {
+      throw new ApiError('Failed to fetch process steps', processStepsResponse.status);
+    }
+    const processSteps = await processStepsResponse.json();
     
     // Initialize empty tracker data
     const initialData = {
@@ -86,7 +131,19 @@ const atoTrackerApi = {
     };
 
     // Reset tracker data for the system
-    return put('/ato/tracker/sys-001', initialData);
+    const resetResponse = await fetch(`${API_URL}/ato/tracker/sys-001`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(initialData),
+    });
+    
+    if (!resetResponse.ok) {
+      throw new ApiError('Failed to reset tracker data', resetResponse.status);
+    }
+    
+    return await resetResponse.json();
   }
 };
 

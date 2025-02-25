@@ -1,4 +1,6 @@
-import { get, post, put } from '../apiHelpers';
+import { validateRequired, ApiError } from '../apiHelpers';
+
+const API_URL = 'http://localhost:3001';
 
 // Re-export enums for backward compatibility
 export const SystemStatus = {
@@ -38,64 +40,116 @@ export const SystemCategory = {
 
 export const systemApi = {
   getSystems: async (clientId) => {
-    return get(`/systems?clientId=${clientId}`);
+    const response = await fetch(`${API_URL}/systems?clientId=${clientId}`);
+    if (!response.ok) {
+      throw new ApiError('Failed to fetch systems', response.status);
+    }
+    return await response.json();
   },
 
   getSystemTypes: async () => {
-    const response = await get('/system-types');
-    return response.map(type => type.name);
+    const response = await fetch(`${API_URL}/system-types`);
+    if (!response.ok) {
+      throw new ApiError('Failed to fetch system types', response.status);
+    }
+    const data = await response.json();
+    return data.map(type => type.name);
   },
 
   getNetworkTypes: async () => {
-    const response = await get('/network-types');
-    return response.map(type => type.name);
+    const response = await fetch(`${API_URL}/network-types`);
+    if (!response.ok) {
+      throw new ApiError('Failed to fetch network types', response.status);
+    }
+    const data = await response.json();
+    return data.map(type => type.name);
   },
 
   getComponentTypes: async () => {
-    const response = await get('/component-types');
-    return response.map(type => type.name);
+    const response = await fetch(`${API_URL}/component-types`);
+    if (!response.ok) {
+      throw new ApiError('Failed to fetch component types', response.status);
+    }
+    const data = await response.json();
+    return data.map(type => type.name);
   },
 
   getProcedureTypes: async () => {
-    const response = await get('/procedure-types');
-    return response.map(type => type.name);
+    const response = await fetch(`${API_URL}/procedure-types`);
+    if (!response.ok) {
+      throw new ApiError('Failed to fetch procedure types', response.status);
+    }
+    const data = await response.json();
+    return data.map(type => type.name);
   },
 
   getCommonPorts: async () => {
-    return get('/common-ports');
+    const response = await fetch(`${API_URL}/common-ports`);
+    if (!response.ok) {
+      throw new ApiError('Failed to fetch common ports', response.status);
+    }
+    return await response.json();
   },
 
   getSystemStatuses: async () => {
-    const response = await get('/system-statuses');
-    return response.map(status => status.name);
+    const response = await fetch(`${API_URL}/system-statuses`);
+    if (!response.ok) {
+      throw new ApiError('Failed to fetch system statuses', response.status);
+    }
+    const data = await response.json();
+    return data.map(status => status.name);
   },
 
   getATOStatuses: async () => {
-    const response = await get('/ato-statuses');
-    return response.map(status => status.name);
+    const response = await fetch(`${API_URL}/ato-statuses`);
+    if (!response.ok) {
+      throw new ApiError('Failed to fetch ATO statuses', response.status);
+    }
+    const data = await response.json();
+    return data.map(status => status.name);
   },
 
   getSecurityLevels: async () => {
-    const response = await get('/security-levels');
-    return response.map(level => level.name);
+    const response = await fetch(`${API_URL}/security-levels`);
+    if (!response.ok) {
+      throw new ApiError('Failed to fetch security levels', response.status);
+    }
+    const data = await response.json();
+    return data.map(level => level.name);
   },
 
   getInformationLevels: async () => {
-    const response = await get('/information-levels');
-    return response.map(level => level.name);
+    const response = await fetch(`${API_URL}/information-levels`);
+    if (!response.ok) {
+      throw new ApiError('Failed to fetch information levels', response.status);
+    }
+    const data = await response.json();
+    return data.map(level => level.name);
   },
 
   getSystemCategories: async () => {
-    const response = await get('/system-categories');
-    return response.map(category => category.name);
+    const response = await fetch(`${API_URL}/system-categories`);
+    if (!response.ok) {
+      throw new ApiError('Failed to fetch system categories', response.status);
+    }
+    const data = await response.json();
+    return data.map(category => category.name);
   },
 
   getSystem: async (clientId, systemId) => {
     // Get base system data
-    const system = await get(`/systems/${systemId}`);
+    const systemResponse = await fetch(`${API_URL}/systems/${systemId}`);
+    if (!systemResponse.ok) {
+      throw new ApiError('Failed to fetch system', systemResponse.status);
+    }
+    const system = await systemResponse.json();
     
     // Get authorization data
-    const authData = await get(`/authorization/${clientId}/${systemId}`);
+    const authResponse = await fetch(`${API_URL}/authorization/${clientId}/${systemId}`);
+    if (!authResponse.ok) {
+      throw new ApiError('Failed to fetch authorization data', authResponse.status);
+    }
+    const authData = await authResponse.json();
     
     // Combine system and authorization data
     return {
@@ -108,23 +162,70 @@ export const systemApi = {
   },
 
   createPOAMItem: async (clientId, systemId, poamData) => {
-    return post(`/authorization/${clientId}/${systemId}/poam`, {
-      ...poamData,
-      status: 'OPEN',
-      dateCreated: new Date().toISOString().split('T')[0]
+    validateRequired(poamData, ['title', 'description', 'severity']);
+    
+    const response = await fetch(`${API_URL}/authorization/${clientId}/${systemId}/poam`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        ...poamData,
+        status: 'OPEN',
+        dateCreated: new Date().toISOString().split('T')[0]
+      }),
     });
+    
+    if (!response.ok) {
+      throw new ApiError('Failed to create POAM item', response.status);
+    }
+    
+    return await response.json();
   },
 
   updateAuthorizationPackage: async (clientId, systemId, packageData) => {
-    return put(`/authorization/${clientId}/${systemId}/package`, packageData);
+    const response = await fetch(`${API_URL}/authorization/${clientId}/${systemId}/package`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(packageData),
+    });
+    
+    if (!response.ok) {
+      throw new ApiError('Failed to update authorization package', response.status);
+    }
+    
+    return await response.json();
   },
 
   updateAuthorizationDecision: async (clientId, systemId, decisionData) => {
-    return put(`/authorization/${clientId}/${systemId}/decision`, decisionData);
+    const response = await fetch(`${API_URL}/authorization/${clientId}/${systemId}/decision`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(decisionData),
+    });
+    
+    if (!response.ok) {
+      throw new ApiError('Failed to update authorization decision', response.status);
+    }
+    
+    return await response.json();
   },
 
   validateAuthorizationPackage: async (clientId, systemId) => {
-    await put(`/authorization/${clientId}/${systemId}/validate`);
+    const response = await fetch(`${API_URL}/authorization/${clientId}/${systemId}/validate`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+    
+    if (!response.ok) {
+      throw new ApiError('Failed to validate authorization package', response.status);
+    }
     
     // Return validation results
     return {
