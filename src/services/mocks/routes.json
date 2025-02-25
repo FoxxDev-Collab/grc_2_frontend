@@ -120,8 +120,19 @@
 
   "/security-objectives": "/securityObjectives",
   "/security-objectives/:id": "/securityObjectives/:id",
+  "/security-objectives?clientId=:clientId": "/securityObjectives?clientId=:clientId",
   "/security-objectives/statuses": "/statuses",
   "/security-objectives/priority-levels": "/priorityLevels",
+
+  "/security-initiatives": "/securityInitiatives",
+  "/security-initiatives/:id": "/securityInitiatives/:id",
+  "/security-initiatives?clientId=:clientId": "/securityInitiatives?clientId=:clientId",
+  "/security-initiatives?clientId=:clientId&objectiveId=:objectiveId": "/securityInitiatives?clientId=:clientId&objectiveId=:objectiveId",
+  "/security-initiatives/:id/milestones": "/securityInitiatives/:id/milestones",
+  "/security-initiatives/:id/milestones/:milestoneId": "/securityInitiatives/:id/milestones/:milestoneId",
+  "/security-initiatives/:id/resources": "/securityInitiatives/:id/resources",
+  "/security-initiatives/statuses": "/initiativeStatuses",
+  "/security-initiatives/phases": "/initiativePhases",
 
   "/risks": "/findings_to_risk/risks",
   "/risks?clientId=:clientId": "/findings_to_risk/risks?clientId=:clientId",
@@ -136,5 +147,12 @@
   
   "/findings_to_risk/assessmentFindings": "/findings_to_risk/assessmentFindings",
   "/findings_to_risk/riskObjectives": "/findings_to_risk/riskObjectives",
-  "/findings_to_risk/objectiveInitiatives": "/findings_to_risk/objectiveInitiatives"
+  "/findings_to_risk/objectiveInitiatives": "/findings_to_risk/objectiveInitiatives",
+  "/findings_to_risk": "/findings_to_risk",
+  
+  "/risk_to_objective": "/risk_to_objective",
+  "/risk_to_objective/:id": "/risk_to_objective/:id",
+  
+  "/objective_to_initiative": "/objective_to_initiative",
+  "/objective_to_initiative/:id": "/objective_to_initiative/:id"
 }

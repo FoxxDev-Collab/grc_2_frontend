@@ -20,7 +20,8 @@ const securityInitiativesApi = {
       }
       return await response.json();
     } catch (error) {
-      throw new Error(`Failed to fetch initiatives: ${error.message}`);
+      console.error('Error fetching initiatives:', error);
+      return [];
     }
   },
 
@@ -45,7 +46,8 @@ const securityInitiativesApi = {
       }
       return await response.json();
     } catch (error) {
-      throw new Error(`Failed to fetch initiatives: ${error.message}`);
+      console.error('Error fetching initiatives by objective:', error);
+      return [];
     }
   },
 
@@ -53,7 +55,6 @@ const securityInitiativesApi = {
   getInitiative: async (clientId, initiativeId) => {
     validateRequired({ clientId, initiativeId }, ['clientId', 'initiativeId']);
     const numericClientId = Number(clientId);
-    const numericInitiativeId = Number(initiativeId);
 
     try {
       const response = await fetch(`${API_URL}/security-initiatives/${initiativeId}?clientId=${numericClientId}`);
@@ -63,7 +64,7 @@ const securityInitiativesApi = {
       const initiative = await response.json();
 
       // If this initiative is linked to a risk-based objective, include risk info
-      if (initiative.objectiveId.startsWith('risk-')) {
+      if (initiative.objectiveId && initiative.objectiveId.startsWith('risk-')) {
         const riskId = initiative.objectiveId.split('-')[1];
         const risk = await riskAssessmentApi.getRisk(clientId, riskId);
         if (risk) {
@@ -81,13 +82,15 @@ const securityInitiativesApi = {
 
       return initiative;
     } catch (error) {
-      throw new Error(`Failed to fetch initiative: ${error.message}`);
+      console.error('Error fetching initiative:', error);
+      throw error;
     }
   },
 
   // Create new initiative
   createInitiative: async (clientId, initiativeData) => {
     validateRequired(initiativeData, ['name', 'phase', 'timeline', 'objectiveId']);
+    validateRequired({ clientId }, ['clientId']);
 
     if (!PHASES.includes(initiativeData.phase)) {
       throw new Error('Invalid phase');
@@ -117,8 +120,8 @@ const securityInitiativesApi = {
         body: JSON.stringify({
           clientId: Number(clientId),
           ...initiativeData,
-          milestones: [],
-          resources: {
+          milestones: initiativeData.milestones || [],
+          resources: initiativeData.resources || {
             team: [],
             budget: '0',
             tools: []
@@ -130,15 +133,26 @@ const securityInitiativesApi = {
         throw new Error('Failed to create initiative');
       }
 
-      return await response.json();
+      const newInitiative = await response.json();
+
+      // Create the objective-initiative mapping
+      await riskAssessmentApi.createObjectiveInitiativeMapping(
+        clientId, 
+        initiativeData.objectiveId, 
+        newInitiative.id
+      );
+
+      return newInitiative;
     } catch (error) {
-      throw new Error(`Failed to create initiative: ${error.message}`);
+      console.error('Error creating initiative:', error);
+      throw error;
     }
   },
 
   // Update initiative
   updateInitiative: async (clientId, initiativeId, updates) => {
     validateRequired({ clientId, initiativeId }, ['clientId', 'initiativeId']);
+    const numericClientId = Number(clientId);
 
     try {
       const initiative = await securityInitiativesApi.getInitiative(clientId, initiativeId);
@@ -152,7 +166,7 @@ const securityInitiativesApi = {
       }
 
       // If this initiative is linked to a risk-based objective
-      if (initiative.objectiveId.startsWith('risk-')) {
+      if (initiative.objectiveId && initiative.objectiveId.startsWith('risk-')) {
         const riskId = initiative.objectiveId.split('-')[1];
         
         // If initiative is completed, update risk status
@@ -163,13 +177,30 @@ const securityInitiativesApi = {
         }
       }
 
+      // If the objectiveId has changed, update the mapping
+      if (updates.objectiveId && initiative.objectiveId !== updates.objectiveId) {
+        // Delete old mapping
+        await riskAssessmentApi.deleteObjectiveInitiativeMapping(
+          clientId, 
+          initiative.objectiveId, 
+          initiativeId
+        );
+        
+        // Create new mapping
+        await riskAssessmentApi.createObjectiveInitiativeMapping(
+          clientId, 
+          updates.objectiveId, 
+          initiativeId
+        );
+      }
+
       const response = await fetch(`${API_URL}/security-initiatives/${initiativeId}`, {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          clientId: Number(clientId),
+          clientId: numericClientId,
           ...updates
         })
       });
@@ -180,7 +211,8 @@ const securityInitiativesApi = {
 
       return await response.json();
     } catch (error) {
-      throw new Error(`Failed to update initiative: ${error.message}`);
+      console.error('Error updating initiative:', error);
+      throw error;
     }
   },
 
@@ -189,6 +221,9 @@ const securityInitiativesApi = {
     validateRequired({ clientId, initiativeId }, ['clientId', 'initiativeId']);
 
     try {
+      // Get the initiative to find its objectiveId
+      const initiative = await securityInitiativesApi.getInitiative(clientId, initiativeId);
+      
       const response = await fetch(`${API_URL}/security-initiatives/${initiativeId}?clientId=${clientId}`, {
         method: 'DELETE'
       });
@@ -197,9 +232,19 @@ const securityInitiativesApi = {
         throw new Error('Failed to delete initiative');
       }
 
+      // Delete the objective-initiative mapping if it exists
+      if (initiative && initiative.objectiveId) {
+        await riskAssessmentApi.deleteObjectiveInitiativeMapping(
+          clientId, 
+          initiative.objectiveId, 
+          initiativeId
+        );
+      }
+
       return { success: true, message: 'Security initiative deleted successfully' };
     } catch (error) {
-      throw new Error(`Failed to delete initiative: ${error.message}`);
+      console.error('Error deleting initiative:', error);
+      throw error;
     }
   },
 
@@ -217,7 +262,7 @@ const securityInitiativesApi = {
         body: JSON.stringify({
           clientId: Number(clientId),
           ...milestoneData,
-          completed: false
+          completed: milestoneData.completed || false
         })
       });
 
@@ -236,7 +281,8 @@ const securityInitiativesApi = {
 
       return result;
     } catch (error) {
-      throw new Error(`Failed to add milestone: ${error.message}`);
+      console.error('Error adding milestone:', error);
+      throw error;
     }
   },
 
@@ -271,7 +317,8 @@ const securityInitiativesApi = {
 
       return result;
     } catch (error) {
-      throw new Error(`Failed to update milestone: ${error.message}`);
+      console.error('Error updating milestone:', error);
+      throw error;
     }
   },
 
@@ -296,7 +343,8 @@ const securityInitiativesApi = {
 
       return { success: true, message: 'Milestone deleted successfully' };
     } catch (error) {
-      throw new Error(`Failed to delete milestone: ${error.message}`);
+      console.error('Error deleting milestone:', error);
+      throw error;
     }
   },
 
@@ -323,7 +371,8 @@ const securityInitiativesApi = {
 
       return await response.json();
     } catch (error) {
-      throw new Error(`Failed to update resources: ${error.message}`);
+      console.error('Error updating resources:', error);
+      throw error;
     }
   },
 
@@ -335,6 +384,54 @@ const securityInitiativesApi = {
   // Get phases
   getPhases: async () => {
     return [...PHASES];
+  },
+
+  // Promote objective to initiative
+  promoteObjectiveToInitiative: async (clientId, objectiveId, initiativeData = {}) => {
+    validateRequired({ clientId, objectiveId }, ['clientId', 'objectiveId']);
+    
+    try {
+      // Create default initiative data based on the objective
+      const defaultInitiativeData = {
+        name: `Initiative for Objective: ${objectiveId}`,
+        description: 'Implementation initiative for security objective',
+        phase: 'Planning',
+        timeline: `Q${Math.floor(Math.random() * 4) + 1} ${new Date().getFullYear()}`,
+        status: 'Planning',
+        objectiveId: objectiveId,
+        milestones: [
+          {
+            name: 'Planning Phase Complete',
+            completed: false,
+            dueDate: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString()
+          },
+          {
+            name: 'Implementation Started',
+            completed: false,
+            dueDate: new Date(Date.now() + 60 * 24 * 60 * 60 * 1000).toISOString()
+          }
+        ],
+        resources: {
+          team: ['Security Team'],
+          budget: '$0',
+          tools: []
+        }
+      };
+      
+      // Merge with any provided initiative data
+      const mergedInitiativeData = {
+        ...defaultInitiativeData,
+        ...initiativeData
+      };
+      
+      // Create the initiative
+      const initiative = await securityInitiativesApi.createInitiative(clientId, mergedInitiativeData);
+      
+      return initiative;
+    } catch (error) {
+      console.error('Error promoting objective to initiative:', error);
+      throw error;
+    }
   }
 };
 

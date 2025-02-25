@@ -31,7 +31,9 @@ const SecurityStrategyPage = () => {
     objectives: [],
     initiatives: [],
     riskStats: null,
-    frameworkProgress: null
+    frameworkProgress: null,
+    riskObjectiveMappings: [],
+    objectiveInitiativeMappings: []
   });
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -57,7 +59,9 @@ const SecurityStrategyPage = () => {
           priorities,
           phaseOptions,
           riskStats,
-          frameworkProgress
+          frameworkProgress,
+          riskObjectiveMappings,
+          objectiveInitiativeMappings
         ] = await Promise.all([
           riskAssessmentApi.getRisks(clientId),
           securityObjectivesApi.getObjectives(clientId),
@@ -67,7 +71,9 @@ const SecurityStrategyPage = () => {
           securityObjectivesApi.getPriorityLevels(),
           securityInitiativesApi.getPhases(),
           riskAssessmentApi.getRiskStats(clientId),
-          riskAssessmentApi.getFrameworkProgress(clientId)
+          riskAssessmentApi.getFrameworkProgress(clientId),
+          riskAssessmentApi.getRiskObjectiveMappings(clientId),
+          riskAssessmentApi.getObjectiveInitiativeMappings(clientId)
         ]);
 
         setData({
@@ -75,7 +81,9 @@ const SecurityStrategyPage = () => {
           objectives,
           initiatives,
           riskStats,
-          frameworkProgress
+          frameworkProgress,
+          riskObjectiveMappings,
+          objectiveInitiativeMappings
         });
         setStatuses({
           objective: objectiveStatuses,
@@ -188,7 +196,7 @@ const SecurityStrategyPage = () => {
         objectives: [...prev.objectives, result]
       }));
 
-      // If this objective is part of risk treatment, update the risk
+      // If this objective is part of risk treatment, update the risk and create the mapping
       if (objectiveData.riskId) {
         const risk = data.risks.find(r => r.id === objectiveData.riskId);
         if (risk) {
@@ -199,6 +207,13 @@ const SecurityStrategyPage = () => {
               objectives: [...(risk.treatment.objectives || []), result.id]
             }
           });
+
+          // Create the risk-objective mapping
+          const mapping = await riskAssessmentApi.createRiskObjectiveMapping(clientId, risk.id, result.id);
+          setData(prev => ({
+            ...prev,
+            riskObjectiveMappings: [...prev.riskObjectiveMappings, mapping]
+          }));
         }
       }
 
@@ -234,6 +249,20 @@ const SecurityStrategyPage = () => {
         ...prev,
         initiatives: [...prev.initiatives, result]
       }));
+
+      // Create the objective-initiative mapping if objectiveId is provided
+      if (initiativeData.objectiveId) {
+        const mapping = await riskAssessmentApi.createObjectiveInitiativeMapping(
+          clientId, 
+          initiativeData.objectiveId, 
+          result.id
+        );
+        setData(prev => ({
+          ...prev,
+          objectiveInitiativeMappings: [...prev.objectiveInitiativeMappings, mapping]
+        }));
+      }
+
       setError(null);
     } catch (err) {
       setError(err.message);
@@ -247,6 +276,36 @@ const SecurityStrategyPage = () => {
         ...prev,
         initiatives: prev.initiatives.map(init => init.id === result.id ? result : init)
       }));
+
+      // If the objectiveId has changed, update the mapping
+      const initiative = data.initiatives.find(i => i.id === initiativeId);
+      if (initiative && initiative.objectiveId !== updates.objectiveId && updates.objectiveId) {
+        // Delete old mapping
+        await riskAssessmentApi.deleteObjectiveInitiativeMapping(
+          clientId, 
+          initiative.objectiveId, 
+          initiativeId
+        );
+        
+        // Create new mapping
+        const mapping = await riskAssessmentApi.createObjectiveInitiativeMapping(
+          clientId, 
+          updates.objectiveId, 
+          initiativeId
+        );
+        
+        // Update mappings in state
+        setData(prev => ({
+          ...prev,
+          objectiveInitiativeMappings: [
+            ...prev.objectiveInitiativeMappings.filter(
+              m => !(m.objectiveId === initiative.objectiveId && m.initiativeId === initiativeId)
+            ),
+            mapping
+          ]
+        }));
+      }
+
       setError(null);
     } catch (err) {
       setError(err.message);
@@ -255,11 +314,32 @@ const SecurityStrategyPage = () => {
 
   const handleDeleteInitiative = async (initiativeId) => {
     try {
+      // Get the initiative to find its objectiveId
+      const initiative = data.initiatives.find(i => i.id === initiativeId);
+      
       await securityInitiativesApi.deleteInitiative(clientId, initiativeId);
       setData(prev => ({
         ...prev,
         initiatives: prev.initiatives.filter(init => init.id !== initiativeId)
       }));
+
+      // Delete the objective-initiative mapping if it exists
+      if (initiative && initiative.objectiveId) {
+        await riskAssessmentApi.deleteObjectiveInitiativeMapping(
+          clientId, 
+          initiative.objectiveId, 
+          initiativeId
+        );
+        
+        // Update mappings in state
+        setData(prev => ({
+          ...prev,
+          objectiveInitiativeMappings: prev.objectiveInitiativeMappings.filter(
+            m => !(m.objectiveId === initiative.objectiveId && m.initiativeId === initiativeId)
+          )
+        }));
+      }
+
       setError(null);
     } catch (err) {
       setError(err.message);

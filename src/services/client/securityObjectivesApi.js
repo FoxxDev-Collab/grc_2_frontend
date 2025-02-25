@@ -49,7 +49,8 @@ const securityObjectivesApi = {
 
       return [...objectives, ...riskBasedObjectives];
     } catch (error) {
-      throw new Error(`Failed to fetch objectives: ${error.message}`);
+      console.error('Error fetching objectives:', error);
+      return [];
     }
   },
 
@@ -90,13 +91,15 @@ const securityObjectivesApi = {
       }
       return await response.json();
     } catch (error) {
-      throw new Error(`Failed to fetch objective: ${error.message}`);
+      console.error('Error fetching objective:', error);
+      throw error;
     }
   },
 
   // Create new objective
   createObjective: async (clientId, objectiveData) => {
     validateRequired(objectiveData, ['name', 'priority', 'dueDate']);
+    validateRequired({ clientId }, ['clientId']);
 
     if (!PRIORITY_LEVELS.includes(objectiveData.priority)) {
       throw new Error('Invalid priority level');
@@ -117,8 +120,8 @@ const securityObjectivesApi = {
         body: JSON.stringify({
           clientId: Number(clientId),
           ...objectiveData,
-          progress: 0,
-          metrics: {
+          progress: objectiveData.progress || 0,
+          metrics: objectiveData.metrics || {
             successCriteria: [],
             currentMetrics: []
           }
@@ -131,7 +134,8 @@ const securityObjectivesApi = {
 
       return await response.json();
     } catch (error) {
-      throw new Error(`Failed to create objective: ${error.message}`);
+      console.error('Error creating objective:', error);
+      throw error;
     }
   },
 
@@ -198,7 +202,8 @@ const securityObjectivesApi = {
 
       return await response.json();
     } catch (error) {
-      throw new Error(`Failed to update objective: ${error.message}`);
+      console.error('Error updating objective:', error);
+      throw error;
     }
   },
 
@@ -222,7 +227,8 @@ const securityObjectivesApi = {
 
       return { success: true, message: 'Security objective deleted successfully' };
     } catch (error) {
-      throw new Error(`Failed to delete objective: ${error.message}`);
+      console.error('Error deleting objective:', error);
+      throw error;
     }
   },
 
@@ -276,7 +282,8 @@ const securityObjectivesApi = {
 
       return await response.json();
     } catch (error) {
-      throw new Error(`Failed to update objective metrics: ${error.message}`);
+      console.error('Error updating objective metrics:', error);
+      throw error;
     }
   },
 

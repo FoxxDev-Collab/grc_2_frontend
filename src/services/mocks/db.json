@@ -395,22 +395,6 @@
     {
       "id": "pending_activation",
       "description": "User account awaiting activation"
-    },
-    {
-      "id": 1,
-      "name": "Planning"
-    },
-    {
-      "id": 2,
-      "name": "In Progress"
-    },
-    {
-      "id": 3,
-      "name": "Completed"
-    },
-    {
-      "id": 4,
-      "name": "On Hold"
     }
   ],
   "preferences": {
@@ -983,10 +967,8 @@
           "severity": "high",
           "category": "System Security",
           "recommendation": "Install and configure antivirus software on all systems with automatic updates",
-          "status": "promoted_to_risk",
-          "createdDate": "2025-02-01T08:00:00Z",
-          "riskId": "vRexRRa",
-          "promotedToRisk": true
+          "status": "open",
+          "createdDate": "2025-02-01T08:00:00Z"
         },
         {
           "id": "f-002",
@@ -997,10 +979,8 @@
           "severity": "high",
           "category": "Data Protection",
           "recommendation": "Implement comprehensive backup strategy with regular testing",
-          "status": "promoted_to_risk",
-          "createdDate": "2025-02-01T08:00:00Z",
-          "riskId": "0i5A975",
-          "promotedToRisk": true
+          "status": "in_progress",
+          "createdDate": "2025-02-01T08:00:00Z"
         }
       ]
     },
@@ -1055,11 +1035,9 @@
           "severity": "high",
           "category": "Audit and Accountability",
           "recommendation": "Define and implement comprehensive audit logging",
-          "status": "promoted_to_risk",
+          "status": "completed",
           "createdDate": "2025-02-15T10:00:00Z",
-          "nistControl": "AU-2",
-          "riskId": "sOZn75g",
-          "promotedToRisk": true
+          "nistControl": "AU-2"
         },
         {
           "id": "f-004",
@@ -1578,75 +1556,6 @@
       "updatedAt": "2024-06-30T00:00:00Z"
     }
   ],
-  "assessmentFindings": [
-    {
-      "id": "mapping-001",
-      "assessmentId": "asmt-001",
-      "findingId": "f-001",
-      "status": "promoted_to_risk",
-      "riskId": "risk-001",
-      "promotedToRisk": true,
-      "datePromoted": "2024-12-15T10:30:00Z"
-    },
-    {
-      "id": "mapping-002",
-      "assessmentId": "asmt-001",
-      "findingId": "f-002",
-      "status": "promoted_to_risk",
-      "riskId": "risk-002",
-      "promotedToRisk": true,
-      "datePromoted": "2024-12-16T14:45:00Z"
-    },
-    {
-      "id": "mapping-003",
-      "assessmentId": "asmt-002",
-      "findingId": "f-003",
-      "status": "promoted_to_risk",
-      "riskId": "risk-003",
-      "promotedToRisk": true,
-      "datePromoted": "2024-12-18T09:15:00Z"
-    }
-  ],
-  "riskObjectives": [
-    {
-      "id": "ro-001",
-      "riskId": "risk-001",
-      "objectiveId": "obj-001",
-      "dateLinked": "2024-12-20T11:30:00Z"
-    },
-    {
-      "id": "ro-002",
-      "riskId": "risk-002",
-      "objectiveId": "obj-002",
-      "dateLinked": "2024-12-21T13:45:00Z"
-    },
-    {
-      "id": "ro-003",
-      "riskId": "risk-003",
-      "objectiveId": "obj-003",
-      "dateLinked": "2024-12-22T10:15:00Z"
-    }
-  ],
-  "objectiveInitiatives": [
-    {
-      "id": "oi-001",
-      "objectiveId": "obj-001",
-      "initiativeId": "init-001",
-      "dateLinked": "2024-12-25T14:30:00Z"
-    },
-    {
-      "id": "oi-002",
-      "objectiveId": "obj-002",
-      "initiativeId": "init-002",
-      "dateLinked": "2024-12-26T16:45:00Z"
-    },
-    {
-      "id": "oi-003",
-      "objectiveId": "obj-003",
-      "initiativeId": "init-003",
-      "dateLinked": "2024-12-27T11:15:00Z"
-    }
-  ],
   "risks": [
     {
       "id": "risk-001",
@@ -1746,102 +1655,6 @@
           "obj-003"
         ]
       }
-    },
-    {
-      "clientId": 1,
-      "lastAssessed": "2025-02-25T20:30:29.923Z",
-      "sourceFindings": [
-        {
-          "findingId": "f-001",
-          "title": "Missing or outdated antivirus protection",
-          "sourceType": "security_assessment",
-          "date": "2025-02-25T20:30:29.923Z"
-        }
-      ],
-      "businessImpact": {
-        "financial": "",
-        "operational": "",
-        "reputational": "",
-        "compliance": ""
-      },
-      "treatment": {
-        "approach": "mitigate",
-        "plan": "",
-        "status": "not_started",
-        "objectives": []
-      },
-      "name": "Missing or outdated antivirus protection",
-      "description": "Systems lack proper antivirus protection or updates are not maintained",
-      "impact": "high",
-      "likelihood": "medium",
-      "category": "System Security",
-      "source": "Finding: f-001",
-      "status": "open",
-      "id": "vRexRRa"
-    },
-    {
-      "clientId": 1,
-      "lastAssessed": "2025-02-25T20:30:32.378Z",
-      "sourceFindings": [
-        {
-          "findingId": "f-002",
-          "title": "Insufficient backup procedures",
-          "sourceType": "security_assessment",
-          "date": "2025-02-25T20:30:32.378Z"
-        }
-      ],
-      "businessImpact": {
-        "financial": "",
-        "operational": "",
-        "reputational": "",
-        "compliance": ""
-      },
-      "treatment": {
-        "approach": "mitigate",
-        "plan": "",
-        "status": "not_started",
-        "objectives": []
-      },
-      "name": "Insufficient backup procedures",
-      "description": "Backup processes are not adequate or tested",
-      "impact": "high",
-      "likelihood": "medium",
-      "category": "Data Protection",
-      "source": "Finding: f-002",
-      "status": "open",
-      "id": "0i5A975"
-    },
-    {
-      "clientId": 1,
-      "lastAssessed": "2025-02-25T20:30:33.363Z",
-      "sourceFindings": [
-        {
-          "findingId": "f-003",
-          "title": "Inadequate audit logging",
-          "sourceType": "security_assessment",
-          "date": "2025-02-25T20:30:33.363Z"
-        }
-      ],
-      "businessImpact": {
-        "financial": "",
-        "operational": "",
-        "reputational": "",
-        "compliance": ""
-      },
-      "treatment": {
-        "approach": "mitigate",
-        "plan": "",
-        "status": "not_started",
-        "objectives": []
-      },
-      "name": "Inadequate audit logging",
-      "description": "Systems do not have proper audit event logging configured",
-      "impact": "high",
-      "likelihood": "medium",
-      "category": "Audit and Accountability",
-      "source": "Finding: f-003",
-      "status": "open",
-      "id": "sOZn75g"
     }
   ],
   "incidentTypes": [
@@ -2236,103 +2049,24 @@
       "title": "Network Director"
     }
   ],
-  "securityObjectives": [
+  "objectiveInitiatives": [
     {
-      "id": 1,
-      "name": "Implement Zero Trust Architecture",
-      "description": "Establish a comprehensive zero trust security model across all systems",
-      "progress": 45,
-      "status": "In Progress",
-      "priority": "High",
-      "dueDate": "2025-12-31",
-      "metrics": {
-        "successCriteria": [
-          "Identity verification for all access requests",
-          "Microsegmentation implemented",
-          "Continuous monitoring and logging in place"
-        ],
-        "currentMetrics": [
-          "Identity management system deployed",
-          "Network segmentation 45% complete"
-        ]
-      }
+      "id": "oi-001",
+      "objectiveId": "obj-001",
+      "initiativeId": "init-001",
+      "dateLinked": "2025-01-18T11:20:00Z"
     },
     {
-      "id": 2,
-      "name": "Security Awareness Training Program",
-      "description": "Develop and implement comprehensive security awareness training for all employees",
-      "progress": 75,
-      "status": "In Progress",
-      "priority": "Medium",
-      "dueDate": "2025-06-30",
-      "metrics": {
-        "successCriteria": [
-          "90% employee completion rate",
-          "Reduced phishing success rate",
-          "Monthly security updates distributed"
-        ],
-        "currentMetrics": [
-          "75% employees completed training",
-          "Phishing success rate reduced by 40%"
-        ]
-      }
+      "id": "oi-002",
+      "objectiveId": "obj-002",
+      "initiativeId": "init-002",
+      "dateLinked": "2025-01-25T15:30:00Z"
     },
     {
-      "id": 3,
-      "name": "Cloud Security Enhancement",
-      "description": "Strengthen security controls for cloud infrastructure and services",
-      "progress": 30,
-      "status": "Planning",
-      "priority": "High",
-      "dueDate": "2025-09-30",
-      "metrics": {
-        "successCriteria": [
-          "Cloud security baseline established",
-          "Automated security scanning implemented",
-          "Data encryption at rest and in transit"
-        ],
-        "currentMetrics": [
-          "Baseline documentation in progress",
-          "Initial security scan completed"
-        ]
-      }
-    }
-  ],
-  "priorityLevels": [
-    {
-      "id": 1,
-      "name": "Low"
-    },
-    {
-      "id": 2,
-      "name": "Medium"
-    },
-    {
-      "id": 3,
-      "name": "High"
-    },
-    {
-      "id": 4,
-      "name": "Critical"
-    }
-  ],
-  "assessmentPlans": [
-    {
-      "id": "ap-001",
-      "assessmentTitle": "Annual Security Assessment 2025",
-      "assessmentType": "Annual Assessment",
-      "startDate": "2025-01-01",
-      "endDate": "2025-03-31",
-      "assessmentTeam": "Security Team A\nExternal Auditor: SecureAudit Inc.",
-      "objectives": "Evaluate system security controls\nValidate compliance with security requirements\nIdentify potential vulnerabilities",
-      "methodology": "NIST SP 800-53A Rev 5\nAutomated scanning\nManual testing\nDocument review",
-      "scope": "All production systems\nNetwork infrastructure\nAccess controls\nSecurity policies",
-      "requirements": "NIST 800-53 Low baseline\nOrganizational security policies\nRegulatory requirements",
-      "status": "in-progress",
-      "clientId": 1,
-      "systemId": "sys-001",
-      "createdAt": "2025-01-01T00:00:00Z",
-      "updatedAt": "2025-02-19T10:00:00Z"
+      "id": "oi-003",
+      "objectiveId": "obj-003",
+      "initiativeId": "init-003",
+      "dateLinked": "2025-02-10T10:45:00Z"
     }
   ],
   "industries": [
@@ -2465,6 +2199,26 @@
       "name": "ZIP"
     }
   ],
+  "riskObjectives": [
+    {
+      "id": "ro-001",
+      "riskId": "risk-001",
+      "objectiveId": "obj-001",
+      "dateLinked": "2025-01-15T10:30:00Z"
+    },
+    {
+      "id": "ro-002",
+      "riskId": "risk-002",
+      "objectiveId": "obj-002",
+      "dateLinked": "2025-01-20T14:45:00Z"
+    },
+    {
+      "id": "ro-003",
+      "riskId": "risk-003",
+      "objectiveId": "obj-003",
+      "dateLinked": "2025-02-05T09:15:00Z"
+    }
+  ],
   "scanResults": [
     {
       "id": "scan-001",
@@ -2501,6 +2255,191 @@
       "assessmentPlanId": "ap-001",
       "createdAt": "2025-02-01T14:30:00Z",
       "updatedAt": "2025-02-01T14:30:00Z"
+    }
+  ],
+  "securityInitiatives": [
+    {
+      "id": "init-001",
+      "clientId": 1,
+      "name": "MFA Implementation Project",
+      "description": "Project to implement multi-factor authentication across all systems",
+      "phase": "Implementation",
+      "timeline": "Q2 2025",
+      "status": "In Progress",
+      "objectiveId": "obj-001",
+      "milestones": [
+        {
+          "id": "ms-001",
+          "name": "MFA Solution Selection",
+          "completed": true,
+          "dueDate": "2025-04-15T00:00:00Z"
+        },
+        {
+          "id": "ms-002",
+          "name": "Admin Account MFA Implementation",
+          "completed": true,
+          "dueDate": "2025-05-15T00:00:00Z"
+        },
+        {
+          "id": "ms-003",
+          "name": "User Account MFA Implementation",
+          "completed": false,
+          "dueDate": "2025-06-15T00:00:00Z"
+        }
+      ],
+      "resources": {
+        "team": [
+          "Security Team",
+          "IT Operations"
+        ],
+        "budget": "$50,000",
+        "tools": [
+          "Okta",
+          "Microsoft Authenticator"
+        ]
+      }
+    },
+    {
+      "id": "init-002",
+      "clientId": 1,
+      "name": "Vulnerability Management Implementation",
+      "description": "Establish vulnerability scanning and patch management processes",
+      "phase": "Design",
+      "timeline": "Q3 2025",
+      "status": "Planning",
+      "objectiveId": "obj-002",
+      "milestones": [
+        {
+          "id": "ms-004",
+          "name": "Vulnerability Scanner Selection",
+          "completed": true,
+          "dueDate": "2025-05-30T00:00:00Z"
+        },
+        {
+          "id": "ms-005",
+          "name": "Initial Vulnerability Assessment",
+          "completed": false,
+          "dueDate": "2025-07-15T00:00:00Z"
+        },
+        {
+          "id": "ms-006",
+          "name": "Patch Management Process Definition",
+          "completed": false,
+          "dueDate": "2025-08-01T00:00:00Z"
+        }
+      ],
+      "resources": {
+        "team": [
+          "Security Team",
+          "IT Operations"
+        ],
+        "budget": "$75,000",
+        "tools": [
+          "Tenable",
+          "Microsoft SCCM"
+        ]
+      }
+    },
+    {
+      "id": "init-003",
+      "clientId": 1,
+      "name": "Backup and Recovery Enhancement",
+      "description": "Improve backup procedures and implement disaster recovery testing",
+      "phase": "Implementation",
+      "timeline": "Q3 2025",
+      "status": "In Progress",
+      "objectiveId": "obj-003",
+      "milestones": [
+        {
+          "id": "ms-007",
+          "name": "Backup Solution Upgrade",
+          "completed": true,
+          "dueDate": "2025-05-01T00:00:00Z"
+        },
+        {
+          "id": "ms-008",
+          "name": "Automated Backup Implementation",
+          "completed": true,
+          "dueDate": "2025-06-01T00:00:00Z"
+        },
+        {
+          "id": "ms-009",
+          "name": "Recovery Testing Procedure Development",
+          "completed": false,
+          "dueDate": "2025-07-15T00:00:00Z"
+        }
+      ],
+      "resources": {
+        "team": [
+          "IT Operations",
+          "Disaster Recovery Team"
+        ],
+        "budget": "$60,000",
+        "tools": [
+          "Veeam",
+          "AWS S3"
+        ]
+      }
+    }
+  ],
+  "securityObjectives": [
+    {
+      "id": "obj-001",
+      "clientId": 1,
+      "name": "Implement Multi-Factor Authentication",
+      "description": "Implement MFA across all critical systems to enhance access security",
+      "priority": "High",
+      "status": "In Progress",
+      "progress": 60,
+      "dueDate": "2025-06-30T00:00:00Z",
+      "metrics": {
+        "successCriteria": [
+          "MFA enabled for all admin accounts",
+          "MFA enabled for all user accounts",
+          "MFA compliance monitoring implemented"
+        ],
+        "currentMetrics": [
+          "Admin accounts secured with MFA"
+        ]
+      }
+    },
+    {
+      "id": "obj-002",
+      "clientId": 1,
+      "name": "Vulnerability Management Program",
+      "description": "Establish a comprehensive vulnerability management program",
+      "priority": "High",
+      "status": "Planning",
+      "progress": 20,
+      "dueDate": "2025-08-15T00:00:00Z",
+      "metrics": {
+        "successCriteria": [
+          "Regular vulnerability scanning implemented",
+          "Patch management process established",
+          "Vulnerability remediation SLAs defined"
+        ],
+        "currentMetrics": []
+      }
+    },
+    {
+      "id": "obj-003",
+      "clientId": 1,
+      "name": "Data Backup and Recovery",
+      "description": "Improve data backup procedures and implement disaster recovery testing",
+      "priority": "Medium",
+      "status": "In Progress",
+      "progress": 40,
+      "dueDate": "2025-07-20T00:00:00Z",
+      "metrics": {
+        "successCriteria": [
+          "Automated daily backups implemented",
+          "Quarterly recovery testing established",
+          "Offsite backup storage configured"
+        ],
+        "currentMetrics": [
+          "Automated daily backups implemented"
+        ]
+      }
     }
   ],
   "artifactTypes": [
