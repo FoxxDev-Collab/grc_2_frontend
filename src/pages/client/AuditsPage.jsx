@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import {
@@ -14,7 +15,6 @@ import {
   DialogTitle,
   DialogContent,
   DialogActions,
-  TextField,
   FormControl,
   InputLabel,
   Select,
@@ -23,6 +23,10 @@ import {
   ListItem,
   Alert,
   CircularProgress,
+  DialogContentText,
+  Divider,
+  Switch,
+  FormControlLabel,
 } from '@mui/material';
 import {
   FilterList as FilterListIcon,
@@ -33,6 +37,8 @@ import {
   Visibility as VisibilityIcon,
   Edit as EditIcon,
   ArrowUpward as ArrowUpwardIcon,
+  Delete as DeleteIcon,
+  Block as BlockIcon,
 } from '@mui/icons-material';
 import { auditApi } from '../../services';
 
@@ -46,10 +52,13 @@ const AuditsPage = () => {
     sourceType: '',
     severity: '',
     status: '',
-    tags: []
+    tags: [],
+    includePromoted: false
   });
   const [filterDialogOpen, setFilterDialogOpen] = useState(false);
   const [findingDialogOpen, setFindingDialogOpen] = useState(false);
+  const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
+  const [naDialogOpen, setNaDialogOpen] = useState(false);
   const [selectedFinding, setSelectedFinding] = useState(null);
   const [sourceTypes, setSourceTypes] = useState([]);
   const [severityLevels, setSeverityLevels] = useState([]);
@@ -75,11 +84,16 @@ const AuditsPage = () => {
         auditApi.getCommonTags()
       ]);
 
-      setFindings(findingsData);
+      // Filter out promoted findings if not included in filters
+      const filteredFindings = filters.includePromoted 
+        ? findingsData 
+        : findingsData.filter(finding => !finding.promotedToRisk);
+
+      setFindings(filteredFindings);
       setMetrics(metricsData);
       setSourceTypes(sourceTypesData);
       setSeverityLevels(severityLevelsData);
-      setFindingStatuses(findingStatusesData);
+      setFindingStatuses([...findingStatusesData, 'not_applicable']);
       setCommonTags(commonTagsData);
       setError(null);
     } catch (err) {
@@ -119,6 +133,38 @@ const AuditsPage = () => {
     }
   };
 
+  const handleDeleteFinding = async () => {
+    if (!selectedFinding) return;
+    
+    try {
+      setLoading(true);
+      await auditApi.deleteFinding(selectedFinding.id, Number(clientId));
+      setDeleteDialogOpen(false);
+      setSelectedFinding(null);
+      await loadData();
+    } catch (err) {
+      setError(err.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleMarkNotApplicable = async () => {
+    if (!selectedFinding) return;
+    
+    try {
+      setLoading(true);
+      await auditApi.updateFindingStatus(selectedFinding.id, Number(clientId), 'not_applicable');
+      setNaDialogOpen(false);
+      setSelectedFinding(null);
+      await loadData();
+    } catch (err) {
+      setError(err.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   const getSourceTypeIcon = (sourceType) => {
     switch (sourceType) {
       case 'security_assessment':
@@ -145,6 +191,27 @@ const AuditsPage = () => {
       default:
         return 'default';
     }
+  };
+
+  const getStatusColor = (status) => {
+    switch (status) {
+      case 'open':
+        return 'error';
+      case 'in_progress':
+        return 'warning';
+      case 'closed':
+        return 'success';
+      case 'promoted_to_risk':
+        return 'info';
+      case 'not_applicable':
+        return 'default';
+      default:
+        return 'default';
+    }
+  };
+
+  const getStatusLabel = (status) => {
+    return status.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase());
   };
 
   if (loading && !findings.length) {
@@ -193,10 +260,10 @@ const AuditsPage = () => {
             <Grid item xs={12} sm={3}>
               <Paper sx={{ p: 2, textAlign: 'center' }}>
                 <Typography variant="body1">
-                  Critical: {metrics.bySeverity.critical}
+                  Critical/High: {metrics.bySeverity.critical + metrics.bySeverity.high}
                 </Typography>
                 <Typography variant="body1">
-                  High: {metrics.bySeverity.high}
+                  Medium/Low: {metrics.bySeverity.medium + metrics.bySeverity.low}
                 </Typography>
                 <Typography variant="body2" color="text.secondary">
                   By Severity
@@ -230,104 +297,149 @@ const AuditsPage = () => {
         )}
 
         {/* Findings List */}
-        <List>
-          {findings.map((finding) => (
-            <ListItem
-              key={finding.id}
-              sx={{
-                mb: 2,
-                border: 1,
-                borderColor: 'divider',
-                borderRadius: 1,
-                flexDirection: 'column',
-                alignItems: 'stretch',
-              }}
-            >
-              <Box sx={{ display: 'flex', alignItems: 'center', mb: 1 }}>
-                {getSourceTypeIcon(finding.sourceType)}
-                <Box sx={{ ml: 2, flexGrow: 1 }}>
-                  <Typography variant="h6">
-                    {finding.title}
-                  </Typography>
-                  <Typography variant="body2" color="text.secondary">
-                    {finding.sourceDetails} | Created: {new Date(finding.createdDate).toLocaleDateString()}
-                  </Typography>
-                </Box>
-                <Box sx={{ display: 'flex', gap: 1 }}>
-                  <Chip
-                    label={finding.severity}
-                    color={getSeverityColor(finding.severity)}
-                    size="small"
-                  />
-                  <Chip
-                    label={finding.status}
-                    variant="outlined"
-                    size="small"
-                  />
-                </Box>
-              </Box>
-
-              <Typography variant="body1" paragraph>
-                {finding.description}
-              </Typography>
-
-              {/* Only show tags section if there are tags */}
-              {finding.category && (
-                <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1, mb: 1 }}>
-                  <Chip
-                    key={finding.category}
-                    label={finding.category}
-                    size="small"
-                    variant="outlined"
-                  />
-                  {finding.nistControl && (
+        {findings.length === 0 ? (
+          <Alert severity="info" sx={{ mb: 3 }}>
+            No findings match the current filters.
+          </Alert>
+        ) : (
+          <List>
+            {findings.map((finding) => (
+              <ListItem
+                key={finding.id}
+                sx={{
+                  mb: 2,
+                  border: 1,
+                  borderColor: finding.promotedToRisk ? 'info.main' : 'divider',
+                  borderRadius: 1,
+                  flexDirection: 'column',
+                  alignItems: 'stretch',
+                  backgroundColor: finding.status === 'not_applicable' ? '#f5f5f5' : 'inherit',
+                }}
+              >
+                <Box sx={{ display: 'flex', alignItems: 'center', mb: 1 }}>
+                  {getSourceTypeIcon(finding.sourceType)}
+                  <Box sx={{ ml: 2, flexGrow: 1 }}>
+                    <Typography variant="h6">
+                      {finding.title}
+                      {finding.promotedToRisk && (
+                        <Chip
+                          label="Promoted to Risk"
+                          color="info"
+                          size="small"
+                          sx={{ ml: 1 }}
+                        />
+                      )}
+                      {finding.status === 'not_applicable' && (
+                        <Chip
+                          label="Not Applicable"
+                          color="default"
+                          size="small"
+                          sx={{ ml: 1 }}
+                        />
+                      )}
+                    </Typography>
+                    <Typography variant="body2" color="text.secondary">
+                      {finding.sourceDetails} | Created: {new Date(finding.createdDate).toLocaleDateString()}
+                    </Typography>
+                  </Box>
+                  <Box sx={{ display: 'flex', gap: 1 }}>
                     <Chip
-                      key={finding.nistControl}
-                      label={finding.nistControl}
+                      label={finding.severity}
+                      color={getSeverityColor(finding.severity)}
                       size="small"
-                      variant="outlined"
                     />
-                  )}
+                    <Chip
+                      label={getStatusLabel(finding.status)}
+                      color={getStatusColor(finding.status)}
+                      variant="outlined"
+                      size="small"
+                    />
+                  </Box>
                 </Box>
-              )}
 
-              <Box sx={{ display: 'flex', justifyContent: 'flex-end', gap: 1 }}>
-                <Tooltip title="View Details">
-                  <IconButton
-                    size="small"
-                    onClick={() => {
-                      setSelectedFinding(finding);
-                      setFindingDialogOpen(true);
-                    }}
-                  >
-                    <VisibilityIcon />
-                  </IconButton>
-                </Tooltip>
-                <Tooltip title="Edit Finding">
-                  <IconButton
-                    size="small"
-                    onClick={() => {
-                      setSelectedFinding(finding);
-                      setFindingDialogOpen(true);
-                    }}
-                  >
-                    <EditIcon />
-                  </IconButton>
-                </Tooltip>
-                {!finding.promotedToRisk && (
-                  <Tooltip title="Promote to Risk">
+                <Typography variant="body1" paragraph>
+                  {finding.description}
+                </Typography>
+
+                {/* Only show category if it exists */}
+                {finding.category && (
+                  <Box sx={{ mb: 1 }}>
+                    <Typography variant="body2" color="text.secondary">
+                      <strong>Category:</strong> {finding.category}
+                      {finding.nistControl && ` | NIST Control: ${finding.nistControl}`}
+                    </Typography>
+                  </Box>
+                )}
+
+                <Divider sx={{ my: 1 }} />
+
+                <Box sx={{ display: 'flex', justifyContent: 'flex-end', gap: 1 }}>
+                  <Tooltip title="View Details">
                     <IconButton
                       size="small"
-                      onClick={() => handlePromoteToRisk(finding)}
+                      onClick={() => {
+                        setSelectedFinding(finding);
+                        setFindingDialogOpen(true);
+                      }}
                     >
-                      <ArrowUpwardIcon />
+                      <VisibilityIcon />
                     </IconButton>
                   </Tooltip>
-                )}
-              </Box>
-            </ListItem>
-          ))}
-        </List>
+                  
+                  <Tooltip title="Edit Finding">
+                    <IconButton
+                      size="small"
+                      onClick={() => {
+                        setSelectedFinding(finding);
+                        setFindingDialogOpen(true);
+                      }}
+                    >
+                      <EditIcon />
+                    </IconButton>
+                  </Tooltip>
+                  
+                  {!finding.promotedToRisk && finding.status !== 'not_applicable' && (
+                    <Tooltip title="Promote to Risk">
+                      <IconButton
+                        size="small"
+                        onClick={() => handlePromoteToRisk(finding)}
+                      >
+                        <ArrowUpwardIcon />
+                      </IconButton>
+                    </Tooltip>
+                  )}
+                  
+                  {!finding.promotedToRisk && finding.status !== 'not_applicable' && (
+                    <Tooltip title="Mark as Not Applicable">
+                      <IconButton
+                        size="small"
+                        onClick={() => {
+                          setSelectedFinding(finding);
+                          setNaDialogOpen(true);
+                        }}
+                      >
+                        <BlockIcon />
+                      </IconButton>
+                    </Tooltip>
+                  )}
+                  
+                  <Tooltip title="Delete Finding">
+                    <IconButton
+                      size="small"
+                      color="error"
+                      onClick={() => {
+                        setSelectedFinding(finding);
+                        setDeleteDialogOpen(true);
+                      }}
+                    >
+                      <DeleteIcon />
+                    </IconButton>
+                  </Tooltip>
+                </Box>
+              </ListItem>
+            ))}
+          </List>
+        )}
 
         {/* Filter Dialog */}
         <Dialog
@@ -394,33 +506,33 @@ const AuditsPage = () => {
               </Grid>
 
               <Grid item xs={12}>
-                <FormControl fullWidth>
-                  <InputLabel>Tags</InputLabel>
-                  <Select
-                    multiple
-                    value={filters.tags}
-                    label="Tags"
-                    onChange={(e) => handleFilterChange('tags', e.target.value)}
-                    renderValue={(selected) => (
-                      <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
-                        {selected.map((value) => (
-                          <Chip key={value} label={value} size="small" />
-                        ))}
-                      </Box>
-                    )}
-                  >
-                    {commonTags.map((tag) => (
-                      <MenuItem key={tag} value={tag}>
-                        {tag}
-                      </MenuItem>
-                    ))}
-                  </Select>
-                </FormControl>
+                <FormControlLabel
+                  control={
+                    <Switch
+                      checked={filters.includePromoted}
+                      onChange={(e) => handleFilterChange('includePromoted', e.target.checked)}
+                    />
+                  }
+                  label="Include findings promoted to risks"
+                />
               </Grid>
             </Grid>
           </DialogContent>
           <DialogActions>
-            <Button onClick={() => setFilterDialogOpen(false)}>Cancel</Button>
+            <Button 
+              onClick={() => {
+                setFilters({
+                  sourceType: '',
+                  severity: '',
+                  status: '',
+                  tags: [],
+                  includePromoted: false
+                });
+                setFilterDialogOpen(false);
+              }}
+            >
+              Reset Filters
+            </Button>
             <Button
               variant="contained"
               onClick={() => {
@@ -447,65 +559,75 @@ const AuditsPage = () => {
             {selectedFinding && (
               <Grid container spacing={3} sx={{ mt: 1 }}>
                 <Grid item xs={12}>
-                  <TextField
-                    fullWidth
-                    label="Title"
-                    value={selectedFinding.title}
-                    InputProps={{ readOnly: true }}
-                  />
-                </Grid>
-                <Grid item xs={12}>
-                  <TextField
-                    fullWidth
-                    multiline
-                    rows={4}
-                    label="Description"
-                    value={selectedFinding.description}
-                    InputProps={{ readOnly: true }}
-                  />
-                </Grid>
-                <Grid item xs={12} sm={6}>
-                  <TextField
-                    fullWidth
-                    label="Source"
-                    value={selectedFinding.sourceType.replace('_', ' ').replace(/\b\w/g, l => l.toUpperCase())}
-                    InputProps={{ readOnly: true }}
-                  />
-                </Grid>
-                <Grid item xs={12} sm={6}>
-                  <TextField
-                    fullWidth
-                    label="Source Details"
-                    value={selectedFinding.sourceDetails}
-                    InputProps={{ readOnly: true }}
-                  />
-                </Grid>
-                {selectedFinding.recommendation && (
-                  <Grid item xs={12}>
-                    <TextField
-                      fullWidth
-                      multiline
-                      rows={3}
-                      label="Recommendation"
-                      value={selectedFinding.recommendation}
-                      InputProps={{ readOnly: true }}
+                  <Box sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
+                    <Typography variant="h6" sx={{ flexGrow: 1 }}>
+                      {selectedFinding.title}
+                    </Typography>
+                    <Chip
+                      label={selectedFinding.severity}
+                      color={getSeverityColor(selectedFinding.severity)}
+                      size="small"
+                      sx={{ mr: 1 }}
                     />
+                    <Chip
+                      label={getStatusLabel(selectedFinding.status)}
+                      color={getStatusColor(selectedFinding.status)}
+                      variant="outlined"
+                      size="small"
+                    />
+                  </Box>
+                </Grid>
+                
+                <Grid item xs={12}>
+                  <Typography variant="body1" paragraph>
+                    {selectedFinding.description}
+                  </Typography>
+                </Grid>
+                
+                <Grid item xs={12} sm={6}>
+                  <Typography variant="body2" color="text.secondary">
+                    <strong>Source:</strong> {selectedFinding.sourceType.replace('_', ' ').replace(/\b\w/g, l => l.toUpperCase())}
+                  </Typography>
+                </Grid>
+                
+                <Grid item xs={12} sm={6}>
+                  <Typography variant="body2" color="text.secondary">
+                    <strong>Created:</strong> {new Date(selectedFinding.createdDate).toLocaleDateString()}
+                  </Typography>
+                </Grid>
+                
+                {selectedFinding.category && (
+                  <Grid item xs={12} sm={6}>
+                    <Typography variant="body2" color="text.secondary">
+                      <strong>Category:</strong> {selectedFinding.category}
+                    </Typography>
                   </Grid>
                 )}
-                {selectedFinding.evidence?.length > 0 && (
+                
+                {selectedFinding.nistControl && (
+                  <Grid item xs={12} sm={6}>
+                    <Typography variant="body2" color="text.secondary">
+                      <strong>NIST Control:</strong> {selectedFinding.nistControl}
+                    </Typography>
+                  </Grid>
+                )}
+                
+                {selectedFinding.recommendation && (
                   <Grid item xs={12}>
                     <Typography variant="subtitle1" gutterBottom>
-                      Evidence
+                      Recommendation
                     </Typography>
-                    <List>
-                      {selectedFinding.evidence.map((evidence) => (
-                        <ListItem key={evidence.id}>
-                          <Typography variant="body2">
-                            {evidence.description}
-                          </Typography>
-                        </ListItem>
-                      ))}
-                    </List>
+                    <Typography variant="body1" paragraph>
+                      {selectedFinding.recommendation}
+                    </Typography>
+                  </Grid>
+                )}
+                
+                {selectedFinding.promotedToRisk && (
+                  <Grid item xs={12}>
+                    <Alert severity="info">
+                      This finding has been promoted to a risk with ID: {selectedFinding.riskId}
+                    </Alert>
                   </Grid>
                 )}
               </Grid>
@@ -519,6 +641,45 @@ const AuditsPage = () => {
               }}
             >
               Close
+            </Button>
+          </DialogActions>
+        </Dialog>
+
+        {/* Delete Confirmation Dialog */}
+        <Dialog
+          open={deleteDialogOpen}
+          onClose={() => setDeleteDialogOpen(false)}
+        >
+          <DialogTitle>Delete Finding</DialogTitle>
+          <DialogContent>
+            <DialogContentText>
+              Are you sure you want to delete this finding? This action cannot be undone.
+            </DialogContentText>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={() => setDeleteDialogOpen(false)}>Cancel</Button>
+            <Button onClick={handleDeleteFinding} color="error" variant="contained">
+              Delete
+            </Button>
+          </DialogActions>
+        </Dialog>
+
+        {/* Not Applicable Dialog */}
+        <Dialog
+          open={naDialogOpen}
+          onClose={() => setNaDialogOpen(false)}
+        >
+          <DialogTitle>Mark as Not Applicable</DialogTitle>
+          <DialogContent>
+            <DialogContentText>
+              Are you sure you want to mark this finding as Not Applicable? 
+              This indicates that the finding is not relevant to your environment.
+            </DialogContentText>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={() => setNaDialogOpen(false)}>Cancel</Button>
+            <Button onClick={handleMarkNotApplicable} color="primary" variant="contained">
+              Mark as Not Applicable
             </Button>
           </DialogActions>
         </Dialog>

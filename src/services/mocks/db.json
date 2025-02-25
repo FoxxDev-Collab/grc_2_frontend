@@ -166,7 +166,7 @@
       "role": "SENIOR_AO",
       "isActive": true,
       "lastLogin": "2024-02-19T12:00:00Z",
-      "lastActive": "2025-02-25T18:28:54.130Z",
+      "lastActive": "2024-02-19T12:00:00Z",
       "createdAt": "2024-01-01T00:00:00Z",
       "updatedAt": "2024-02-19T12:00:00Z",
       "profileImage": null,
@@ -983,8 +983,10 @@
           "severity": "high",
           "category": "System Security",
           "recommendation": "Install and configure antivirus software on all systems with automatic updates",
-          "status": "open",
-          "createdDate": "2025-02-01T08:00:00Z"
+          "status": "promoted_to_risk",
+          "createdDate": "2025-02-01T08:00:00Z",
+          "riskId": "vRexRRa",
+          "promotedToRisk": true
         },
         {
           "id": "f-002",
@@ -995,8 +997,10 @@
           "severity": "high",
           "category": "Data Protection",
           "recommendation": "Implement comprehensive backup strategy with regular testing",
-          "status": "in_progress",
-          "createdDate": "2025-02-01T08:00:00Z"
+          "status": "promoted_to_risk",
+          "createdDate": "2025-02-01T08:00:00Z",
+          "riskId": "0i5A975",
+          "promotedToRisk": true
         }
       ]
     },
@@ -1051,9 +1055,11 @@
           "severity": "high",
           "category": "Audit and Accountability",
           "recommendation": "Define and implement comprehensive audit logging",
-          "status": "completed",
+          "status": "promoted_to_risk",
           "createdDate": "2025-02-15T10:00:00Z",
-          "nistControl": "AU-2"
+          "nistControl": "AU-2",
+          "riskId": "sOZn75g",
+          "promotedToRisk": true
         },
         {
           "id": "f-004",
@@ -1489,60 +1495,6 @@
       "name": "pending"
     }
   ],
-  "controls": [
-    {
-      "id": "AC-1",
-      "title": "Access Control Policy and Procedures",
-      "status": "Compliant",
-      "evidence": "Access Control Policy v2.1 implemented and reviewed",
-      "notes": "Annual review completed",
-      "lastUpdated": "2025-02-10T09:00:00Z",
-      "clientId": 1,
-      "systemId": "sys-001",
-      "assessmentPlanId": "ap-001",
-      "createdAt": "2025-02-10T09:00:00Z",
-      "updatedAt": "2025-02-10T09:00:00Z"
-    },
-    {
-      "id": "AC-2",
-      "title": "Account Management",
-      "status": "Non-Compliant",
-      "evidence": "Automated account review process not implemented",
-      "notes": "Implementation in progress",
-      "lastUpdated": "2025-02-11T15:30:00Z",
-      "clientId": 1,
-      "systemId": "sys-001",
-      "assessmentPlanId": "ap-001",
-      "createdAt": "2025-02-11T15:30:00Z",
-      "updatedAt": "2025-02-11T15:30:00Z"
-    },
-    {
-      "id": "AC-3",
-      "title": "Access Enforcement",
-      "status": "Compliant",
-      "evidence": "Role-based access control implemented",
-      "notes": "Verified during testing",
-      "lastUpdated": "2025-02-12T11:20:00Z",
-      "clientId": 1,
-      "systemId": "sys-001",
-      "assessmentPlanId": "ap-001",
-      "createdAt": "2025-02-12T11:20:00Z",
-      "updatedAt": "2025-02-12T11:20:00Z"
-    },
-    {
-      "id": "AC-4",
-      "title": "Information Flow Enforcement",
-      "status": "Not-Applicable",
-      "evidence": "System does not process classified information",
-      "notes": "Approved deviation",
-      "lastUpdated": "2025-02-13T14:15:00Z",
-      "clientId": 1,
-      "systemId": "sys-001",
-      "assessmentPlanId": "ap-001",
-      "createdAt": "2025-02-13T14:15:00Z",
-      "updatedAt": "2025-02-13T14:15:00Z"
-    }
-  ],
   "assessmentDocuments": [
     {
       "id": "doc-001",
@@ -1624,6 +1576,272 @@
       "assessmentPlanId": "ap-001",
       "createdAt": "2024-06-30T00:00:00Z",
       "updatedAt": "2024-06-30T00:00:00Z"
+    }
+  ],
+  "assessmentFindings": [
+    {
+      "id": "mapping-001",
+      "assessmentId": "asmt-001",
+      "findingId": "f-001",
+      "status": "promoted_to_risk",
+      "riskId": "risk-001",
+      "promotedToRisk": true,
+      "datePromoted": "2024-12-15T10:30:00Z"
+    },
+    {
+      "id": "mapping-002",
+      "assessmentId": "asmt-001",
+      "findingId": "f-002",
+      "status": "promoted_to_risk",
+      "riskId": "risk-002",
+      "promotedToRisk": true,
+      "datePromoted": "2024-12-16T14:45:00Z"
+    },
+    {
+      "id": "mapping-003",
+      "assessmentId": "asmt-002",
+      "findingId": "f-003",
+      "status": "promoted_to_risk",
+      "riskId": "risk-003",
+      "promotedToRisk": true,
+      "datePromoted": "2024-12-18T09:15:00Z"
+    }
+  ],
+  "riskObjectives": [
+    {
+      "id": "ro-001",
+      "riskId": "risk-001",
+      "objectiveId": "obj-001",
+      "dateLinked": "2024-12-20T11:30:00Z"
+    },
+    {
+      "id": "ro-002",
+      "riskId": "risk-002",
+      "objectiveId": "obj-002",
+      "dateLinked": "2024-12-21T13:45:00Z"
+    },
+    {
+      "id": "ro-003",
+      "riskId": "risk-003",
+      "objectiveId": "obj-003",
+      "dateLinked": "2024-12-22T10:15:00Z"
+    }
+  ],
+  "objectiveInitiatives": [
+    {
+      "id": "oi-001",
+      "objectiveId": "obj-001",
+      "initiativeId": "init-001",
+      "dateLinked": "2024-12-25T14:30:00Z"
+    },
+    {
+      "id": "oi-002",
+      "objectiveId": "obj-002",
+      "initiativeId": "init-002",
+      "dateLinked": "2024-12-26T16:45:00Z"
+    },
+    {
+      "id": "oi-003",
+      "objectiveId": "obj-003",
+      "initiativeId": "init-003",
+      "dateLinked": "2024-12-27T11:15:00Z"
+    }
+  ],
+  "risks": [
+    {
+      "id": "risk-001",
+      "clientId": 1,
+      "name": "Unauthorized Access to Sensitive Data",
+      "description": "There is a risk of unauthorized access to sensitive customer data due to weak access controls.",
+      "impact": "high",
+      "likelihood": "medium",
+      "category": "Access Control",
+      "status": "open",
+      "lastAssessed": "2024-12-15T10:30:00Z",
+      "sourceFindings": [
+        {
+          "findingId": "f-001",
+          "title": "Weak Password Policy",
+          "sourceType": "security_assessment",
+          "date": "2024-12-15T10:30:00Z"
+        }
+      ],
+      "businessImpact": {
+        "financial": "High potential for fines and legal costs",
+        "operational": "Moderate disruption to operations",
+        "reputational": "Severe damage to customer trust",
+        "compliance": "Violation of data protection regulations"
+      },
+      "treatment": {
+        "approach": "mitigate",
+        "plan": "Implement stronger password policies and multi-factor authentication",
+        "status": "in_progress",
+        "objectives": [
+          "obj-001"
+        ]
+      }
+    },
+    {
+      "id": "risk-002",
+      "clientId": 1,
+      "name": "Outdated Software Vulnerabilities",
+      "description": "Critical systems are running outdated software with known security vulnerabilities.",
+      "impact": "high",
+      "likelihood": "high",
+      "category": "Vulnerability Management",
+      "status": "open",
+      "lastAssessed": "2024-12-16T14:45:00Z",
+      "sourceFindings": [
+        {
+          "findingId": "f-002",
+          "title": "Outdated Operating Systems",
+          "sourceType": "security_assessment",
+          "date": "2024-12-16T14:45:00Z"
+        }
+      ],
+      "businessImpact": {
+        "financial": "Potential for significant recovery costs",
+        "operational": "High risk of service disruption",
+        "reputational": "Moderate impact on reputation",
+        "compliance": "Potential compliance issues"
+      },
+      "treatment": {
+        "approach": "mitigate",
+        "plan": "Implement a regular patching schedule and software upgrade policy",
+        "status": "not_started",
+        "objectives": [
+          "obj-002"
+        ]
+      }
+    },
+    {
+      "id": "risk-003",
+      "clientId": 1,
+      "name": "Insufficient Backup Procedures",
+      "description": "Current backup procedures do not adequately protect against data loss in case of a disaster.",
+      "impact": "medium",
+      "likelihood": "medium",
+      "category": "Business Continuity",
+      "status": "open",
+      "lastAssessed": "2024-12-18T09:15:00Z",
+      "sourceFindings": [
+        {
+          "findingId": "f-003",
+          "title": "Inadequate Backup Testing",
+          "sourceType": "security_assessment",
+          "date": "2024-12-18T09:15:00Z"
+        }
+      ],
+      "businessImpact": {
+        "financial": "Moderate recovery costs",
+        "operational": "Severe operational disruption possible",
+        "reputational": "Minor reputational impact",
+        "compliance": "Potential regulatory issues"
+      },
+      "treatment": {
+        "approach": "mitigate",
+        "plan": "Implement automated daily backups with regular testing",
+        "status": "in_progress",
+        "objectives": [
+          "obj-003"
+        ]
+      }
+    },
+    {
+      "clientId": 1,
+      "lastAssessed": "2025-02-25T20:30:29.923Z",
+      "sourceFindings": [
+        {
+          "findingId": "f-001",
+          "title": "Missing or outdated antivirus protection",
+          "sourceType": "security_assessment",
+          "date": "2025-02-25T20:30:29.923Z"
+        }
+      ],
+      "businessImpact": {
+        "financial": "",
+        "operational": "",
+        "reputational": "",
+        "compliance": ""
+      },
+      "treatment": {
+        "approach": "mitigate",
+        "plan": "",
+        "status": "not_started",
+        "objectives": []
+      },
+      "name": "Missing or outdated antivirus protection",
+      "description": "Systems lack proper antivirus protection or updates are not maintained",
+      "impact": "high",
+      "likelihood": "medium",
+      "category": "System Security",
+      "source": "Finding: f-001",
+      "status": "open",
+      "id": "vRexRRa"
+    },
+    {
+      "clientId": 1,
+      "lastAssessed": "2025-02-25T20:30:32.378Z",
+      "sourceFindings": [
+        {
+          "findingId": "f-002",
+          "title": "Insufficient backup procedures",
+          "sourceType": "security_assessment",
+          "date": "2025-02-25T20:30:32.378Z"
+        }
+      ],
+      "businessImpact": {
+        "financial": "",
+        "operational": "",
+        "reputational": "",
+        "compliance": ""
+      },
+      "treatment": {
+        "approach": "mitigate",
+        "plan": "",
+        "status": "not_started",
+        "objectives": []
+      },
+      "name": "Insufficient backup procedures",
+      "description": "Backup processes are not adequate or tested",
+      "impact": "high",
+      "likelihood": "medium",
+      "category": "Data Protection",
+      "source": "Finding: f-002",
+      "status": "open",
+      "id": "0i5A975"
+    },
+    {
+      "clientId": 1,
+      "lastAssessed": "2025-02-25T20:30:33.363Z",
+      "sourceFindings": [
+        {
+          "findingId": "f-003",
+          "title": "Inadequate audit logging",
+          "sourceType": "security_assessment",
+          "date": "2025-02-25T20:30:33.363Z"
+        }
+      ],
+      "businessImpact": {
+        "financial": "",
+        "operational": "",
+        "reputational": "",
+        "compliance": ""
+      },
+      "treatment": {
+        "approach": "mitigate",
+        "plan": "",
+        "status": "not_started",
+        "objectives": []
+      },
+      "name": "Inadequate audit logging",
+      "description": "Systems do not have proper audit event logging configured",
+      "impact": "high",
+      "likelihood": "medium",
+      "category": "Audit and Accountability",
+      "source": "Finding: f-003",
+      "status": "open",
+      "id": "sOZn75g"
     }
   ],
   "incidentTypes": [
@@ -2571,6 +2789,60 @@
     {
       "id": "status-4",
       "name": "DECOMMISSIONED"
+    }
+  ],
+  "controls": [
+    {
+      "id": "AC-1",
+      "title": "Access Control Policy and Procedures",
+      "status": "Compliant",
+      "evidence": "Access Control Policy v2.1 implemented and reviewed",
+      "notes": "Annual review completed",
+      "lastUpdated": "2025-02-10T09:00:00Z",
+      "clientId": 1,
+      "systemId": "sys-001",
+      "assessmentPlanId": "ap-001",
+      "createdAt": "2025-02-10T09:00:00Z",
+      "updatedAt": "2025-02-10T09:00:00Z"
+    },
+    {
+      "id": "AC-2",
+      "title": "Account Management",
+      "status": "Non-Compliant",
+      "evidence": "Automated account review process not implemented",
+      "notes": "Implementation in progress",
+      "lastUpdated": "2025-02-11T15:30:00Z",
+      "clientId": 1,
+      "systemId": "sys-001",
+      "assessmentPlanId": "ap-001",
+      "createdAt": "2025-02-11T15:30:00Z",
+      "updatedAt": "2025-02-11T15:30:00Z"
+    },
+    {
+      "id": "AC-3",
+      "title": "Access Enforcement",
+      "status": "Compliant",
+      "evidence": "Role-based access control implemented",
+      "notes": "Verified during testing",
+      "lastUpdated": "2025-02-12T11:20:00Z",
+      "clientId": 1,
+      "systemId": "sys-001",
+      "assessmentPlanId": "ap-001",
+      "createdAt": "2025-02-12T11:20:00Z",
+      "updatedAt": "2025-02-12T11:20:00Z"
+    },
+    {
+      "id": "AC-4",
+      "title": "Information Flow Enforcement",
+      "status": "Not-Applicable",
+      "evidence": "System does not process classified information",
+      "notes": "Approved deviation",
+      "lastUpdated": "2025-02-13T14:15:00Z",
+      "clientId": 1,
+      "systemId": "sys-001",
+      "assessmentPlanId": "ap-001",
+      "createdAt": "2025-02-13T14:15:00Z",
+      "updatedAt": "2025-02-13T14:15:00Z"
     }
   ],
   "systemStatus": [

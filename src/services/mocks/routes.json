@@ -34,6 +34,14 @@
     "target": "/assessmentHistory/:id",
     "method": "PATCH"
   },
+  "/findings/:id/status": {
+    "target": "/assessmentHistory/:id",
+    "method": "PATCH"
+  },
+  "/findings/:id/delete": {
+    "target": "/assessmentHistory/:id",
+    "method": "DELETE"
+  },
 
   "/incidents": "/incidents",
   "/incidents/:id": "/incidents/:id",
@@ -113,5 +121,20 @@
   "/security-objectives": "/securityObjectives",
   "/security-objectives/:id": "/securityObjectives/:id",
   "/security-objectives/statuses": "/statuses",
-  "/security-objectives/priority-levels": "/priorityLevels"
+  "/security-objectives/priority-levels": "/priorityLevels",
+
+  "/risks": "/findings_to_risk/risks",
+  "/risks?clientId=:clientId": "/findings_to_risk/risks?clientId=:clientId",
+  "/risks/:id": "/findings_to_risk/risks/:id",
+  "/risks/:id/treatment": {
+    "target": "/findings_to_risk/risks/:id",
+    "method": "PATCH"
+  },
+  "/risks/:id/findings": "/findings_to_risk/assessmentFindings?riskId=:id",
+  "/risks/stats/:clientId": "/findings_to_risk/risks?clientId=:clientId",
+  "/risks/framework/:clientId": "/findings_to_risk/risks?clientId=:clientId",
+  
+  "/findings_to_risk/assessmentFindings": "/findings_to_risk/assessmentFindings",
+  "/findings_to_risk/riskObjectives": "/findings_to_risk/riskObjectives",
+  "/findings_to_risk/objectiveInitiatives": "/findings_to_risk/objectiveInitiatives"
 }

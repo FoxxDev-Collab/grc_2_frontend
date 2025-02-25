@@ -4,7 +4,6 @@ export { default as auditApi } from './client/auditApi';
 export { default as clientApi } from './client/clientApi';
 export { default as clientUserApi } from './client/clientUserApi';
 export { default as incidentApi } from './client/incidentApi';
-export { default as initialAssessmentApi } from './client/initialAssessmentApi';
 export { default as reportGenerationApi } from './client/reportGenerationApi';
 export { default as reportingApi } from './client/reportingApi';
 export { default as riskAssessmentApi } from './client/riskAssessmentApi';
@@ -20,6 +19,7 @@ export { systemApi, SecurityLevel, InformationLevel, SystemCategory } from './sy
 export { default as systemCategorizationApi } from './system/systemCategorizationApi';
 export { default as systemComponentsApi } from './system/systemComponentsApi';
 export { default as systemControlsApi } from './system/systemControlsApi';
+export { default as initialAssessmentApi } from './system/initialAssessmentApi';
 
 // GRC Application APIs
 export { default as grcUserApi } from './grc_application/grcUserApi';
