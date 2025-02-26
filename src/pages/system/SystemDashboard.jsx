@@ -11,7 +11,8 @@ import {
   LinearProgress,
   Alert,
 } from '@mui/material';
-import systemApi, { SecurityLevel } from '../../services';
+import { SecurityLevel } from '../../services';
+import { systemApi } from '../../services';
 
 const SystemDashboard = () => {
   const { clientId, systemId } = useParams();

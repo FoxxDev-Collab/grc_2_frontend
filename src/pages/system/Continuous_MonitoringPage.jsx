@@ -39,7 +39,7 @@ import {
   Warning as WarningIcon,
   Info as InfoIcon,
 } from '@mui/icons-material';
-import systemApi from '../../services';
+import { systemApi } from '../../services';
 
 const TabPanel = (props) => {
   const { children, value, index, ...other } = props;

@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
@@ -10,10 +11,12 @@ import {
   Alert,
   CircularProgress,
 } from '@mui/material';
-import { grcUserApi } from '../../services';
+import { useAuth } from '../../services/hooks/useAuth';
 
 const LoginPage = () => {
   const navigate = useNavigate();
+  const { login, loading: authLoading, error: authError } = useAuth();
+  
   const [formData, setFormData] = useState({
     email: '',
     password: '',
@@ -36,11 +39,7 @@ const LoginPage = () => {
       setLoading(true);
       setError('');
       
-      const result = await grcUserApi.login(formData);
-      // Store user info and token in localStorage
-      localStorage.setItem('user', JSON.stringify(result.user));
-      localStorage.setItem('token', result.token);
-      
+      await login(formData);
       navigate('/system/dashboard');
     } catch (err) {
       setError(err.message || 'An error occurred during login');
@@ -49,6 +48,11 @@ const LoginPage = () => {
       setLoading(false);
     }
   };
+
+  // Use either local error state or auth error from hook
+  const displayError = error || authError;
+  // Use either local loading state or auth loading from hook
+  const isLoading = loading || authLoading;
 
   return (
     <Container component="main" maxWidth="xs">
@@ -64,9 +68,9 @@ const LoginPage = () => {
           <Typography component="h1" variant="h5" align="center" gutterBottom>
             GRC System Login
           </Typography>
-          {error && (
+          {displayError && (
             <Alert severity="error" sx={{ mb: 2 }}>
-              {error}
+              {displayError}
             </Alert>
           )}
           <Box component="form" onSubmit={handleSubmit} sx={{ mt: 1 }}>
@@ -81,7 +85,7 @@ const LoginPage = () => {
               autoFocus
               value={formData.email}
               onChange={handleChange}
-              disabled={loading}
+              disabled={isLoading}
             />
             <TextField
               margin="normal"
@@ -94,16 +98,16 @@ const LoginPage = () => {
               autoComplete="current-password"
               value={formData.password}
               onChange={handleChange}
-              disabled={loading}
+              disabled={isLoading}
             />
             <Button
               type="submit"
               fullWidth
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
-              disabled={loading}
+              disabled={isLoading}
             >
-              {loading ? <CircularProgress size={24} /> : 'Sign In'}
+              {isLoading ? <CircularProgress size={24} /> : 'Sign In'}
             </Button>
             <Typography variant="body2" color="textSecondary" align="center">
               Demo credentials: senior.ao@example.com / password123

@@ -22,13 +22,28 @@ import { incidentApi } from '../../services';
 import IncidentList from '../../components/incidents/IncidentList';
 import IncidentDetail from '../../components/incidents/IncidentDetail';
 
+// Default stats to use when data is not available
+const DEFAULT_STATS = {
+  total: 0,
+  active: 0,
+  resolved: 0,
+  avgResolutionTime: 0,
+  bySeverity: {
+    critical: 0,
+    high: 0,
+    medium: 0,
+    low: 0
+  },
+  byType: {}
+};
+
 const IncidentsPage = () => {
   const { clientId } = useParams();
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
   const [data, setData] = useState({
     incidents: [],
-    stats: null,
+    stats: DEFAULT_STATS,
     types: [],
     severities: [],
     statuses: [],
@@ -66,15 +81,15 @@ const IncidentsPage = () => {
         ]);
 
         setData({
-          incidents,
-          stats,
-          types,
-          severities,
-          statuses,
-          priorities,
-          actionTypes,
-          teams,
-          systemTypes,
+          incidents: incidents || [],
+          stats: stats || DEFAULT_STATS,
+          types: types || [],
+          severities: severities || [],
+          statuses: statuses || [],
+          priorities: priorities || [],
+          actionTypes: actionTypes || [],
+          teams: teams || [],
+          systemTypes: systemTypes || [],
         });
         setError('');
       } catch (err) {
@@ -130,7 +145,7 @@ const IncidentsPage = () => {
           if (inc.id === incidentId) {
             return {
               ...inc,
-              actions: [...inc.actions, result]
+              actions: [...(inc.actions || []), result]
             };
           }
           return inc;
@@ -139,7 +154,7 @@ const IncidentsPage = () => {
       if (selectedIncident?.id === incidentId) {
         setSelectedIncident(prev => ({
           ...prev,
-          actions: [...prev.actions, result]
+          actions: [...(prev.actions || []), result]
         }));
       }
       setError('');
@@ -157,7 +172,8 @@ const IncidentsPage = () => {
     );
   }
 
-  const { stats } = data;
+  // Ensure stats is never null
+  const stats = data.stats || DEFAULT_STATS;
 
   return (
     <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
@@ -225,18 +241,18 @@ const IncidentsPage = () => {
                 <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
                   <TrendingDownIcon color="error" />
                   <Typography variant="h4">
-                    {stats.bySeverity.critical + stats.bySeverity.high}
+                    {(stats.bySeverity?.critical || 0) + (stats.bySeverity?.high || 0)}
                   </Typography>
                 </Box>
                 <Stack direction="row" spacing={1}>
                   <Chip
                     size="small"
-                    label={`${stats.bySeverity.critical} Critical`}
+                    label={`${stats.bySeverity?.critical || 0} Critical`}
                     color="error"
                   />
                   <Chip
                     size="small"
-                    label={`${stats.bySeverity.high} High`}
+                    label={`${stats.bySeverity?.high || 0} High`}
                     color="warning"
                   />
                 </Stack>
@@ -259,7 +275,7 @@ const IncidentsPage = () => {
                   </Typography>
                 </Box>
                 <Typography variant="body2" color="text.secondary">
-                  {Math.round((stats.resolved / stats.total) * 100)}% resolution rate
+                  {stats.total ? Math.round((stats.resolved / stats.total) * 100) : 0}% resolution rate
                 </Typography>
               </Stack>
             </CardContent>
@@ -271,15 +287,15 @@ const IncidentsPage = () => {
         {/* Incident List */}
         <Grid item xs={12} md={selectedIncident ? 6 : 12}>
           <IncidentList
-            incidents={data.incidents}
+            incidents={data.incidents || []}
             onAddIncident={handleAddIncident}
             onUpdateIncident={handleUpdateIncident}
             onViewIncident={setSelectedIncident}
-            incidentTypes={data.types}
-            incidentSeverities={data.severities}
-            incidentPriorities={data.priorities}
-            teams={data.teams}
-            systemTypes={data.systemTypes}
+            incidentTypes={data.types || []}
+            incidentSeverities={data.severities || []}
+            incidentPriorities={data.priorities || []}
+            teams={data.teams || []}
+            systemTypes={data.systemTypes || []}
           />
         </Grid>
 
@@ -289,8 +305,8 @@ const IncidentsPage = () => {
             <IncidentDetail
               incident={selectedIncident}
               onAddAction={handleAddAction}
-              actionTypes={data.actionTypes}
-              teams={data.teams}
+              actionTypes={data.actionTypes || []}
+              teams={data.teams || []}
             />
           </Grid>
         )}

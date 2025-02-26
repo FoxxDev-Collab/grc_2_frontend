@@ -24,7 +24,7 @@ import {
   PackagePreparationForm,
   AuthorizationDecisionForm,
 } from '../../components/system_ato/authorization';
-import authorizationApi from '../../services';
+import { authorizationApi } from '../../services';
 
 const ATO_AuthorizationPage = () => {
   const { clientId, systemId } = useParams();

@@ -1,0 +1,21 @@
+{
+  "families": [
+    { "id": "AC", "name": "Access Control" },
+    { "id": "AT", "name": "Awareness and Training" },
+    { "id": "AU", "name": "Audit and Accountability" },
+    { "id": "CA", "name": "Security Assessment and Authorization" },
+    { "id": "CM", "name": "Configuration Management" },
+    { "id": "CP", "name": "Contingency Planning" },
+    { "id": "IA", "name": "Identification and Authentication" },
+    { "id": "IR", "name": "Incident Response" },
+    { "id": "MA", "name": "Maintenance" },
+    { "id": "MP", "name": "Media Protection" },
+    { "id": "PE", "name": "Physical and Environmental Protection" },
+    { "id": "PL", "name": "Planning" },
+    { "id": "PS", "name": "Personnel Security" },
+    { "id": "RA", "name": "Risk Assessment" },
+    { "id": "SA", "name": "System and Services Acquisition" },
+    { "id": "SC", "name": "System and Communications Protection" },
+    { "id": "SI", "name": "System and Information Integrity" }
+  ]
+}

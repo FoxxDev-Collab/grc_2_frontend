@@ -1,4 +1,4 @@
-import { validateRequired, ApiError } from '../apiHelpers';
+import { validateRequired, ApiError } from '../../services/apiHelpers';
 
 const API_URL = 'http://localhost:3001';
 

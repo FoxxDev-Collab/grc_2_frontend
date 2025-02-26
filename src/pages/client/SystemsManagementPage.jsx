@@ -31,7 +31,7 @@ import {
   Delete as DeleteIcon,
   Security as SecurityIcon,
 } from '@mui/icons-material';
-import systemApi, { SecurityLevel, InformationLevel, SystemCategory } from '../../services';
+import { systemApi, SecurityLevel, InformationLevel, SystemCategory } from '../../services';
 
 const SYSTEM_TYPES = [
   'Major Application',

@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
-import { validateRequired, checkExists } from '../apiHelpers';
-import riskAssessmentApi from './riskAssessmentApi';
+import { validateRequired, checkExists } from '../../apiHelpers';
+import riskAssessmentApi from '../../api/client/RiskAssessmentApi';
 
 const API_URL = 'http://localhost:3001';
 

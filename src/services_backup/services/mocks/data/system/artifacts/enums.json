@@ -1,0 +1,44 @@
+{
+  "artifactTypes": [
+    {
+      "id": "type-1",
+      "name": "Technical Documentation"
+    },
+    {
+      "id": "type-2",
+      "name": "Policy Documentation"
+    },
+    {
+      "id": "type-3",
+      "name": "Security Assessment"
+    },
+    {
+      "id": "type-4",
+      "name": "Implementation Evidence"
+    },
+    {
+      "id": "type-5",
+      "name": "Training Records"
+    },
+    {
+      "id": "type-6",
+      "name": "Audit Reports"
+    },
+    {
+      "id": "type-7",
+      "name": "Configuration Files"
+    },
+    {
+      "id": "type-8",
+      "name": "System Logs"
+    },
+    {
+      "id": "type-9",
+      "name": "Incident Reports"
+    },
+    {
+      "id": "type-10",
+      "name": "Other"
+    }
+  ]
+}

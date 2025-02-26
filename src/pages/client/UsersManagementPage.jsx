@@ -53,7 +53,7 @@ const UsersManagementPage = () => {
   };
 
   // Client roles (excluding SYSTEM_ADMIN)
-  const clientRoles = roles.filter(role => role !== 'SYSTEM_ADMIN');
+  const clientRoles = roles.filter(role => role.id !== 'SYSTEM_ADMIN');
 
   useEffect(() => {
     loadUsers();
@@ -299,7 +299,7 @@ const UsersManagementPage = () => {
               >
                 <MenuItem value="">Select Role</MenuItem>
                 {clientRoles.map(role => (
-                  <MenuItem key={role} value={role}>{role}</MenuItem>
+                  <MenuItem key={role.id} value={role.id}>{role.name}</MenuItem>
                 ))}
               </TextField>
             </Grid>

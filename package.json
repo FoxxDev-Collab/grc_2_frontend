@@ -9,8 +9,10 @@
     "lint": "eslint .",
     "preview": "vite preview",
     "generate-db": "node src/services/mocks/generateDb.js",
-    "mock-server": "json-server --watch src/services/mocks/db.json --port 3001",
-    "mock": "npm run generate-db && npm run mock-server"
+    "mock-server-legacy": "json-server --watch src/services/mocks/db.json --port 3001",
+    "mock-legacy": "npm run generate-db && npm run mock-server-legacy",
+    "mock-server": "node start-mock-server.js",
+    "mock": "npm run mock-server"
   },
   "dependencies": {
     "@date-io/dayjs": "^3.2.0",
@@ -21,7 +23,9 @@
     "@mui/material": "^6.4.5",
     "@mui/x-data-grid": "^7.27.0",
     "@mui/x-date-pickers": "^7.27.0",
+    "cors": "^2.8.5",
     "dayjs": "^1.11.13",
+    "express": "^4.18.2",
     "jspdf": "^2.5.2",
     "jspdf-autotable": "^3.8.4",
     "react": "^19.0.0",
@@ -41,6 +45,7 @@
     "globals": "^15.14.0",
     "json-server": "^0.17.4",
     "sonarqube-scanner": "^4.2.7",
-    "vite": "^6.1.0"
+    "vite": "^6.1.0",
+    "vite-node": "^1.3.1"
   }
 }

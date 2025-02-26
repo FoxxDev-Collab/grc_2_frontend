@@ -37,15 +37,13 @@ import ControlsBaselinePage from '../pages/system/ControlsBaselinePage';
 import ControlsDetailsPage from '../pages/system/ControlsDetailsPage';
 import ControlsImplementationPage from '../pages/system/ControlsImplementationPage';
 
-const isAuthenticated = () => {
-  const token = localStorage.getItem('token');
-  const user = localStorage.getItem('user');
-  return token && user;
-};
+
+// Import auth API
+import authApi from '../services/api/grc/AuthApi';
 
 // Protected Route Wrapper
 const ProtectedRoute = ({ children }) => {
-  if (!isAuthenticated()) {
+  if (!authApi.isAuthenticated()) {
     return <Navigate to="/login" replace />;
   }
   return children;
