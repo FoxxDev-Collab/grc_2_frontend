@@ -611,6 +611,58 @@ createEntityEndpoints('userStatus', '/userStatus'); // Add endpoint for user sta
 // Add assessments endpoints
 const assessmentsRouter = express.Router();
 
+//GET all departments
+assessmentsRouter.get('/departments/:id', async (req, res) => {
+  try {
+    console.log('Retrieving all departments');
+    const repository = getRepository('departments');
+    const data = await repository.findAll(req.query);
+    res.json(data);
+  } catch (error) {
+    console.error('Error retrieving all departments:', error);
+    res.status(error.status || 500).json({ message: error.message });
+  }
+});
+//Post new department
+assessmentsRouter.post('/departments', async (req, res) => {
+  try {
+    console.log('Creating new department');
+    const repository = getRepository('departments');
+    const data = await repository.create(req.body);
+    console.log(`Created new department with ID: ${data.id}`);
+    res.status(201).json(data);
+  } catch (error) {
+    console.error('Error creating new department:', error);
+    res.status(error.status || 500).json({ message: error.message });
+  }
+});
+//Patch update department
+assessmentsRouter.patch('/departments/:id', async (req, res) => {
+  try {
+    console.log(`Updating department with ID: ${req.params.id}`);
+    const repository = getRepository('departments');
+    const data = await repository.partialUpdate(req.params.id, req.body);
+    console.log(`Updated department with ID: ${data.id}`);
+    res.json(data);
+  } catch (error) {
+    console.error(`Error updating department with ID ${req.params.id}:`, error);
+    res.status(error.status || 500).json({ message: error.message });
+  }
+});
+//Delete department
+assessmentsRouter.delete('/:id', async (req, res) => {
+  try {
+    console.log(`Deleting department with ID: ${req.params.id}`);
+    const repository = getRepository('departments');
+    await repository.delete(req.params.id);
+    console.log(`Deleted department with ID: ${req.params.id}`);
+    res.json({ success: true });
+  } catch (error) {
+    console.error(`Error deleting department with ID ${req.params.id}:`, error);
+    res.status(error.status || 500).json({ message: error.message });
+  }
+});
+
 // GET all assessments
 assessmentsRouter.get('/', async (req, res) => {
   try {

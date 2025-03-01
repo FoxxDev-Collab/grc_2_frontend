@@ -25,6 +25,7 @@ import {
   Menu as MenuIcon,
   People,
   Business,
+  BookOnlineOutlined,
 } from '@mui/icons-material';
 import { useTheme as useCustomTheme } from '../context/ThemeContext';
 
@@ -83,6 +84,10 @@ const TopNavBar = ({ children, onDrawerToggle }) => {
   const handleClientsClick = () => {
     navigate('/system/clients');
   };
+
+  const handleNISTGuideClick = () => {
+    navigate('/system/nist-guide');
+  }
 
   return (
     <AppBar position="fixed" sx={{ zIndex: theme.zIndex.drawer + 1 }}>
@@ -165,6 +170,16 @@ const TopNavBar = ({ children, onDrawerToggle }) => {
               GRC Users
             </Button>
           )}
+
+          {/* Clients Management */}
+          <Button
+            color="inherit"
+            startIcon={<BookOnlineOutlined />}
+            onClick={handleNISTGuideClick}
+            sx={{ display: { xs: 'none', sm: 'flex' } }}
+          >
+            NIST Guide
+          </Button>
 
           {/* Clients Management */}
           <Button

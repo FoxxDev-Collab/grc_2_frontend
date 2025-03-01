@@ -76,6 +76,189 @@ class SystemApi extends BaseApiService {
     }
   }
 
+  // Create a new system
+  async createSystem(clientId, systemData) {
+    validateRequired({ clientId }, ['clientId']);
+    validateRequired(systemData, ['name', 'type', 'securityLevel', 'informationLevel', 'category']);
+    
+    // Prepare the system data with client ID
+    const newSystemData = {
+      ...systemData,
+      clientId: Number(clientId),
+      status: 'IN_PROGRESS',
+      atoStatus: 'NOT_STARTED',
+      currentPhase: 'initial_assessment',
+      createdAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString(),
+      lastAssessment: null,
+      phaseProgress: {
+        'initial-assessment': 0,
+        'system-categorization': 0,
+        'security-controls': 0,
+        'assessment': 0,
+        'ato-authorization': 0,
+        'continuous-monitoring': 0
+      },
+      phases: {
+        initialAssessment: {
+          discovery: {
+            status: 'not_started',
+            completedItems: [],
+            pendingItems: []
+          },
+          gapAnalysis: {
+            status: 'not_started',
+            completedItems: [],
+            pendingItems: []
+          },
+          environment: {
+            status: 'not_started',
+            details: {
+              hosting: '',
+              components: []
+            }
+          },
+          stakeholders: {
+            status: 'not_started',
+            identified: [],
+            pending: []
+          }
+        },
+        systemCategorization: {
+          infoTypes: {
+            status: 'not_started',
+            identified: [],
+            pending: []
+          },
+          impact: {
+            status: 'not_started',
+            assessments: {
+              confidentiality: null,
+              integrity: null,
+              availability: null
+            }
+          },
+          objectives: {
+            status: 'not_started',
+            defined: [],
+            pending: []
+          }
+        },
+        securityControls: {
+          baseline: {
+            status: 'not_started',
+            selected: null,
+            rationale: null
+          },
+          tailoring: {
+            status: 'not_started',
+            completedControls: [],
+            pendingControls: []
+          },
+          implementation: {
+            status: 'not_started',
+            implemented: [],
+            pending: []
+          },
+          documentation: {
+            status: 'not_started',
+            completed: [],
+            pending: []
+          }
+        },
+        assessment: {
+          planning: {
+            status: 'not_started',
+            completed: [],
+            pending: []
+          },
+          testing: {
+            status: 'not_started',
+            completed: [],
+            pending: []
+          },
+          review: {
+            status: 'not_started',
+            completed: [],
+            pending: []
+          }
+        },
+        authorization: {
+          riskAssessment: {
+            status: 'not_started',
+            completed: [],
+            pending: []
+          },
+          package: {
+            status: 'not_started',
+            completed: [],
+            pending: []
+          },
+          decision: {
+            status: 'not_started',
+            result: null,
+            conditions: []
+          }
+        },
+        continuousMonitoring: {
+          program: {
+            status: 'not_started',
+            defined: [],
+            pending: []
+          },
+          assessment: {
+            status: 'not_started',
+            completed: [],
+            pending: []
+          },
+          maintenance: {
+            status: 'not_started',
+            completed: [],
+            pending: []
+          }
+        }
+      },
+      components: [],
+      networks: [],
+      ports: [],
+      procedures: [],
+      artifacts: [],
+      boundaries: {
+        physical: [],
+        network: [],
+        security: []
+      },
+      compliance: {
+        nist: 0,
+        hipaa: 0,
+        pci: 0
+      }
+    };
+    
+    return this.create(newSystemData);
+  }
+
+  // Update an existing system
+  async updateSystem(clientId, systemId, systemData) {
+    validateRequired({ clientId, systemId }, ['clientId', 'systemId']);
+    validateRequired(systemData, ['name', 'type', 'securityLevel', 'informationLevel', 'category']);
+    
+    // Prepare the update data
+    const updateData = {
+      ...systemData,
+      clientId: Number(clientId),
+      updatedAt: new Date().toISOString()
+    };
+    
+    return this.update(systemId, updateData);
+  }
+
+  // Delete a system
+  async deleteSystem(clientId, systemId) {
+    validateRequired({ clientId, systemId }, ['clientId', 'systemId']);
+    return this.delete(systemId);
+  }
+
   // Create a new POAM item
   async createPOAMItem(clientId, systemId, poamData) {
     validateRequired({ clientId, systemId }, ['clientId', 'systemId']);

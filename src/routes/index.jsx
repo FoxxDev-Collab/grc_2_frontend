@@ -1,12 +1,10 @@
+// Import Auth Pages/Components
+import LoginPage from '../pages/auth/LoginPage';
+
+// Import Client User Pages
 import { Navigate, createBrowserRouter } from 'react-router-dom';
 import SystemLayout from '../layouts/SystemLayout';
 import ClientLayout from '../layouts/ClientLayout';
-import GRCSystemLayout from '../layouts/GRCSystemLayout';
-import LoginPage from '../pages/auth/LoginPage';
-import CreateClientPage from '../pages/grc_system/CreateClientPage';
-import ClientManagementPage from '../pages/grc_system/ClientManagementPage';
-import GRCUsersManagementPage from '../pages/grc_system/GRCUsersManagementPage';
-import SettingsPage from '../pages/grc_system/SettingsPage';
 import DashboardPage from '../pages/client/DashboardPage';
 import SystemsManagementPage from '../pages/client/SystemsManagementPage';
 import SecurityAssessmentsPage from '../pages/client/SecurityAssessmentsPage';
@@ -18,7 +16,16 @@ import IncidentsPage from '../pages/client/IncidentsPage';
 import GRCProcessPage from '../pages/client/GRCProcessPage';
 import ExecutiveDashboard from '../components/reporting/ExecutiveDashboard';
 import PropTypes from 'prop-types';
+
+
+// Import GRC User pages
+import CreateClientPage from '../pages/grc_system/CreateClientPage';
+import ClientManagementPage from '../pages/grc_system/ClientManagementPage';
+import GRCUsersManagementPage from '../pages/grc_system/GRCUsersManagementPage';
+import SettingsPage from '../pages/grc_system/SettingsPage';
 import GRCDashboard from '../pages/grc_system/GRCDashboard';
+import GRCSystemLayout from '../layouts/GRCSystemLayout';
+import NISTGuidePage from '../pages/grc_system/NISTGuidePage';
 
 // Import new phase-based pages
 import Initial_AssessmentPage from '../pages/system/Initial_AssessmentPage';
@@ -98,6 +105,10 @@ export const router = createBrowserRouter([
         path: 'settings',
         element: <SettingsPage />,
       },
+      {
+        path: 'nist-guide',
+        element: <NISTGuidePage />,
+      }
     ],
   },
   {
