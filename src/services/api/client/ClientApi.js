@@ -231,7 +231,8 @@ class ClientApi {
     const numericClientId = Number(clientId);
     
     try {
-      const response = await fetch(`${API_URL}${this.endpoint}/departments?clientId=${numericClientId}`);
+      // Changed from /clients/departments to /departments to match the server's endpoint structure
+      const response = await fetch(`${API_URL}/departments?clientId=${numericClientId}`);
       if (!response.ok) {
         throw new Error('Failed to fetch departments');
       }
@@ -261,7 +262,8 @@ class ClientApi {
     }
 
     try {
-      const response = await fetch(`${API_URL}${this.endpoint}/departments`, {
+      // Changed from /clients/departments to /departments to match the server's endpoint structure
+      const response = await fetch(`${API_URL}/departments`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(newDepartment)
@@ -283,7 +285,8 @@ class ClientApi {
 
     try {
       // Get current department data
-      const response = await fetch(`${API_URL}${this.endpoint}/departments/${numericDepartmentId}`);
+      // Changed from /clients/departments to /departments to match the server's endpoint structure
+      const response = await fetch(`${API_URL}/departments/${numericDepartmentId}`);
       if (!response.ok) {
         throw new Error('Failed to fetch department');
       }
@@ -311,7 +314,8 @@ class ClientApi {
         lastUpdated: getCurrentDate()
       };
 
-      const updateResponse = await fetch(`${API_URL}${this.endpoint}/departments/${numericDepartmentId}`, {
+      // Changed from /clients/departments to /departments to match the server's endpoint structure
+      const updateResponse = await fetch(`${API_URL}/departments/${numericDepartmentId}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(updatedDepartment)
@@ -333,7 +337,8 @@ class ClientApi {
 
     try {
       // Verify department belongs to client before deletion
-      const response = await fetch(`${API_URL}${this.endpoint}/departments/${numericDepartmentId}`);
+      // Changed from /clients/departments to /departments to match the server's endpoint structure
+      const response = await fetch(`${API_URL}/departments/${numericDepartmentId}`);
       if (!response.ok) {
         throw new Error('Failed to fetch department');
       }
@@ -343,7 +348,8 @@ class ClientApi {
         throw new Error('Department not found');
       }
 
-      const deleteResponse = await fetch(`${API_URL}${this.endpoint}/departments/${numericDepartmentId}`, {
+      // Changed from /clients/departments to /departments to match the server's endpoint structure
+      const deleteResponse = await fetch(`${API_URL}/departments/${numericDepartmentId}`, {
         method: 'DELETE'
       });
       
@@ -413,7 +419,8 @@ class ClientApi {
     const numericClientId = Number(clientId);
     
     try {
-      const response = await fetch(`${API_URL}${this.endpoint}/documents?clientId=${numericClientId}`);
+      // Changed from /clients/documents to /documents to match the server's endpoint structure
+      const response = await fetch(`${API_URL}/documents?clientId=${numericClientId}`);
       if (!response.ok) {
         throw new Error('Failed to fetch documents');
       }
@@ -448,7 +455,8 @@ class ClientApi {
     };
 
     try {
-      const response = await fetch(`${API_URL}${this.endpoint}/documents`, {
+      // Changed from /clients/documents to /documents to match the server's endpoint structure
+      const response = await fetch(`${API_URL}/documents`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(newDocument)
@@ -470,7 +478,8 @@ class ClientApi {
 
     try {
       // Verify document exists and belongs to client
-      const response = await fetch(`${API_URL}${this.endpoint}/documents/${numericDocumentId}`);
+      // Changed from /clients/documents to /documents to match the server's endpoint structure
+      const response = await fetch(`${API_URL}/documents/${numericDocumentId}`);
       if (!response.ok) {
         throw new Error('Failed to fetch document');
       }
@@ -493,7 +502,8 @@ class ClientApi {
 
     try {
       // Verify document belongs to client before deletion
-      const response = await fetch(`${API_URL}${this.endpoint}/documents/${numericDocumentId}`);
+      // Changed from /clients/documents to /documents to match the server's endpoint structure
+      const response = await fetch(`${API_URL}/documents/${numericDocumentId}`);
       if (!response.ok) {
         throw new Error('Failed to fetch document');
       }
@@ -503,7 +513,7 @@ class ClientApi {
         throw new Error('Document not found');
       }
 
-      const deleteResponse = await fetch(`${API_URL}${this.endpoint}/documents/${numericDocumentId}`, {
+      const deleteResponse = await fetch(`${API_URL}/documents/${numericDocumentId}`, {
         method: 'DELETE'
       });
       
