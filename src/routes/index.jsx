@@ -14,6 +14,7 @@ import CompanyStructurePage from '../pages/client/CompanyStructurePage';
 import SecurityStrategyPage from '../pages/client/SecurityStrategyPage';
 import IncidentsPage from '../pages/client/IncidentsPage';
 import GRCProcessPage from '../pages/client/GRCProcessPage';
+import AssetManagementPage from '../pages/client/AssetManagementPage';
 import ExecutiveDashboard from '../components/reporting/ExecutiveDashboard';
 import PropTypes from 'prop-types';
 
@@ -134,6 +135,10 @@ export const router = createBrowserRouter([
       {
         path: 'systems',
         element: <SystemsManagementPage />,
+      },
+      {
+        path: 'assets',
+        element: <AssetManagementPage />,
       },
       {
         path: 'assessments',

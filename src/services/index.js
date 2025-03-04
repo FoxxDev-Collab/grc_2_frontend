@@ -26,9 +26,13 @@ export { default as systemControlsApi } from './api/system/systemControlsApi';
 export { default as assessmentApi } from './api/system/AssessmentApi';
 export { default as atoTrackerApi } from './api/system/AtoTrackerApi';
 export { default as artifactsApi } from './api/system/ArtifactsApi';
+export { default as assetManagementApi } from './api/client/AssetManagementApi';
 
 // Re-export enums from systemApi
 export { SecurityLevel, InformationLevel, SystemCategory } from './api/system/SystemApi';
+
+// Re-export enums from assetManagementApi
+export { AssetType, AssetStatus } from './api/client/AssetManagementApi';
 
 // Add other API services as they are implemented
 

@@ -26,6 +26,7 @@ import {
   Gavel as GavelIcon,
   Report as ReportIcon,
   AccountTree as AccountTreeIcon,
+  Inventory as InventoryIcon,
 } from '@mui/icons-material';
 import TopNavBar from '../components/TopNavBar';
 import { clientApi } from '../services';
@@ -71,14 +72,15 @@ const ClientLayout = () => {
   const menuItems = [
     { text: 'Dashboard', icon: <DashboardIcon />, path: `/client/${clientId}/dashboard` },
     { text: 'GRC Process', icon: <AccountTreeIcon />, path: `/client/${clientId}/grc-process` },
-    { text: 'Systems', icon: <ComputerIcon />, path: `/client/${clientId}/systems` },
+    { text: 'Assets', icon: <InventoryIcon />, path: `/client/${clientId}/assets` },
     { text: 'Security Assessments', icon: <SecurityIcon />, path: `/client/${clientId}/assessments` },
     { text: 'Audits', icon: <GavelIcon />, path: `/client/${clientId}/audits` },
+    { text: 'Security Strategy', icon: <ShieldIcon />, path: `/client/${clientId}/security-strategy` },
+    { text: 'ATO Systems', icon: <ComputerIcon />, path: `/client/${clientId}/systems` },
+    { text: 'Company', icon: <BusinessIcon />, path: `/client/${clientId}/company` },
+    { text: 'Reports', icon: <AssessmentIcon />, path: `/client/${clientId}/reports` },
     { text: 'Incidents', icon: <ReportIcon />, path: `/client/${clientId}/incidents` },
     { text: 'Users', icon: <PeopleIcon />, path: `/client/${clientId}/users` },
-    { text: 'Company', icon: <BusinessIcon />, path: `/client/${clientId}/company` },
-    { text: 'Security Strategy', icon: <ShieldIcon />, path: `/client/${clientId}/security-strategy` },
-    { text: 'Reports', icon: <AssessmentIcon />, path: `/client/${clientId}/reports` },
   ];
 
   const drawer = (
