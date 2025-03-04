@@ -10,8 +10,13 @@ import SystemsManagementPage from '../pages/client/SystemsManagementPage';
 import SecurityAssessmentsPage from '../pages/client/SecurityAssessmentsPage';
 import AuditsPage from '../pages/client/AuditsPage';
 import UsersManagementPage from '../pages/client/UsersManagementPage';
+import CompanyOverviewPage from '../pages/client/CompanyOverviewPage';
 import CompanyStructurePage from '../pages/client/CompanyStructurePage';
+import CompanyDocumentsPage from '../pages/client/CompanyDocumentsPage';
 import SecurityStrategyPage from '../pages/client/SecurityStrategyPage';
+import SecurityRiskManagementPage from '../pages/client/SecurityRiskManagementPage';
+import SecurityObjectivesPage from '../pages/client/SecurityObjectivesPage';
+import SecurityInitiativesPage from '../pages/client/SecurityInitiativesPage';
 import IncidentsPage from '../pages/client/IncidentsPage';
 import GRCProcessPage from '../pages/client/GRCProcessPage';
 import AssetManagementPage from '../pages/client/AssetManagementPage';
@@ -158,11 +163,31 @@ export const router = createBrowserRouter([
       },
       {
         path: 'company',
+        element: <CompanyOverviewPage />,
+      },
+      {
+        path: 'company/structure',
         element: <CompanyStructurePage />,
+      },
+      {
+        path: 'company/documents',
+        element: <CompanyDocumentsPage />,
       },
       {
         path: 'security-strategy',
         element: <SecurityStrategyPage />,
+      },
+      {
+        path: 'security-strategy/risks',
+        element: <SecurityRiskManagementPage />,
+      },
+      {
+        path: 'security-strategy/objectives',
+        element: <SecurityObjectivesPage />,
+      },
+      {
+        path: 'security-strategy/initiatives',
+        element: <SecurityInitiativesPage />,
       },
       {
         path: 'reports',

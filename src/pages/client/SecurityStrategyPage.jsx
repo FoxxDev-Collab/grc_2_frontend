@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import {
@@ -12,6 +13,7 @@ import {
   DialogContent,
   DialogActions,
   Button,
+  Box,
 } from '@mui/material';
 import { 
   riskAssessmentApi, 
@@ -19,9 +21,7 @@ import {
   securityInitiativesApi, 
   auditApi 
 } from '../../services';
-import RiskAssessment from '../../components/security_strategy/RiskAssessment';
-import SecurityObjectives from '../../components/security_strategy/SecurityObjectives';
-import SecurityRoadmap from '../../components/security_strategy/SecurityRoadmap';
+import SecurityStrategyOverview from '../../components/security_strategy/SecurityStrategyOverview';
 
 const SecurityStrategyPage = () => {
   const { clientId } = useParams();
@@ -45,6 +45,21 @@ const SecurityStrategyPage = () => {
   const [phases, setPhases] = useState([]);
   const [selectedFinding, setSelectedFinding] = useState(null);
   const [findingDialogOpen, setFindingDialogOpen] = useState(false);
+  const [objectiveStats, setObjectiveStats] = useState({
+    total: 0,
+    completed: 0,
+    inProgress: 0,
+    notStarted: 0,
+    overallProgress: 0,
+    completionForecast: 'Q4 2025',
+  });
+  const [initiativeStats, setInitiativeStats] = useState({
+    total: 0,
+    completed: 0,
+    inProgress: 0,
+    upcoming: 0,
+    overallProgress: 0,
+  });
 
   useEffect(() => {
     const loadSecurityStrategy = async () => {
@@ -91,6 +106,46 @@ const SecurityStrategyPage = () => {
         });
         setPriorityLevels(priorities);
         setPhases(phaseOptions);
+        
+        // Calculate objective statistics
+        const totalObjectives = objectives.length;
+        const completedObjectives = objectives.filter(obj => obj.status === 'completed').length;
+        const inProgressObjectives = objectives.filter(obj => obj.status === 'in-progress').length;
+        const notStartedObjectives = objectives.filter(obj => obj.status === 'not-started').length;
+        
+        // Calculate overall progress
+        const overallObjectiveProgress = totalObjectives > 0 
+          ? Math.round((completedObjectives + (inProgressObjectives * 0.5)) / totalObjectives * 100) 
+          : 0;
+        
+        setObjectiveStats({
+          total: totalObjectives,
+          completed: completedObjectives,
+          inProgress: inProgressObjectives,
+          notStarted: notStartedObjectives,
+          overallProgress: overallObjectiveProgress,
+          completionForecast: 'Q4 2025', // This would typically come from the API
+        });
+        
+        // Calculate initiative statistics
+        const totalInitiatives = initiatives.length;
+        const completedInitiatives = initiatives.filter(init => init.status === 'completed').length;
+        const inProgressInitiatives = initiatives.filter(init => init.status === 'in-progress').length;
+        const upcomingInitiatives = initiatives.filter(init => init.status === 'not-started').length;
+        
+        // Calculate overall progress
+        const overallInitiativeProgress = totalInitiatives > 0 
+          ? Math.round((completedInitiatives + (inProgressInitiatives * 0.5)) / totalInitiatives * 100) 
+          : 0;
+        
+        setInitiativeStats({
+          total: totalInitiatives,
+          completed: completedInitiatives,
+          inProgress: inProgressInitiatives,
+          upcoming: upcomingInitiatives,
+          overallProgress: overallInitiativeProgress,
+        });
+        
         setError(null);
       } catch (err) {
         setError(err.message);
@@ -102,64 +157,6 @@ const SecurityStrategyPage = () => {
 
     loadSecurityStrategy();
   }, [clientId]);
-
-  // Risk handlers
-  const handleAddRisk = async (riskData) => {
-    try {
-      const result = await riskAssessmentApi.createRisk(clientId, riskData);
-      setData(prev => ({
-        ...prev,
-        risks: [...prev.risks, result]
-      }));
-      // Refresh risk stats after adding a new risk
-      const newStats = await riskAssessmentApi.getRiskStats(clientId);
-      setData(prev => ({
-        ...prev,
-        riskStats: newStats
-      }));
-      setError(null);
-    } catch (err) {
-      setError(err.message);
-    }
-  };
-
-  const handleUpdateRisk = async (riskId, updates) => {
-    try {
-      const result = await riskAssessmentApi.updateRisk(clientId, riskId, updates);
-      setData(prev => ({
-        ...prev,
-        risks: prev.risks.map(risk => risk.id === result.id ? result : risk)
-      }));
-      // Refresh risk stats after updating a risk
-      const newStats = await riskAssessmentApi.getRiskStats(clientId);
-      setData(prev => ({
-        ...prev,
-        riskStats: newStats
-      }));
-      setError(null);
-    } catch (err) {
-      setError(err.message);
-    }
-  };
-
-  const handleDeleteRisk = async (riskId) => {
-    try {
-      await riskAssessmentApi.deleteRisk(clientId, riskId);
-      setData(prev => ({
-        ...prev,
-        risks: prev.risks.filter(risk => risk.id !== riskId)
-      }));
-      // Refresh risk stats after deleting a risk
-      const newStats = await riskAssessmentApi.getRiskStats(clientId);
-      setData(prev => ({
-        ...prev,
-        riskStats: newStats
-      }));
-      setError(null);
-    } catch (err) {
-      setError(err.message);
-    }
-  };
 
   const handleViewFinding = async (findingId) => {
     try {
@@ -178,240 +175,16 @@ const SecurityStrategyPage = () => {
     }
   };
 
-  // Objective handlers
-  const handleAddObjective = async (objectiveData) => {
-    try {
-      // If objective is created from a risk, link them automatically
-      const result = await securityObjectivesApi.createObjective(clientId, {
-        ...objectiveData,
-        relatedRisks: objectiveData.relatedRisks || [],
-        // If created from risk treatment, add the risk reference
-        riskTreatment: objectiveData.riskId ? {
-          riskId: objectiveData.riskId,
-          approach: objectiveData.treatmentApproach || 'mitigate'
-        } : undefined
-      });
-      setData(prev => ({
-        ...prev,
-        objectives: [...prev.objectives, result]
-      }));
-
-      // If this objective is part of risk treatment, update the risk and create the mapping
-      if (objectiveData.riskId) {
-        const risk = data.risks.find(r => r.id === objectiveData.riskId);
-        if (risk) {
-          await handleUpdateRisk(risk.id, {
-            ...risk,
-            treatment: {
-              ...risk.treatment,
-              objectives: [...(risk.treatment.objectives || []), result.id]
-            }
-          });
-
-          // Create the risk-objective mapping
-          const mapping = await riskAssessmentApi.createRiskObjectiveMapping(clientId, risk.id, result.id);
-          setData(prev => ({
-            ...prev,
-            riskObjectiveMappings: [...prev.riskObjectiveMappings, mapping]
-          }));
-        }
-      }
-
-      setError(null);
-    } catch (err) {
-      setError(err.message);
-    }
+  const handleNavigateToRisks = () => {
+    navigate(`/client/${clientId}/security-strategy/risks`);
   };
 
-  const handleUpdateObjective = async (objectiveId, updates) => {
-    try {
-      const result = await securityObjectivesApi.updateObjective(clientId, objectiveId, updates);
-      setData(prev => ({
-        ...prev,
-        objectives: prev.objectives.map(obj => obj.id === result.id ? result : obj)
-      }));
-      setError(null);
-    } catch (err) {
-      setError(err.message);
-    }
+  const handleNavigateToObjectives = () => {
+    navigate(`/client/${clientId}/security-strategy/objectives`);
   };
 
-  // Initiative handlers
-  const handleAddInitiative = async (initiativeData) => {
-    try {
-      const result = await securityInitiativesApi.createInitiative(clientId, {
-        ...initiativeData,
-        relatedRisks: initiativeData.relatedRisks || [],
-        // Link to objectives if specified
-        objectives: initiativeData.objectives || []
-      });
-      setData(prev => ({
-        ...prev,
-        initiatives: [...prev.initiatives, result]
-      }));
-
-      // Create the objective-initiative mapping if objectiveId is provided
-      if (initiativeData.objectiveId) {
-        const mapping = await riskAssessmentApi.createObjectiveInitiativeMapping(
-          clientId, 
-          initiativeData.objectiveId, 
-          result.id
-        );
-        setData(prev => ({
-          ...prev,
-          objectiveInitiativeMappings: [...prev.objectiveInitiativeMappings, mapping]
-        }));
-      }
-
-      setError(null);
-    } catch (err) {
-      setError(err.message);
-    }
-  };
-
-  const handleUpdateInitiative = async (initiativeId, updates) => {
-    try {
-      const result = await securityInitiativesApi.updateInitiative(clientId, initiativeId, updates);
-      setData(prev => ({
-        ...prev,
-        initiatives: prev.initiatives.map(init => init.id === result.id ? result : init)
-      }));
-
-      // If the objectiveId has changed, update the mapping
-      const initiative = data.initiatives.find(i => i.id === initiativeId);
-      if (initiative && initiative.objectiveId !== updates.objectiveId && updates.objectiveId) {
-        // Delete old mapping
-        await riskAssessmentApi.deleteObjectiveInitiativeMapping(
-          clientId, 
-          initiative.objectiveId, 
-          initiativeId
-        );
-        
-        // Create new mapping
-        const mapping = await riskAssessmentApi.createObjectiveInitiativeMapping(
-          clientId, 
-          updates.objectiveId, 
-          initiativeId
-        );
-        
-        // Update mappings in state
-        setData(prev => ({
-          ...prev,
-          objectiveInitiativeMappings: [
-            ...prev.objectiveInitiativeMappings.filter(
-              m => !(m.objectiveId === initiative.objectiveId && m.initiativeId === initiativeId)
-            ),
-            mapping
-          ]
-        }));
-      }
-
-      setError(null);
-    } catch (err) {
-      setError(err.message);
-    }
-  };
-
-  const handleDeleteInitiative = async (initiativeId) => {
-    try {
-      // Get the initiative to find its objectiveId
-      const initiative = data.initiatives.find(i => i.id === initiativeId);
-      
-      await securityInitiativesApi.deleteInitiative(clientId, initiativeId);
-      setData(prev => ({
-        ...prev,
-        initiatives: prev.initiatives.filter(init => init.id !== initiativeId)
-      }));
-
-      // Delete the objective-initiative mapping if it exists
-      if (initiative && initiative.objectiveId) {
-        await riskAssessmentApi.deleteObjectiveInitiativeMapping(
-          clientId, 
-          initiative.objectiveId, 
-          initiativeId
-        );
-        
-        // Update mappings in state
-        setData(prev => ({
-          ...prev,
-          objectiveInitiativeMappings: prev.objectiveInitiativeMappings.filter(
-            m => !(m.objectiveId === initiative.objectiveId && m.initiativeId === initiativeId)
-          )
-        }));
-      }
-
-      setError(null);
-    } catch (err) {
-      setError(err.message);
-    }
-  };
-
-  const handleAddMilestone = async (initiativeId, milestoneData) => {
-    try {
-      const result = await securityInitiativesApi.addMilestone(clientId, initiativeId, milestoneData);
-      setData(prev => ({
-        ...prev,
-        initiatives: prev.initiatives.map(init => {
-          if (init.id === initiativeId) {
-            return {
-              ...init,
-              milestones: [...init.milestones, result]
-            };
-          }
-          return init;
-        })
-      }));
-      setError(null);
-    } catch (err) {
-      setError(err.message);
-    }
-  };
-
-  const handleUpdateMilestone = async (initiativeId, milestoneId, updates) => {
-    try {
-      const result = await securityInitiativesApi.updateMilestone(
-        clientId,
-        initiativeId,
-        milestoneId,
-        updates
-      );
-      setData(prev => ({
-        ...prev,
-        initiatives: prev.initiatives.map(init => {
-          if (init.id === initiativeId) {
-            return {
-              ...init,
-              milestones: init.milestones.map(m => m.id === milestoneId ? result : m)
-            };
-          }
-          return init;
-        })
-      }));
-      setError(null);
-    } catch (err) {
-      setError(err.message);
-    }
-  };
-
-  const handleDeleteMilestone = async (initiativeId, milestoneId) => {
-    try {
-      await securityInitiativesApi.deleteMilestone(clientId, initiativeId, milestoneId);
-      setData(prev => ({
-        ...prev,
-        initiatives: prev.initiatives.map(init => {
-          if (init.id === initiativeId) {
-            return {
-              ...init,
-              milestones: init.milestones.filter(m => m.id !== milestoneId)
-            };
-          }
-          return init;
-        })
-      }));
-      setError(null);
-    } catch (err) {
-      setError(err.message);
-    }
+  const handleNavigateToInitiatives = () => {
+    navigate(`/client/${clientId}/security-strategy/initiatives`);
   };
 
   if (loading) {
@@ -430,59 +203,26 @@ const SecurityStrategyPage = () => {
         </Alert>
       )}
 
-      <Typography variant="h4" gutterBottom>
-        Security Strategy
-      </Typography>
+      <Box sx={{ mb: 4 }}>
+        <Typography variant="h4" gutterBottom>Security Strategy</Typography>
+        <Typography variant="body1" paragraph>
+          A comprehensive view of your organization&apos;s security strategy, including risk management, 
+          security objectives, and implementation initiatives. This dashboard provides an overview 
+          of your current security posture and progress toward your security goals.
+        </Typography>
+      </Box>
 
-      <Grid container spacing={3}>
-        {/* Risk Assessment Section */}
-        <Grid item xs={12}>
-          <Paper sx={{ p: 3, mb: 3 }}>
-            <RiskAssessment
-              risks={data.risks}
-              riskStats={data.riskStats}
-              frameworkProgress={data.frameworkProgress}
-              onAddRisk={handleAddRisk}
-              onUpdateRisk={handleUpdateRisk}
-              onDeleteRisk={handleDeleteRisk}
-              onViewFinding={handleViewFinding}
-            />
-          </Paper>
-        </Grid>
-
-        {/* Security Objectives Section */}
-        <Grid item xs={12}>
-          <Paper sx={{ p: 3, mb: 3 }}>
-            <SecurityObjectives
-              objectives={data.objectives}
-              risks={data.risks}
-              onAddObjective={handleAddObjective}
-              onUpdateObjective={handleUpdateObjective}
-              statuses={statuses.objective}
-              priorityLevels={priorityLevels}
-            />
-          </Paper>
-        </Grid>
-
-        {/* Security Roadmap Section */}
-        <Grid item xs={12}>
-          <Paper sx={{ p: 3 }}>
-            <SecurityRoadmap
-              initiatives={data.initiatives}
-              objectives={data.objectives}
-              risks={data.risks}
-              onAddInitiative={handleAddInitiative}
-              onUpdateInitiative={handleUpdateInitiative}
-              onDeleteInitiative={handleDeleteInitiative}
-              onAddMilestone={handleAddMilestone}
-              onUpdateMilestone={handleUpdateMilestone}
-              onDeleteMilestone={handleDeleteMilestone}
-              statuses={statuses.initiative}
-              phases={phases}
-            />
-          </Paper>
-        </Grid>
-      </Grid>
+      {/* Security Strategy Overview Dashboard */}
+      <SecurityStrategyOverview
+        riskStats={data.riskStats}
+        objectiveStats={objectiveStats}
+        initiativeStats={initiativeStats}
+        topRisks={data.risks.slice(0, 3)}
+        topObjectives={data.objectives.slice(0, 3)}
+        onNavigateToRisks={handleNavigateToRisks}
+        onNavigateToObjectives={handleNavigateToObjectives}
+        onNavigateToInitiatives={handleNavigateToInitiatives}
+      />
 
       {/* Finding Detail Dialog */}
       <Dialog

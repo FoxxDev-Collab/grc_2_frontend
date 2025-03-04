@@ -10,12 +10,15 @@ import {
   Button,
   CircularProgress,
   Alert,
+  Paper,
+  ToggleButtonGroup,
+  ToggleButton,
+  Divider,
 } from '@mui/material';
-import { Add as AddIcon } from '@mui/icons-material';
+import { Add as AddIcon, Edit as EditIcon } from '@mui/icons-material';
 import {
   CompanyOverview,
   DepartmentsList,
-  CompanyDocuments,
   DepartmentDialog,
   CompanyInfoDialog,
   useCompanyStructure
@@ -26,15 +29,12 @@ const CompanyStructurePage = () => {
   const {
     client,
     departments,
-    documents,
     loading,
     error,
     updateClient,
     createDepartment,
     updateDepartment,
     addPosition,
-    uploadDocument,
-    downloadDocument
   } = useCompanyStructure(clientId);
 
   const [openDialog, setOpenDialog] = useState(false);
@@ -56,6 +56,7 @@ const CompanyStructurePage = () => {
     phone: '',
   });
   const [expandedDept, setExpandedDept] = useState('');
+  const [viewMode, setViewMode] = useState('orgChart');
 
   // Company Info Dialog Handlers
   const handleOpenCompanyDialog = (section) => {
@@ -169,11 +170,143 @@ const CompanyStructurePage = () => {
     setExpandedDept(expandedDept === deptId ? '' : deptId);
   };
 
-  const handleUploadDocument = (event) => {
-    const file = event.target.files[0];
-    if (file) {
-      uploadDocument(file);
+  const handleViewModeChange = (event, newMode) => {
+    if (newMode !== null) {
+      setViewMode(newMode);
     }
+  };
+
+  // Render organization chart
+  const renderOrgChart = () => {
+    // Define colors for different levels
+    const colors = {
+      executive: '#4a75f5',
+      cLevel: '#5499C7',
+      department: '#3498db',
+      team: '#5DADE2',
+      background: '#ffffff',
+      line: '#cccccc',
+      text: '#ffffff',
+      textDark: '#333333'
+    };
+
+    // Define box styles for reuse
+    const boxStyle = (color, width, height) => ({
+      width,
+      height,
+      bgcolor: color,
+      color: colors.text,
+      borderRadius: 1,
+      boxShadow: '0px 2px 4px rgba(0,0,0,0.1)',
+      display: 'flex',
+      flexDirection: 'column',
+      justifyContent: 'center',
+      alignItems: 'center',
+      textAlign: 'center',
+      position: 'relative',
+      zIndex: 2,
+    });
+
+    // Define line styles for connecting boxes
+    const verticalLine = (top, left, height) => ({
+      position: 'absolute',
+      top,
+      left,
+      width: '2px',
+      height,
+      bgcolor: colors.line,
+      zIndex: 1,
+    });
+
+    const horizontalLine = (top, left, width) => ({
+      position: 'absolute',
+      top,
+      left,
+      height: '2px',
+      width,
+      bgcolor: colors.line,
+      zIndex: 1,
+    });
+
+    return (
+      <Box sx={{ p: 4, position: 'relative', minHeight: 500, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+        {/* CEO Box */}
+        <Box sx={{ mb: 5 }}>
+          <Box sx={boxStyle(colors.executive, 200, 80)}>
+            <Typography variant="subtitle1" fontWeight="bold">CEO</Typography>
+            <Typography variant="body2">{client?.primaryContact || 'Not specified'}</Typography>
+          </Box>
+        </Box>
+
+        {/* Vertical line from CEO to horizontal line */}
+        <Box sx={verticalLine('80px', '50%', '40px')} />
+
+        {/* Horizontal line connecting C-Level executives */}
+        <Box sx={horizontalLine('120px', '20%', '60%')} />
+
+        {/* C-Level Executives */}
+        <Box sx={{ display: 'flex', justifyContent: 'space-between', width: '80%', mb: 5 }}>
+          {['CIO/CISO', 'CFO', 'COO'].map((title, index) => (
+            <Box key={index} sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+              {/* Vertical line from horizontal line to each C-level box */}
+              <Box sx={verticalLine('120px', '50%', '20px')} />
+              <Box sx={boxStyle(colors.cLevel, 180, 70)}>
+                <Typography variant="subtitle1" fontWeight="bold">{title}</Typography>
+                <Typography variant="body2">Executive</Typography>
+              </Box>
+            </Box>
+          ))}
+        </Box>
+
+        {/* Vertical line from CIO to IT departments horizontal line */}
+        <Box sx={{ position: 'absolute', top: '190px', left: '25%', width: '2px', height: '40px', bgcolor: colors.line }} />
+
+        {/* Horizontal line connecting IT departments */}
+        <Box sx={{ position: 'absolute', top: '230px', left: '10%', height: '2px', width: '30%', bgcolor: colors.line }} />
+
+        {/* IT Departments */}
+        <Box sx={{ position: 'absolute', top: '250px', left: '10%', display: 'flex', justifyContent: 'space-between', width: '30%' }}>
+          {['IT Security', 'IT Operations'].map((deptName, index) => (
+            <Box key={index} sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+              {/* Vertical line from horizontal line to each department box */}
+              <Box sx={{ position: 'absolute', top: '-20px', left: '50%', width: '2px', height: '20px', bgcolor: colors.line }} />
+              <Box sx={boxStyle(colors.department, 140, 60)}>
+                <Typography variant="body2" fontWeight="bold">{deptName}</Typography>
+                <Typography variant="caption">{index === 0 ? '8' : '12'} Members</Typography>
+              </Box>
+            </Box>
+          ))}
+        </Box>
+
+        {/* Vertical line from CFO to Finance departments horizontal line */}
+        <Box sx={{ position: 'absolute', top: '190px', left: '50%', width: '2px', height: '40px', bgcolor: colors.line }} />
+
+        {/* Horizontal line connecting Finance departments */}
+        <Box sx={{ position: 'absolute', top: '230px', left: '40%', height: '2px', width: '20%', bgcolor: colors.line }} />
+
+        {/* Finance Department */}
+        <Box sx={{ position: 'absolute', top: '250px', left: '45%', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+          <Box sx={boxStyle(colors.department, 140, 60)}>
+            <Typography variant="body2" fontWeight="bold">Finance</Typography>
+            <Typography variant="caption">6 Members</Typography>
+          </Box>
+        </Box>
+
+        {/* Vertical line from COO to Operations departments horizontal line */}
+        <Box sx={{ position: 'absolute', top: '190px', left: '75%', width: '2px', height: '40px', bgcolor: colors.line }} />
+
+        {/* Horizontal line connecting Operations departments */}
+        <Box sx={{ position: 'absolute', top: '230px', left: '65%', height: '2px', width: '20%', bgcolor: colors.line }} />
+
+        {/* Operations Department */}
+        <Box sx={{ position: 'absolute', top: '250px', left: '70%', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+          <Box sx={boxStyle(colors.department, 140, 60)}>
+            <Typography variant="body2" fontWeight="bold">Operations</Typography>
+            <Typography variant="caption">15 Members</Typography>
+          </Box>
+        </Box>
+      </Box>
+    );
   };
 
   if (loading) {
@@ -192,51 +325,87 @@ const CompanyStructurePage = () => {
         </Alert>
       )}
 
-      {/* Company Overview Section */}
-      {client && (
-        <CompanyOverview 
-          client={client} 
-          onEditOrganization={() => handleOpenCompanyDialog('organization')}
-          onEditContact={() => handleOpenCompanyDialog('contact')}
-        />
-      )}
+      {/* Header */}
+      <Paper sx={{ p: 2, mb: 3, display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+        <Typography variant="h4" component="h1">
+          Company Structure
+        </Typography>
+        <Button
+          variant="contained"
+          startIcon={<EditIcon />}
+          onClick={() => handleOpenDialog()}
+        >
+          Edit Structure
+        </Button>
+      </Paper>
 
-      <Grid container spacing={3}>
-        <Grid item xs={12}>
-          <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 3 }}>
-            <Typography variant="h4" component="h1">
-              Company Structure
-            </Typography>
-            <Button
-              variant="contained"
-              startIcon={<AddIcon />}
-              onClick={() => handleOpenDialog()}
-            >
-              Add Department
-            </Button>
+      {/* View Options */}
+      <Paper sx={{ p: 1, mb: 3 }}>
+        <ToggleButtonGroup
+          value={viewMode}
+          exclusive
+          onChange={handleViewModeChange}
+          aria-label="view mode"
+          sx={{ display: 'flex', flexWrap: 'wrap' }}
+        >
+          <ToggleButton value="orgChart" aria-label="org chart" sx={{ borderRadius: '15px', m: 0.5 }}>
+            Org Chart
+          </ToggleButton>
+          <ToggleButton value="locations" aria-label="locations" sx={{ borderRadius: '15px', m: 0.5 }}>
+            Locations
+          </ToggleButton>
+          <ToggleButton value="departments" aria-label="departments" sx={{ borderRadius: '15px', m: 0.5 }}>
+            Departments
+          </ToggleButton>
+          <ToggleButton value="teams" aria-label="teams" sx={{ borderRadius: '15px', m: 0.5 }}>
+            Teams
+          </ToggleButton>
+        </ToggleButtonGroup>
+      </Paper>
+
+      {/* Main Content */}
+      <Paper sx={{ mb: 3, minHeight: 400, overflow: 'hidden' }}>
+        {viewMode === 'orgChart' && renderOrgChart()}
+        {viewMode === 'departments' && (
+          <Box sx={{ p: 2 }}>
+            <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 3 }}>
+              <Typography variant="h6">
+                Departments
+              </Typography>
+              <Button
+                variant="contained"
+                startIcon={<AddIcon />}
+                onClick={() => handleOpenDialog()}
+              >
+                Add Department
+              </Button>
+            </Box>
+            <DepartmentsList 
+              departments={departments}
+              expandedDept={expandedDept}
+              onExpandDepartment={handleExpandDepartment}
+              onEditDepartment={handleOpenDialog}
+              onAddPosition={addPosition}
+            />
           </Box>
-        </Grid>
-
-        {/* Departments Section */}
-        <Grid item xs={12} md={8}>
-          <DepartmentsList 
-            departments={departments}
-            expandedDept={expandedDept}
-            onExpandDepartment={handleExpandDepartment}
-            onEditDepartment={handleOpenDialog}
-            onAddPosition={addPosition}
-          />
-        </Grid>
-
-        {/* Documents Section */}
-        <Grid item xs={12} md={4}>
-          <CompanyDocuments 
-            documents={documents}
-            onUpload={handleUploadDocument}
-            onDownload={downloadDocument}
-          />
-        </Grid>
-      </Grid>
+        )}
+        {viewMode === 'locations' && (
+          <Box sx={{ p: 2, textAlign: 'center' }}>
+            <Typography variant="h6">Locations View</Typography>
+            <Typography variant="body2" color="text.secondary" sx={{ mt: 2 }}>
+              This feature is coming soon.
+            </Typography>
+          </Box>
+        )}
+        {viewMode === 'teams' && (
+          <Box sx={{ p: 2, textAlign: 'center' }}>
+            <Typography variant="h6">Teams View</Typography>
+            <Typography variant="body2" color="text.secondary" sx={{ mt: 2 }}>
+              This feature is coming soon.
+            </Typography>
+          </Box>
+        )}
+      </Paper>
 
       {/* Add/Edit Department Dialog */}
       <DepartmentDialog 
