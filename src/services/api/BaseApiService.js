@@ -1,6 +1,5 @@
 // src/services/api/BaseApiService.js
 import { get, post, put, patch, del, validateRequired } from '../utils/apiHelpers';
-import { IS_MOCK, API_BASE_URL } from '../config';
 import { unwrapResponse } from '../utils/apiResponseHandler';
 
 /**
@@ -79,8 +78,6 @@ export class BaseApiService {
   constructor(basePath, entityName, options = {}) {
     this.basePath = basePath;
     this.entityName = entityName;
-    // When in mock mode, use the mock server URL
-    this.baseUrl = IS_MOCK ? 'http://localhost:3001' : API_BASE_URL;
     
     // Default options
     this.options = {

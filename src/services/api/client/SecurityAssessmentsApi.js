@@ -1,20 +1,21 @@
-import { validateRequired } from '../../apiHelpers';
-import riskAssessmentApi from '../../api/client/RiskAssessmentApi';
-import securityObjectivesApi from '../../api/client/SecurityObjectivesApi';
+// src/services/api/assessment/SecurityAssessmentsApi.js
+import { BaseApiService } from '../BaseApiService';
+import { validateRequired, get, post, patch } from '../../utils/apiHelpers';
+import riskAssessmentApi from '../client/RiskAssessmentApi';
+import securityObjectivesApi from '../client/SecurityObjectivesApi';
 
-const API_URL = 'http://localhost:3001';
+class SecurityAssessmentsApi extends BaseApiService {
+  constructor() {
+    // Using the same pattern as other APIs
+    super('/assessments', 'assessments');
+  }
 
-const securityAssessmentsApi = {
   // Get all assessments for a client
-  getAssessments: async (clientId, options = {}) => {
+  async getAssessments(clientId, options = {}) {
     validateRequired({ clientId }, ['clientId']);
     
     try {
-      const response = await fetch(`${API_URL}/assessments?clientId=${clientId}`);
-      if (!response.ok) {
-        throw new Error('Failed to fetch assessments');
-      }
-      let assessments = await response.json();
+      let assessments = await get(`/assessments?clientId=${clientId}`);
 
       // Apply filters
       if (options.status && options.status !== 'all') {
@@ -47,45 +48,37 @@ const securityAssessmentsApi = {
 
       return assessments;
     } catch (error) {
-      console.error('Error fetching assessments:', error);
+      console.error('Get assessments error:', error);
       return [];
     }
-  },
+  }
 
   // Get assessment by ID
-  getAssessment: async (assessmentId) => {
+  async getAssessment(assessmentId) {
     validateRequired({ assessmentId }, ['assessmentId']);
     
     try {
-      const response = await fetch(`${API_URL}/assessments/${assessmentId}`);
-      if (!response.ok) {
-        throw new Error('Failed to fetch assessment');
-      }
-      return await response.json();
+      return await get(`/assessments/${assessmentId}`);
     } catch (error) {
-      console.error('Error fetching assessment:', error);
+      console.error('Get assessment error:', error);
       throw error;
     }
-  },
+  }
 
   // Get findings for an assessment
-  getFindings: async (assessmentId) => {
+  async getFindings(assessmentId) {
     validateRequired({ assessmentId }, ['assessmentId']);
     
     try {
-      const response = await fetch(`${API_URL}/assessments/${assessmentId}/generatedFindings`);
-      if (!response.ok) {
-        throw new Error('Failed to fetch findings');
-      }
-      return await response.json();
+      return await get(`/assessments/${assessmentId}/generatedFindings`);
     } catch (error) {
-      console.error('Error fetching findings:', error);
+      console.error('Get findings error:', error);
       return [];
     }
-  },
+  }
 
   // Get risks promoted from findings
-  getPromotedRisks: async (clientId) => {
+  async getPromotedRisks(clientId) {
     validateRequired({ clientId }, ['clientId']);
     
     try {
@@ -97,24 +90,19 @@ const securityAssessmentsApi = {
       
       return promotedRisks;
     } catch (error) {
-      console.error('Error fetching promoted risks:', error);
+      console.error('Get promoted risks error:', error);
       return [];
     }
-  },
+  }
 
   // Promote finding to risk
-  promoteFindingToRisk: async (clientId, findingId, riskData) => {
+  async promoteFindingToRisk(clientId, findingId, riskData) {
     validateRequired({ clientId, findingId }, ['clientId', 'findingId']);
     validateRequired(riskData, ['name', 'description', 'impact', 'likelihood', 'category']);
     
     try {
       // First get the finding details
-      const findingResponse = await fetch(`${API_URL}/assessments/${findingId}`);
-      if (!findingResponse.ok) {
-        throw new Error('Finding not found');
-      }
-      
-      const finding = await findingResponse.json();
+      const finding = await get(`/assessments/${findingId}`);
       
       // Create a new risk with the finding as the source
       const newRisk = await riskAssessmentApi.createRisk(clientId, {
@@ -128,25 +116,21 @@ const securityAssessmentsApi = {
       });
       
       // Update the finding status to promoted
-      await fetch(`${API_URL}/assessments/${findingId}`, {
-        method: 'PATCH',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          status: 'promoted_to_risk',
-          promotedRiskId: newRisk.id,
-          lastUpdated: new Date().toISOString()
-        })
+      await patch(`/assessments/${findingId}`, {
+        status: 'promoted_to_risk',
+        promotedRiskId: newRisk.id,
+        lastUpdated: new Date().toISOString()
       });
       
       return newRisk;
     } catch (error) {
-      console.error('Error promoting finding to risk:', error);
+      console.error('Promote finding to risk error:', error);
       throw error;
     }
-  },
+  }
 
   // Promote risk to objective
-  promoteRiskToObjective: async (clientId, riskId, objectiveData = {}) => {
+  async promoteRiskToObjective(clientId, riskId, objectiveData = {}) {
     validateRequired({ clientId, riskId }, ['clientId', 'riskId']);
     
     try {
@@ -179,98 +163,74 @@ const securityAssessmentsApi = {
       
       return objective;
     } catch (error) {
-      console.error('Error promoting risk to objective:', error);
+      console.error('Promote risk to objective error:', error);
       throw error;
     }
-  },
+  }
 
   // Submit a new assessment
-  submitAssessment: async (clientId, assessmentData) => {
+  async submitAssessment(clientId, assessmentData) {
     validateRequired(assessmentData, ['type', 'name', 'answers']);
     validateRequired({ clientId }, ['clientId']);
     
     try {
-      const response = await fetch(`${API_URL}/assessments`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          clientId: Number(clientId),
-          date: new Date().toISOString(),
-          status: 'pending_review',
-          ...assessmentData
-        })
-      });
-
-      if (!response.ok) {
-        throw new Error('Failed to submit assessment');
-      }
-
-      return await response.json();
+      const newAssessment = {
+        clientId: Number(clientId),
+        date: new Date().toISOString(),
+        status: 'pending_review',
+        ...assessmentData
+      };
+      
+      return await post('/assessments', newAssessment);
     } catch (error) {
-      console.error('Error submitting assessment:', error);
+      console.error('Submit assessment error:', error);
       throw error;
     }
-  },
+  }
 
   // Update assessment status
-  updateAssessmentStatus: async (assessmentId, status) => {
+  async updateAssessmentStatus(assessmentId, status) {
     validateRequired({ assessmentId, status }, ['assessmentId', 'status']);
     
     try {
-      const response = await fetch(`${API_URL}/assessments/${assessmentId}`, {
-        method: 'PATCH',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          status,
-          lastUpdated: new Date().toISOString()
-        })
-      });
-
-      if (!response.ok) {
-        throw new Error('Failed to update assessment status');
-      }
-
-      return await response.json();
+      const updates = {
+        status,
+        lastUpdated: new Date().toISOString()
+      };
+      
+      return await patch(`/assessments/${assessmentId}`, updates);
     } catch (error) {
-      console.error('Error updating assessment status:', error);
+      console.error('Update assessment status error:', error);
       throw error;
     }
-  },
+  }
 
   // Review assessment
-  reviewAssessment: async (assessmentId, reviewData) => {
+  async reviewAssessment(assessmentId, reviewData) {
     validateRequired(reviewData, ['reviewer', 'status']);
     validateRequired({ assessmentId }, ['assessmentId']);
     
     try {
-      const response = await fetch(`${API_URL}/assessments/${assessmentId}`, {
-        method: 'PATCH',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          reviewer: reviewData.reviewer,
-          status: reviewData.status,
-          reviewNotes: reviewData.notes,
-          reviewDate: new Date().toISOString()
-        })
-      });
-
-      if (!response.ok) {
-        throw new Error('Failed to review assessment');
-      }
-
-      return await response.json();
+      const updates = {
+        reviewer: reviewData.reviewer,
+        status: reviewData.status,
+        reviewNotes: reviewData.notes,
+        reviewDate: new Date().toISOString()
+      };
+      
+      return await patch(`/assessments/${assessmentId}`, updates);
     } catch (error) {
-      console.error('Error reviewing assessment:', error);
+      console.error('Review assessment error:', error);
       throw error;
     }
-  },
+  }
 
   // Get assessment statistics
-  getAssessmentStats: async (clientId) => {
+  async getAssessmentStats(clientId) {
     validateRequired({ clientId }, ['clientId']);
     
     try {
-      const assessments = await securityAssessmentsApi.getAssessments(clientId);
+      const assessments = await this.getAssessments(clientId);
       
       return {
         total: assessments.length,
@@ -290,7 +250,7 @@ const securityAssessmentsApi = {
           .slice(0, 5)
       };
     } catch (error) {
-      console.error('Error getting assessment stats:', error);
+      console.error('Get assessment stats error:', error);
       return {
         total: 0,
         byStatus: { pending: 0, inProgress: 0, completed: 0, promoted: 0 },
@@ -299,6 +259,6 @@ const securityAssessmentsApi = {
       };
     }
   }
-};
+}
 
-export default securityAssessmentsApi;
+export default new SecurityAssessmentsApi();

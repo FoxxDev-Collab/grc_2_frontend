@@ -1,228 +1,164 @@
-import { validateRequired } from '../../apiHelpers';
+// src/services/api/security/SecurityStrategyApi.js
+import { BaseApiService } from '../BaseApiService';
+import { validateRequired, get, post, put, del } from '../../utils/apiHelpers';
 
-const API_URL = 'http://localhost:3001';
+class SecurityStrategyApi extends BaseApiService {
+  constructor() {
+    super('/security-strategy', 'securityStrategy');
+  }
 
-const securityStrategyApi = {
   // Get security strategy for a client
-  getSecurityStrategy: async (clientId) => {
+  async getSecurityStrategy(clientId) {
     validateRequired({ clientId }, ['clientId']);
     
     try {
-      const response = await fetch(`${API_URL}/securityStrategy?clientId=${clientId}`);
-      if (!response.ok) {
-        throw new Error('Failed to fetch security strategy');
-      }
-      return await response.json();
+      return await get(`/securityStrategy?clientId=${clientId}`);
     } catch (error) {
-      console.error('Error fetching security strategy:', error);
+      console.error('Get security strategy error:', error);
       return {
         objectives: [],
         roadmap: [],
         policies: []
       };
     }
-  },
+  }
   
   // Get security objectives
-  getSecurityObjectives: async (clientId) => {
+  async getSecurityObjectives(clientId) {
     validateRequired({ clientId }, ['clientId']);
     
     try {
-      const response = await fetch(`${API_URL}/securityObjectives?clientId=${clientId}`);
-      if (!response.ok) {
-        throw new Error('Failed to fetch security objectives');
-      }
-      return await response.json();
+      return await get(`/securityObjectives?clientId=${clientId}`);
     } catch (error) {
-      console.error('Error fetching security objectives:', error);
+      console.error('Get security objectives error:', error);
       return [];
     }
-  },
+  }
   
   // Get security roadmap
-  getSecurityRoadmap: async (clientId) => {
+  async getSecurityRoadmap(clientId) {
     validateRequired({ clientId }, ['clientId']);
     
     try {
-      const response = await fetch(`${API_URL}/securityRoadmap?clientId=${clientId}`);
-      if (!response.ok) {
-        throw new Error('Failed to fetch security roadmap');
-      }
-      return await response.json();
+      return await get(`/securityRoadmap?clientId=${clientId}`);
     } catch (error) {
-      console.error('Error fetching security roadmap:', error);
+      console.error('Get security roadmap error:', error);
       return [];
     }
-  },
+  }
   
   // Update security strategy
-  updateSecurityStrategy: async (clientId, strategyData) => {
+  async updateSecurityStrategy(clientId, strategyData) {
     validateRequired({ clientId }, ['clientId']);
     validateRequired(strategyData, ['name', 'description']);
     
     try {
-      const response = await fetch(`${API_URL}/securityStrategy/${clientId}`, {
-        method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(strategyData)
-      });
-      
-      if (!response.ok) {
-        throw new Error('Failed to update security strategy');
-      }
-      
-      return await response.json();
+      return await put(`/securityStrategy/${clientId}`, strategyData);
     } catch (error) {
-      console.error('Error updating security strategy:', error);
+      console.error('Update security strategy error:', error);
       throw error;
     }
-  },
+  }
   
   // Create security objective
-  createSecurityObjective: async (clientId, objectiveData) => {
+  async createSecurityObjective(clientId, objectiveData) {
     validateRequired({ clientId }, ['clientId']);
     validateRequired(objectiveData, ['name', 'description', 'priority']);
     
     try {
-      const response = await fetch(`${API_URL}/securityObjectives`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          clientId: Number(clientId),
-          ...objectiveData,
-          createdAt: new Date().toISOString(),
-          status: objectiveData.status || 'Planning'
-        })
-      });
+      const newObjective = {
+        clientId: Number(clientId),
+        ...objectiveData,
+        createdAt: new Date().toISOString(),
+        status: objectiveData.status || 'Planning'
+      };
       
-      if (!response.ok) {
-        throw new Error('Failed to create security objective');
-      }
-      
-      return await response.json();
+      return await post('/securityObjectives', newObjective);
     } catch (error) {
-      console.error('Error creating security objective:', error);
+      console.error('Create security objective error:', error);
       throw error;
     }
-  },
+  }
   
   // Update security objective
-  updateSecurityObjective: async (clientId, objectiveId, objectiveData) => {
+  async updateSecurityObjective(clientId, objectiveId, objectiveData) {
     validateRequired({ clientId, objectiveId }, ['clientId', 'objectiveId']);
     
     try {
-      const response = await fetch(`${API_URL}/securityObjectives/${objectiveId}`, {
-        method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          ...objectiveData,
-          updatedAt: new Date().toISOString()
-        })
-      });
+      const updatedObjective = {
+        ...objectiveData,
+        updatedAt: new Date().toISOString()
+      };
       
-      if (!response.ok) {
-        throw new Error('Failed to update security objective');
-      }
-      
-      return await response.json();
+      return await put(`/securityObjectives/${objectiveId}`, updatedObjective);
     } catch (error) {
-      console.error('Error updating security objective:', error);
+      console.error('Update security objective error:', error);
       throw error;
     }
-  },
+  }
   
   // Delete security objective
-  deleteSecurityObjective: async (objectiveId) => {
+  async deleteSecurityObjective(objectiveId) {
     validateRequired({ objectiveId }, ['objectiveId']);
     
     try {
-      const response = await fetch(`${API_URL}/securityObjectives/${objectiveId}`, {
-        method: 'DELETE'
-      });
-      
-      if (!response.ok) {
-        throw new Error('Failed to delete security objective');
-      }
-      
+      await del(`/securityObjectives/${objectiveId}`);
       return true;
     } catch (error) {
-      console.error('Error deleting security objective:', error);
+      console.error('Delete security objective error:', error);
       throw error;
     }
-  },
+  }
   
   // Add roadmap item
-  addRoadmapItem: async (clientId, roadmapData) => {
+  async addRoadmapItem(clientId, roadmapData) {
     validateRequired({ clientId }, ['clientId']);
     validateRequired(roadmapData, ['title', 'description', 'timeline']);
     
     try {
-      const response = await fetch(`${API_URL}/securityRoadmap`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          clientId: Number(clientId),
-          ...roadmapData,
-          createdAt: new Date().toISOString(),
-          status: roadmapData.status || 'Planned'
-        })
-      });
+      const newRoadmapItem = {
+        clientId: Number(clientId),
+        ...roadmapData,
+        createdAt: new Date().toISOString(),
+        status: roadmapData.status || 'Planned'
+      };
       
-      if (!response.ok) {
-        throw new Error('Failed to add roadmap item');
-      }
-      
-      return await response.json();
+      return await post('/securityRoadmap', newRoadmapItem);
     } catch (error) {
-      console.error('Error adding roadmap item:', error);
-      throw error;
-    }
-  },
-  
-  // Update roadmap item
-  updateRoadmapItem: async (clientId, itemId, itemData) => {
-    validateRequired({ clientId, itemId }, ['clientId', 'itemId']);
-    
-    try {
-      const response = await fetch(`${API_URL}/securityRoadmap/${itemId}`, {
-        method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          ...itemData,
-          updatedAt: new Date().toISOString()
-        })
-      });
-      
-      if (!response.ok) {
-        throw new Error('Failed to update roadmap item');
-      }
-      
-      return await response.json();
-    } catch (error) {
-      console.error('Error updating roadmap item:', error);
-      throw error;
-    }
-  },
-  
-  // Delete roadmap item
-  deleteRoadmapItem: async (itemId) => {
-    validateRequired({ itemId }, ['itemId']);
-    
-    try {
-      const response = await fetch(`${API_URL}/securityRoadmap/${itemId}`, {
-        method: 'DELETE'
-      });
-      
-      if (!response.ok) {
-        throw new Error('Failed to delete roadmap item');
-      }
-      
-      return true;
-    } catch (error) {
-      console.error('Error deleting roadmap item:', error);
+      console.error('Add roadmap item error:', error);
       throw error;
     }
   }
-};
+  
+  // Update roadmap item
+  async updateRoadmapItem(clientId, itemId, itemData) {
+    validateRequired({ clientId, itemId }, ['clientId', 'itemId']);
+    
+    try {
+      const updatedItem = {
+        ...itemData,
+        updatedAt: new Date().toISOString()
+      };
+      
+      return await put(`/securityRoadmap/${itemId}`, updatedItem);
+    } catch (error) {
+      console.error('Update roadmap item error:', error);
+      throw error;
+    }
+  }
+  
+  // Delete roadmap item
+  async deleteRoadmapItem(itemId) {
+    validateRequired({ itemId }, ['itemId']);
+    
+    try {
+      await del(`/securityRoadmap/${itemId}`);
+      return true;
+    } catch (error) {
+      console.error('Delete roadmap item error:', error);
+      throw error;
+    }
+  }
+}
 
-export default securityStrategyApi;
+export default new SecurityStrategyApi();

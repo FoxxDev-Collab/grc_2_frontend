@@ -1,4 +1,6 @@
-import { fetchWithAuth, validateRequired } from '../../utils/apiHelpers';
+// src/services/api/incident/IncidentApi.js
+import { BaseApiService } from '../BaseApiService';
+import { validateRequired, get, post, patch } from '../../utils/apiHelpers';
 
 const DEFAULT_STATS = {
   total: 0,
@@ -14,197 +16,176 @@ const DEFAULT_STATS = {
   byType: {}
 };
 
-const incidentApi = {
+class IncidentApi extends BaseApiService {
+  constructor() {
+    // Using the same pattern as other APIs
+    super('/incidents', 'incidents');
+  }
+
   // Get all incidents
-  getIncidents: async (clientId) => {
+  async getIncidents(clientId) {
     try {
-      const response = await fetchWithAuth(`/incidents?clientId=${clientId}`);
-      return response;
+      return await get(`/incidents?clientId=${clientId}`);
     } catch (error) {
-      console.error('Error fetching incidents:', error);
-      throw new Error('Failed to fetch incidents');
+      console.error('Get incidents error:', error);
+      throw error;
     }
-  },
+  }
 
   // Get single incident
-  getIncident: async (clientId, incidentId) => {
+  async getIncident(clientId, incidentId) {
     try {
-      const response = await fetchWithAuth(`/incidents/${incidentId}?clientId=${clientId}`);
-      return response;
+      return await get(`/incidents/${incidentId}?clientId=${clientId}`);
     } catch (error) {
-      console.error('Error fetching incident:', error);
+      console.error('Get incident error:', error);
       if (error.status === 404) throw new Error('Incident not found');
-      throw new Error('Failed to fetch incident');
+      throw error;
     }
-  },
+  }
 
   // Create new incident
-  createIncident: async (clientId, incidentData) => {
+  async createIncident(clientId, incidentData) {
     try {
       validateRequired(incidentData, ['title', 'type', 'severity', 'priority', 'description']);
 
-      const response = await fetchWithAuth('/incidents', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          ...incidentData,
-          clientId: Number(clientId),
-          status: 'active',
-          createdAt: new Date().toISOString(),
-          updatedAt: new Date().toISOString(),
-          resolvedAt: null,
-          actions: []
-        })
-      });
-      
-      return response;
+      const newIncident = {
+        ...incidentData,
+        clientId: Number(clientId),
+        status: 'active',
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString(),
+        resolvedAt: null,
+        actions: []
+      };
+
+      return await post('/incidents', newIncident);
     } catch (error) {
-      console.error('Error creating incident:', error);
-      throw new Error('Failed to create incident');
+      console.error('Create incident error:', error);
+      throw error;
     }
-  },
+  }
 
   // Update incident
-  updateIncident: async (clientId, incidentId, updates) => {
+  async updateIncident(clientId, incidentId, updates) {
     try {
-      const response = await fetchWithAuth(`/incidents/${incidentId}`, {
-        method: 'PATCH',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          ...updates,
-          clientId: Number(clientId),
-          updatedAt: new Date().toISOString(),
-          // If status is being updated to 'resolved', set resolvedAt
-          ...(updates.status === 'resolved' ? { resolvedAt: new Date().toISOString() } : {})
-        })
-      });
-      
-      return response;
+      const updatedIncident = {
+        ...updates,
+        clientId: Number(clientId),
+        updatedAt: new Date().toISOString(),
+        // If status is being updated to 'resolved', set resolvedAt
+        ...(updates.status === 'resolved' ? { resolvedAt: new Date().toISOString() } : {})
+      };
+
+      return await patch(`/incidents/${incidentId}`, updatedIncident);
     } catch (error) {
-      console.error('Error updating incident:', error);
+      console.error('Update incident error:', error);
       if (error.status === 404) throw new Error('Incident not found');
-      throw new Error('Failed to update incident');
+      throw error;
     }
-  },
+  }
 
   // Add action to incident
-  addAction: async (clientId, incidentId, actionData) => {
+  async addAction(clientId, incidentId, actionData) {
     try {
       validateRequired(actionData, ['type', 'description', 'performedBy']);
 
-      const incident = await incidentApi.getIncident(clientId, incidentId);
+      const incident = await this.getIncident(clientId, incidentId);
       const newAction = {
         id: Math.max(0, ...incident.actions.map(a => a.id)) + 1,
         timestamp: new Date().toISOString(),
         ...actionData
       };
 
-      // eslint-disable-next-line no-unused-vars
-      const response = await fetchWithAuth(`/incidents/${incidentId}`, {
-        method: 'PATCH',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          actions: [...incident.actions, newAction],
-          updatedAt: new Date().toISOString()
-        })
-      });
+      const updates = {
+        actions: [...incident.actions, newAction],
+        updatedAt: new Date().toISOString()
+      };
+
+      await patch(`/incidents/${incidentId}`, updates);
       
       return newAction;
     } catch (error) {
-      console.error('Error adding action:', error);
-      throw new Error('Failed to add action');
+      console.error('Add action error:', error);
+      throw error;
     }
-  },
+  }
 
   // Get incident types
-  getIncidentTypes: async () => {
+  async getIncidentTypes() {
     try {
-      const response = await fetchWithAuth('/incidentTypes');
-      return response;
+      return await get('/incidentTypes');
     } catch (error) {
-      console.error('Error fetching incident types:', error);
-      throw new Error('Failed to fetch incident types');
+      console.error('Get incident types error:', error);
+      throw error;
     }
-  },
+  }
 
   // Get incident severities
-  getIncidentSeverities: async () => {
+  async getIncidentSeverities() {
     try {
-      const response = await fetchWithAuth('/incidentSeverities');
-      return response;
+      return await get('/incidentSeverities');
     } catch (error) {
-      console.error('Error fetching incident severities:', error);
-      throw new Error('Failed to fetch incident severities');
+      console.error('Get incident severities error:', error);
+      throw error;
     }
-  },
+  }
 
   // Get incident statuses
-  getIncidentStatuses: async () => {
+  async getIncidentStatuses() {
     try {
-      const response = await fetchWithAuth('/incidentStatuses');
-      return response;
+      return await get('/incidentStatuses');
     } catch (error) {
-      console.error('Error fetching incident statuses:', error);
-      throw new Error('Failed to fetch incident statuses');
+      console.error('Get incident statuses error:', error);
+      throw error;
     }
-  },
+  }
 
   // Get incident priorities
-  getIncidentPriorities: async () => {
+  async getIncidentPriorities() {
     try {
-      const response = await fetchWithAuth('/incidentPriorities');
-      return response;
+      return await get('/incidentPriorities');
     } catch (error) {
-      console.error('Error fetching incident priorities:', error);
-      throw new Error('Failed to fetch incident priorities');
+      console.error('Get incident priorities error:', error);
+      throw error;
     }
-  },
+  }
 
   // Get action types
-  getActionTypes: async () => {
+  async getActionTypes() {
     try {
-      const response = await fetchWithAuth('/actionTypes');
-      return response;
+      return await get('/actionTypes');
     } catch (error) {
-      console.error('Error fetching action types:', error);
-      throw new Error('Failed to fetch action types');
+      console.error('Get action types error:', error);
+      throw error;
     }
-  },
+  }
 
   // Get teams
-  getTeams: async () => {
+  async getTeams() {
     try {
-      const response = await fetchWithAuth('/teams');
-      return response;
+      return await get('/teams');
     } catch (error) {
-      console.error('Error fetching teams:', error);
-      throw new Error('Failed to fetch teams');
+      console.error('Get teams error:', error);
+      throw error;
     }
-  },
+  }
 
   // Get system types
-  getSystemTypes: async () => {
+  async getSystemTypes() {
     try {
-      const response = await fetchWithAuth('/systemTypes');
-      return response;
+      return await get('/systemTypes');
     } catch (error) {
-      console.error('Error fetching system types:', error);
-      throw new Error('Failed to fetch system types');
+      console.error('Get system types error:', error);
+      throw error;
     }
-  },
+  }
 
   // Get incident statistics
-  getIncidentStats: async (clientId) => {
+  async getIncidentStats(clientId) {
     try {
       const [incidents, incidentTypes] = await Promise.all([
-        incidentApi.getIncidents(clientId),
-        incidentApi.getIncidentTypes()
+        this.getIncidents(clientId),
+        this.getIncidentTypes()
       ]);
       
       if (!Array.isArray(incidents) || incidents.length === 0) {
@@ -241,10 +222,10 @@ const incidentApi = {
         }), {})
       };
     } catch (error) {
-      console.error('Error getting incident stats:', error);
+      console.error('Get incident stats error:', error);
       return DEFAULT_STATS;
     }
   }
-};
+}
 
-export default incidentApi;
+export default new IncidentApi();

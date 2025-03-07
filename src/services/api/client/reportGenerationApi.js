@@ -1,9 +1,15 @@
-import { delay } from '../../apiHelpers';
+// src/services/api/report/ReportGenerationApi.js
+import { BaseApiService, delay } from '../BaseApiService';
 import { jsPDF } from 'jspdf';
 import 'jspdf-autotable';
 
-const reportGenerationApi = {
-  generateExecutiveReport: async (data) => {
+class ReportGenerationApi extends BaseApiService {
+  constructor() {
+    // Using the same pattern as other APIs
+    super('/reports', 'reports');
+  }
+
+  async generateExecutiveReport(data) {
     await delay(1000); // Simulate processing time
 
     const doc = new jsPDF();
@@ -135,6 +141,6 @@ const reportGenerationApi = {
 
     return doc;
   }
-};
+}
 
-export default reportGenerationApi;
+export default new ReportGenerationApi();

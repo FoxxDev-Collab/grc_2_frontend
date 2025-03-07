@@ -1,32 +1,33 @@
-/* eslint-disable no-unused-vars */
-import { validateRequired, checkExists } from '../../apiHelpers';
-import riskAssessmentApi from '../../api/client/RiskAssessmentApi';
+// src/services/api/security/SecurityInitiativesApi.js
+import { BaseApiService } from '../BaseApiService';
+import { validateRequired, get, post, patch, del } from '../../utils/apiHelpers';
+import riskAssessmentApi from '../client/RiskAssessmentApi';
 
-const API_URL = 'http://localhost:3001';
+// Constants moved outside the class definition for easier access
+export const INITIATIVE_STATUS = ['Planning', 'In Progress', 'Completed', 'On Hold', 'Cancelled'];
+export const PHASES = ['Assessment', 'Design', 'Implementation', 'Testing', 'Deployment', 'Review'];
 
-const INITIATIVE_STATUS = ['Planning', 'In Progress', 'Completed', 'On Hold', 'Cancelled'];
-const PHASES = ['Assessment', 'Design', 'Implementation', 'Testing', 'Deployment', 'Review'];
+class SecurityInitiativesApi extends BaseApiService {
+  constructor() {
+    // Using the same pattern as other APIs
+    super('/security-initiatives', 'security-initiatives');
+  }
 
-const securityInitiativesApi = {
   // Get all initiatives for a client
-  getInitiatives: async (clientId) => {
+  async getInitiatives(clientId) {
     validateRequired({ clientId }, ['clientId']);
     const numericClientId = Number(clientId);
 
     try {
-      const response = await fetch(`${API_URL}/security-initiatives?clientId=${numericClientId}`);
-      if (!response.ok) {
-        throw new Error('Failed to fetch initiatives');
-      }
-      return await response.json();
+      return await get(`/security-initiatives?clientId=${numericClientId}`);
     } catch (error) {
-      console.error('Error fetching initiatives:', error);
+      console.error('Get initiatives error:', error);
       return [];
     }
-  },
+  }
 
   // Get initiatives by objective
-  getInitiativesByObjective: async (clientId, objectiveId) => {
+  async getInitiativesByObjective(clientId, objectiveId) {
     validateRequired({ clientId, objectiveId }, ['clientId', 'objectiveId']);
     const numericClientId = Number(clientId);
 
@@ -40,28 +41,20 @@ const securityInitiativesApi = {
         }
       }
 
-      const response = await fetch(`${API_URL}/security-initiatives?clientId=${numericClientId}&objectiveId=${objectiveId}`);
-      if (!response.ok) {
-        throw new Error('Failed to fetch initiatives');
-      }
-      return await response.json();
+      return await get(`/security-initiatives?clientId=${numericClientId}&objectiveId=${objectiveId}`);
     } catch (error) {
-      console.error('Error fetching initiatives by objective:', error);
+      console.error('Get initiatives by objective error:', error);
       return [];
     }
-  },
+  }
 
   // Get single initiative
-  getInitiative: async (clientId, initiativeId) => {
+  async getInitiative(clientId, initiativeId) {
     validateRequired({ clientId, initiativeId }, ['clientId', 'initiativeId']);
     const numericClientId = Number(clientId);
 
     try {
-      const response = await fetch(`${API_URL}/security-initiatives/${initiativeId}?clientId=${numericClientId}`);
-      if (!response.ok) {
-        throw new Error('Initiative not found');
-      }
-      const initiative = await response.json();
+      const initiative = await get(`/security-initiatives/${initiativeId}?clientId=${numericClientId}`);
 
       // If this initiative is linked to a risk-based objective, include risk info
       if (initiative.objectiveId && initiative.objectiveId.startsWith('risk-')) {
@@ -82,13 +75,13 @@ const securityInitiativesApi = {
 
       return initiative;
     } catch (error) {
-      console.error('Error fetching initiative:', error);
+      console.error('Get initiative error:', error);
       throw error;
     }
-  },
+  }
 
   // Create new initiative
-  createInitiative: async (clientId, initiativeData) => {
+  async createInitiative(clientId, initiativeData) {
     validateRequired(initiativeData, ['name', 'phase', 'timeline', 'objectiveId']);
     validateRequired({ clientId }, ['clientId']);
 
@@ -112,50 +105,40 @@ const securityInitiativesApi = {
         }
       }
 
-      const response = await fetch(`${API_URL}/security-initiatives`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          clientId: Number(clientId),
-          ...initiativeData,
-          milestones: initiativeData.milestones || [],
-          resources: initiativeData.resources || {
-            team: [],
-            budget: '0',
-            tools: []
-          }
-        })
-      });
+      const newInitiative = {
+        clientId: Number(clientId),
+        ...initiativeData,
+        milestones: initiativeData.milestones || [],
+        resources: initiativeData.resources || {
+          team: [],
+          budget: '0',
+          tools: []
+        }
+      };
 
-      if (!response.ok) {
-        throw new Error('Failed to create initiative');
-      }
-
-      const newInitiative = await response.json();
+      const createdInitiative = await post('/security-initiatives', newInitiative);
 
       // Create the objective-initiative mapping
       await riskAssessmentApi.createObjectiveInitiativeMapping(
         clientId, 
         initiativeData.objectiveId, 
-        newInitiative.id
+        createdInitiative.id
       );
 
-      return newInitiative;
+      return createdInitiative;
     } catch (error) {
-      console.error('Error creating initiative:', error);
+      console.error('Create initiative error:', error);
       throw error;
     }
-  },
+  }
 
   // Update initiative
-  updateInitiative: async (clientId, initiativeId, updates) => {
+  async updateInitiative(clientId, initiativeId, updates) {
     validateRequired({ clientId, initiativeId }, ['clientId', 'initiativeId']);
     const numericClientId = Number(clientId);
 
     try {
-      const initiative = await securityInitiativesApi.getInitiative(clientId, initiativeId);
+      const initiative = await this.getInitiative(clientId, initiativeId);
 
       if (updates.phase && !PHASES.includes(updates.phase)) {
         throw new Error('Invalid phase');
@@ -194,43 +177,27 @@ const securityInitiativesApi = {
         );
       }
 
-      const response = await fetch(`${API_URL}/security-initiatives/${initiativeId}`, {
-        method: 'PATCH',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          clientId: numericClientId,
-          ...updates
-        })
-      });
+      const updatedInitiative = {
+        clientId: numericClientId,
+        ...updates
+      };
 
-      if (!response.ok) {
-        throw new Error('Failed to update initiative');
-      }
-
-      return await response.json();
+      return await patch(`/security-initiatives/${initiativeId}`, updatedInitiative);
     } catch (error) {
-      console.error('Error updating initiative:', error);
+      console.error('Update initiative error:', error);
       throw error;
     }
-  },
+  }
 
   // Delete initiative
-  deleteInitiative: async (clientId, initiativeId) => {
+  async deleteInitiative(clientId, initiativeId) {
     validateRequired({ clientId, initiativeId }, ['clientId', 'initiativeId']);
 
     try {
       // Get the initiative to find its objectiveId
-      const initiative = await securityInitiativesApi.getInitiative(clientId, initiativeId);
+      const initiative = await this.getInitiative(clientId, initiativeId);
       
-      const response = await fetch(`${API_URL}/security-initiatives/${initiativeId}?clientId=${clientId}`, {
-        method: 'DELETE'
-      });
-
-      if (!response.ok) {
-        throw new Error('Failed to delete initiative');
-      }
+      await del(`/security-initiatives/${initiativeId}?clientId=${clientId}`);
 
       // Delete the objective-initiative mapping if it exists
       if (initiative && initiative.objectiveId) {
@@ -243,151 +210,113 @@ const securityInitiativesApi = {
 
       return { success: true, message: 'Security initiative deleted successfully' };
     } catch (error) {
-      console.error('Error deleting initiative:', error);
+      console.error('Delete initiative error:', error);
       throw error;
     }
-  },
+  }
 
   // Add milestone
-  addMilestone: async (clientId, initiativeId, milestoneData) => {
+  async addMilestone(clientId, initiativeId, milestoneData) {
     validateRequired({ clientId, initiativeId }, ['clientId', 'initiativeId']);
     validateRequired(milestoneData, ['name']);
 
     try {
-      const response = await fetch(`${API_URL}/security-initiatives/${initiativeId}/milestones`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          clientId: Number(clientId),
-          ...milestoneData,
-          completed: milestoneData.completed || false
-        })
-      });
+      const newMilestone = {
+        clientId: Number(clientId),
+        ...milestoneData,
+        completed: milestoneData.completed || false
+      };
 
-      if (!response.ok) {
-        throw new Error('Failed to add milestone');
-      }
-
-      const result = await response.json();
+      const result = await post(`/security-initiatives/${initiativeId}/milestones`, newMilestone);
 
       // If all milestones are completed, update initiative status
-      const initiative = await securityInitiativesApi.getInitiative(clientId, initiativeId);
+      const initiative = await this.getInitiative(clientId, initiativeId);
       const allCompleted = initiative.milestones.every(m => m.completed);
       if (allCompleted) {
-        await securityInitiativesApi.updateInitiative(clientId, initiativeId, { status: 'Completed' });
+        await this.updateInitiative(clientId, initiativeId, { status: 'Completed' });
       }
 
       return result;
     } catch (error) {
-      console.error('Error adding milestone:', error);
+      console.error('Add milestone error:', error);
       throw error;
     }
-  },
+  }
 
   // Update milestone
-  updateMilestone: async (clientId, initiativeId, milestoneId, updates) => {
+  async updateMilestone(clientId, initiativeId, milestoneId, updates) {
     validateRequired({ clientId, initiativeId, milestoneId }, ['clientId', 'initiativeId', 'milestoneId']);
 
     try {
-      const response = await fetch(`${API_URL}/security-initiatives/${initiativeId}/milestones/${milestoneId}`, {
-        method: 'PATCH',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          clientId: Number(clientId),
-          ...updates
-        })
-      });
+      const updatedMilestone = {
+        clientId: Number(clientId),
+        ...updates
+      };
 
-      if (!response.ok) {
-        throw new Error('Failed to update milestone');
-      }
-
-      const result = await response.json();
+      const result = await patch(`/security-initiatives/${initiativeId}/milestones/${milestoneId}`, updatedMilestone);
 
       // If all milestones are completed, update initiative status
-      const initiative = await securityInitiativesApi.getInitiative(clientId, initiativeId);
+      const initiative = await this.getInitiative(clientId, initiativeId);
       const allCompleted = initiative.milestones.every(m => m.completed);
       if (allCompleted) {
-        await securityInitiativesApi.updateInitiative(clientId, initiativeId, { status: 'Completed' });
+        await this.updateInitiative(clientId, initiativeId, { status: 'Completed' });
       }
 
       return result;
     } catch (error) {
-      console.error('Error updating milestone:', error);
+      console.error('Update milestone error:', error);
       throw error;
     }
-  },
+  }
 
   // Delete milestone
-  deleteMilestone: async (clientId, initiativeId, milestoneId) => {
+  async deleteMilestone(clientId, initiativeId, milestoneId) {
     validateRequired({ clientId, initiativeId, milestoneId }, ['clientId', 'initiativeId', 'milestoneId']);
 
     try {
-      const response = await fetch(`${API_URL}/security-initiatives/${initiativeId}/milestones/${milestoneId}`, {
-        method: 'DELETE',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          clientId: Number(clientId)
-        })
-      });
+      const body = {
+        clientId: Number(clientId)
+      };
 
-      if (!response.ok) {
-        throw new Error('Failed to delete milestone');
-      }
+      await del(`/security-initiatives/${initiativeId}/milestones/${milestoneId}`, body);
 
       return { success: true, message: 'Milestone deleted successfully' };
     } catch (error) {
-      console.error('Error deleting milestone:', error);
+      console.error('Delete milestone error:', error);
       throw error;
     }
-  },
+  }
 
   // Update resources
-  updateResources: async (clientId, initiativeId, resources) => {
+  async updateResources(clientId, initiativeId, resources) {
     validateRequired({ clientId, initiativeId }, ['clientId', 'initiativeId']);
     validateRequired(resources, ['team', 'budget', 'tools']);
 
     try {
-      const response = await fetch(`${API_URL}/security-initiatives/${initiativeId}/resources`, {
-        method: 'PATCH',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          clientId: Number(clientId),
-          resources
-        })
-      });
+      const updatedResources = {
+        clientId: Number(clientId),
+        resources
+      };
 
-      if (!response.ok) {
-        throw new Error('Failed to update resources');
-      }
-
-      return await response.json();
+      return await patch(`/security-initiatives/${initiativeId}/resources`, updatedResources);
     } catch (error) {
-      console.error('Error updating resources:', error);
+      console.error('Update resources error:', error);
       throw error;
     }
-  },
+  }
 
   // Get initiative statuses
-  getInitiativeStatuses: async () => {
+  async getInitiativeStatuses() {
     return [...INITIATIVE_STATUS];
-  },
+  }
 
   // Get phases
-  getPhases: async () => {
+  async getPhases() {
     return [...PHASES];
-  },
+  }
 
   // Promote objective to initiative
-  promoteObjectiveToInitiative: async (clientId, objectiveId, initiativeData = {}) => {
+  async promoteObjectiveToInitiative(clientId, objectiveId, initiativeData = {}) {
     validateRequired({ clientId, objectiveId }, ['clientId', 'objectiveId']);
     
     try {
@@ -425,14 +354,12 @@ const securityInitiativesApi = {
       };
       
       // Create the initiative
-      const initiative = await securityInitiativesApi.createInitiative(clientId, mergedInitiativeData);
-      
-      return initiative;
+      return await this.createInitiative(clientId, mergedInitiativeData);
     } catch (error) {
-      console.error('Error promoting objective to initiative:', error);
+      console.error('Promote objective to initiative error:', error);
       throw error;
     }
   }
-};
+}
 
-export default securityInitiativesApi;
+export default new SecurityInitiativesApi();
