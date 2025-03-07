@@ -1,29 +1,30 @@
 /* eslint-disable no-unused-vars */
 // src/services/api/client/ClientApi.js
+import { BaseApiService } from '../BaseApiService';
 import { validateRequired, validateEmail, get, post, put, del } from '../../utils/apiHelpers';
 import { IS_MOCK } from '../../config';
-
-// Define direct API URL constant (matching AuditApi.js approach)
-const API_URL = 'http://localhost:3001';
 
 // Helper function to get current date in ISO format
 const getCurrentDate = () => new Date().toISOString();
 
-class ClientApi {
+class ClientApi extends BaseApiService {
   constructor() {
-    this.endpoint = '/clients';
+    // Using the same pattern as AuthApi - BaseApiService(endpoint, serviceName)
+    super('/clients', 'clients');
+    
+    // We don't rely on this.endpoint for building paths
+    // Instead we use explicit paths in each method
   }
 
   // Get all clients
   async getClients() {
     try {
-      const response = await fetch(`${API_URL}${this.endpoint}`);
-      if (!response.ok) {
-        throw new Error('Failed to fetch clients');
-      }
-      return await response.json();
+      // Use the full path including the leading slash
+      // The endpoint property already includes the leading slash from BaseApiService
+      return await get('/clients');
     } catch (error) {
-      throw new Error(`Failed to fetch clients: ${error.message}`);
+      console.error('Get clients error:', error);
+      throw error;
     }
   }
 
@@ -31,13 +32,11 @@ class ClientApi {
   async getClient(id) {
     const numericId = Number(id);
     try {
-      const response = await fetch(`${API_URL}${this.endpoint}/${numericId}`);
-      if (!response.ok) {
-        throw new Error('Failed to fetch client');
-      }
-      return await response.json();
+      // Use explicit path pattern
+      return await get(`/clients/${numericId}`);
     } catch (error) {
-      throw new Error(`Failed to fetch client: ${error.message}`);
+      console.error('Get client error:', error);
+      throw error;
     }
   }
 
@@ -65,19 +64,11 @@ class ClientApi {
     };
 
     try {
-      const response = await fetch(`${API_URL}${this.endpoint}`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(newClient)
-      });
-      
-      if (!response.ok) {
-        throw new Error('Failed to create client');
-      }
-      
-      return await response.json();
+      // Use explicit path
+      return await post('/clients', newClient);
     } catch (error) {
-      throw new Error(`Failed to create client: ${error.message}`);
+      console.error('Create client error:', error);
+      throw error;
     }
   }
 
@@ -99,19 +90,10 @@ class ClientApi {
         lastActivity: getCurrentDate()
       };
 
-      const response = await fetch(`${API_URL}${this.endpoint}/${numericId}`, {
-        method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(updatedClient)
-      });
-      
-      if (!response.ok) {
-        throw new Error('Failed to update client');
-      }
-      
-      return await response.json();
+      return await put(`/clients/${numericId}`, updatedClient);
     } catch (error) {
-      throw new Error(`Failed to update client: ${error.message}`);
+      console.error('Update client error:', error);
+      throw error;
     }
   }
 
@@ -119,17 +101,11 @@ class ClientApi {
   async deleteClient(id) {
     const numericId = Number(id);
     try {
-      const response = await fetch(`${API_URL}${this.endpoint}/${numericId}`, {
-        method: 'DELETE'
-      });
-      
-      if (!response.ok) {
-        throw new Error('Failed to delete client');
-      }
-      
+      await del(`/clients/${numericId}`);
       return { success: true };
     } catch (error) {
-      throw new Error(`Failed to delete client: ${error.message}`);
+      console.error('Delete client error:', error);
+      throw error;
     }
   }
 
@@ -151,7 +127,8 @@ class ClientApi {
         }
       };
     } catch (error) {
-      throw new Error(`Failed to get client compliance: ${error.message}`);
+      console.error('Get client compliance error:', error);
+      throw error;
     }
   }
 
@@ -172,13 +149,10 @@ class ClientApi {
     }
     
     try {
-      const response = await fetch(`${API_URL}${this.endpoint}/industries`);
-      if (!response.ok) {
-        throw new Error('Failed to fetch industries');
-      }
-      return await response.json();
+      return await get('/clients/industries');
     } catch (error) {
-      throw new Error(`Failed to fetch industries: ${error.message}`);
+      console.error('Get industries error:', error);
+      throw error;
     }
   }
 
@@ -194,13 +168,10 @@ class ClientApi {
     }
     
     try {
-      const response = await fetch(`${API_URL}${this.endpoint}/clientSizes`);
-      if (!response.ok) {
-        throw new Error('Failed to fetch client sizes');
-      }
-      return await response.json();
+      return await get('/clients/clientSizes');
     } catch (error) {
-      throw new Error(`Failed to fetch client sizes: ${error.message}`);
+      console.error('Get client sizes error:', error);
+      throw error;
     }
   }
 
@@ -216,13 +187,10 @@ class ClientApi {
     }
     
     try {
-      const response = await fetch(`${API_URL}${this.endpoint}/clientStatuses`);
-      if (!response.ok) {
-        throw new Error('Failed to fetch client statuses');
-      }
-      return await response.json();
+      return await get('/clients/clientStatuses');
     } catch (error) {
-      throw new Error(`Failed to fetch client statuses: ${error.message}`);
+      console.error('Get client statuses error:', error);
+      throw error;
     }
   }
 
@@ -231,14 +199,10 @@ class ClientApi {
     const numericClientId = Number(clientId);
     
     try {
-      // Changed from /clients/departments to /departments to match the server's endpoint structure
-      const response = await fetch(`${API_URL}/departments?clientId=${numericClientId}`);
-      if (!response.ok) {
-        throw new Error('Failed to fetch departments');
-      }
-      return await response.json();
+      return await get(`/departments?clientId=${numericClientId}`);
     } catch (error) {
-      throw new Error(`Failed to fetch departments: ${error.message}`);
+      console.error('Get departments error:', error);
+      throw error;
     }
   }
 
@@ -262,20 +226,10 @@ class ClientApi {
     }
 
     try {
-      // Changed from /clients/departments to /departments to match the server's endpoint structure
-      const response = await fetch(`${API_URL}/departments`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(newDepartment)
-      });
-      
-      if (!response.ok) {
-        throw new Error('Failed to create department');
-      }
-      
-      return await response.json();
+      return await post('/departments', newDepartment);
     } catch (error) {
-      throw new Error(`Failed to create department: ${error.message}`);
+      console.error('Create department error:', error);
+      throw error;
     }
   }
 
@@ -285,12 +239,7 @@ class ClientApi {
 
     try {
       // Get current department data
-      // Changed from /clients/departments to /departments to match the server's endpoint structure
-      const response = await fetch(`${API_URL}/departments/${numericDepartmentId}`);
-      if (!response.ok) {
-        throw new Error('Failed to fetch department');
-      }
-      const currentDepartment = await response.json();
+      const currentDepartment = await get(`/departments/${numericDepartmentId}`);
 
       // Verify department belongs to client
       if (currentDepartment.clientId !== numericClientId) {
@@ -314,20 +263,10 @@ class ClientApi {
         lastUpdated: getCurrentDate()
       };
 
-      // Changed from /clients/departments to /departments to match the server's endpoint structure
-      const updateResponse = await fetch(`${API_URL}/departments/${numericDepartmentId}`, {
-        method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(updatedDepartment)
-      });
-      
-      if (!updateResponse.ok) {
-        throw new Error('Failed to update department');
-      }
-      
-      return await updateResponse.json();
+      return await put(`/departments/${numericDepartmentId}`, updatedDepartment);
     } catch (error) {
-      throw new Error(`Failed to update department: ${error.message}`);
+      console.error('Update department error:', error);
+      throw error;
     }
   }
 
@@ -337,29 +276,17 @@ class ClientApi {
 
     try {
       // Verify department belongs to client before deletion
-      // Changed from /clients/departments to /departments to match the server's endpoint structure
-      const response = await fetch(`${API_URL}/departments/${numericDepartmentId}`);
-      if (!response.ok) {
-        throw new Error('Failed to fetch department');
-      }
-      const department = await response.json();
+      const department = await get(`/departments/${numericDepartmentId}`);
       
       if (department.clientId !== numericClientId) {
         throw new Error('Department not found');
       }
 
-      // Changed from /clients/departments to /departments to match the server's endpoint structure
-      const deleteResponse = await fetch(`${API_URL}/departments/${numericDepartmentId}`, {
-        method: 'DELETE'
-      });
-      
-      if (!deleteResponse.ok) {
-        throw new Error('Failed to delete department');
-      }
-      
+      await del(`/departments/${numericDepartmentId}`);
       return { success: true };
     } catch (error) {
-      throw new Error(`Failed to delete department: ${error.message}`);
+      console.error('Delete department error:', error);
+      throw error;
     }
   }
 
@@ -379,13 +306,10 @@ class ClientApi {
     }
     
     try {
-      const response = await fetch(`${API_URL}${this.endpoint}/documentCategories`);
-      if (!response.ok) {
-        throw new Error('Failed to fetch document categories');
-      }
-      return await response.json();
+      return await get('/clients/documentCategories');
     } catch (error) {
-      throw new Error(`Failed to fetch document categories: ${error.message}`);
+      console.error('Get document categories error:', error);
+      throw error;
     }
   }
 
@@ -405,13 +329,10 @@ class ClientApi {
     }
     
     try {
-      const response = await fetch(`${API_URL}${this.endpoint}/documentTypes`);
-      if (!response.ok) {
-        throw new Error('Failed to fetch document types');
-      }
-      return await response.json();
+      return await get('/clients/documentTypes');
     } catch (error) {
-      throw new Error(`Failed to fetch document types: ${error.message}`);
+      console.error('Get document types error:', error);
+      throw error;
     }
   }
 
@@ -419,14 +340,10 @@ class ClientApi {
     const numericClientId = Number(clientId);
     
     try {
-      // Changed from /clients/documents to /documents to match the server's endpoint structure
-      const response = await fetch(`${API_URL}/documents?clientId=${numericClientId}`);
-      if (!response.ok) {
-        throw new Error('Failed to fetch documents');
-      }
-      return await response.json();
+      return await get(`/documents?clientId=${numericClientId}`);
     } catch (error) {
-      throw new Error(`Failed to fetch documents: ${error.message}`);
+      console.error('Get company documents error:', error);
+      throw error;
     }
   }
 
@@ -455,20 +372,10 @@ class ClientApi {
     };
 
     try {
-      // Changed from /clients/documents to /documents to match the server's endpoint structure
-      const response = await fetch(`${API_URL}/documents`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(newDocument)
-      });
-      
-      if (!response.ok) {
-        throw new Error('Failed to upload document');
-      }
-      
-      return await response.json();
+      return await post('/documents', newDocument);
     } catch (error) {
-      throw new Error(`Failed to upload document: ${error.message}`);
+      console.error('Upload document error:', error);
+      throw error;
     }
   }
 
@@ -478,12 +385,7 @@ class ClientApi {
 
     try {
       // Verify document exists and belongs to client
-      // Changed from /clients/documents to /documents to match the server's endpoint structure
-      const response = await fetch(`${API_URL}/documents/${numericDocumentId}`);
-      if (!response.ok) {
-        throw new Error('Failed to fetch document');
-      }
-      const document = await response.json();
+      const document = await get(`/documents/${numericDocumentId}`);
       
       if (document.clientId !== numericClientId) {
         throw new Error('Document not found');
@@ -492,7 +394,8 @@ class ClientApi {
       // In a real implementation, this would handle file download
       return { success: true, message: 'Document download initiated' };
     } catch (error) {
-      throw new Error(`Failed to download document: ${error.message}`);
+      console.error('Download document error:', error);
+      throw error;
     }
   }
 
@@ -502,28 +405,17 @@ class ClientApi {
 
     try {
       // Verify document belongs to client before deletion
-      // Changed from /clients/documents to /documents to match the server's endpoint structure
-      const response = await fetch(`${API_URL}/documents/${numericDocumentId}`);
-      if (!response.ok) {
-        throw new Error('Failed to fetch document');
-      }
-      const document = await response.json();
+      const document = await get(`/documents/${numericDocumentId}`);
       
       if (document.clientId !== numericClientId) {
         throw new Error('Document not found');
       }
 
-      const deleteResponse = await fetch(`${API_URL}/documents/${numericDocumentId}`, {
-        method: 'DELETE'
-      });
-      
-      if (!deleteResponse.ok) {
-        throw new Error('Failed to delete document');
-      }
-      
+      await del(`/documents/${numericDocumentId}`);
       return { success: true };
     } catch (error) {
-      throw new Error(`Failed to delete document: ${error.message}`);
+      console.error('Delete document error:', error);
+      throw error;
     }
   }
 }

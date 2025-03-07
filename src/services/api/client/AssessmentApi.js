@@ -1,59 +1,53 @@
-const API_URL = 'http://localhost:3001';
+// src/services/api/assessment/AssessmentApi.js
+import { BaseApiService } from '../BaseApiService';
+import { get, post, patch, del } from '../../utils/apiHelpers';
 
-const handleError = (error) => {
-  console.error('API Error:', error);
-  throw error;
-};
+class AssessmentApi extends BaseApiService {
+  constructor() {
+    // Using the same pattern as AuthApi - BaseApiService(endpoint, serviceName)
+    super('/assessments', 'assessments');
+    
+    // We don't rely on this.endpoint for building paths
+    // Instead we use explicit paths in each method
+  }
 
-const assessmentApi = {
   // Assessment Plan APIs
-  getAssessmentPlan: async (clientId, systemId) => {
+  async getAssessmentPlan(clientId, systemId) {
     try {
-      const response = await fetch(
-        `${API_URL}/assessmentPlans?clientId=${clientId}&systemId=${systemId}`
-      );
-      if (!response.ok) throw new Error('Failed to fetch assessment plan');
-      const plans = await response.json();
-      return plans[0]; // Return the first matching plan
+      const response = await get(`/assessmentPlans?clientId=${clientId}&systemId=${systemId}`);
+      // Return the first matching plan if it exists
+      return Array.isArray(response) && response.length > 0 ? response[0] : null;
     } catch (error) {
-      return handleError(error);
+      console.error('Get assessment plan error:', error);
+      throw error;
     }
-  },
+  }
 
-  updateAssessmentPlan: async (clientId, systemId, planData) => {
+  async updateAssessmentPlan(clientId, systemId, planData) {
     try {
-      const response = await fetch(
-        `${API_URL}/assessmentPlans/${planData.id}`,
-        {
-          method: 'PATCH',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            ...planData,
-            updatedAt: new Date().toISOString()
-          }),
-        }
-      );
-      if (!response.ok) throw new Error('Failed to update assessment plan');
-      return response.json();
+      const updatedPlan = {
+        ...planData,
+        updatedAt: new Date().toISOString()
+      };
+      
+      return await patch(`/assessmentPlans/${planData.id}`, updatedPlan);
     } catch (error) {
-      return handleError(error);
+      console.error('Update assessment plan error:', error);
+      throw error;
     }
-  },
+  }
 
   // Security Testing APIs
-  getScanResults: async (clientId, systemId) => {
+  async getScanResults(clientId, systemId) {
     try {
-      const response = await fetch(
-        `${API_URL}/scanResults?clientId=${clientId}&systemId=${systemId}`
-      );
-      if (!response.ok) throw new Error('Failed to fetch scan results');
-      return response.json();
+      return await get(`/scanResults?clientId=${clientId}&systemId=${systemId}`);
     } catch (error) {
-      return handleError(error);
+      console.error('Get scan results error:', error);
+      throw error;
     }
-  },
+  }
 
-  uploadScanResults: async (clientId, systemId, formData) => {
+  async uploadScanResults(clientId, systemId, formData) {
     try {
       const newScan = {
         id: `scan-${Date.now()}`,
@@ -74,114 +68,80 @@ const assessmentApi = {
         updatedAt: new Date().toISOString()
       };
 
-      const response = await fetch(
-        `${API_URL}/scanResults`,
-        {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(newScan)
-        }
-      );
-      if (!response.ok) throw new Error('Failed to upload scan results');
-      return response.json();
+      return await post('/scanResults', newScan);
     } catch (error) {
-      return handleError(error);
+      console.error('Upload scan results error:', error);
+      throw error;
     }
-  },
+  }
 
-  deleteScanResult: async (clientId, systemId, scanId) => {
+  async deleteScanResult(clientId, systemId, scanId) {
     try {
-      const response = await fetch(
-        `${API_URL}/scanResults/${scanId}`,
-        {
-          method: 'DELETE'
-        }
-      );
-      if (!response.ok) throw new Error('Failed to delete scan result');
-      return response.json();
+      await del(`/scanResults/${scanId}`);
+      return { success: true };
     } catch (error) {
-      return handleError(error);
+      console.error('Delete scan result error:', error);
+      throw error;
     }
-  },
+  }
 
   // Control Assessment APIs
-  getControlAssessments: async (clientId, systemId) => {
+  async getControlAssessments(clientId, systemId) {
     try {
-      const response = await fetch(
-        `${API_URL}/controls?clientId=${clientId}&systemId=${systemId}`
-      );
-      if (!response.ok) throw new Error('Failed to fetch control assessments');
-      return response.json();
+      return await get(`/controls?clientId=${clientId}&systemId=${systemId}`);
     } catch (error) {
-      return handleError(error);
+      console.error('Get control assessments error:', error);
+      throw error;
     }
-  },
+  }
 
-  updateControlAssessment: async (clientId, systemId, controlData) => {
+  async updateControlAssessment(clientId, systemId, controlData) {
     try {
-      const response = await fetch(
-        `${API_URL}/controls/${controlData.id}`,
-        {
-          method: 'PATCH',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            ...controlData,
-            updatedAt: new Date().toISOString()
-          }),
-        }
-      );
-      if (!response.ok) throw new Error('Failed to update control assessment');
-      return response.json();
+      const updatedControl = {
+        ...controlData,
+        updatedAt: new Date().toISOString()
+      };
+      
+      return await patch(`/controls/${controlData.id}`, updatedControl);
     } catch (error) {
-      return handleError(error);
+      console.error('Update control assessment error:', error);
+      throw error;
     }
-  },
+  }
 
   // Documentation Review APIs
-  getDocumentationReview: async (clientId, systemId) => {
+  async getDocumentationReview(clientId, systemId) {
     try {
-      const response = await fetch(
-        `${API_URL}/assessmentDocuments?clientId=${clientId}&systemId=${systemId}`
-      );
-      if (!response.ok) throw new Error('Failed to fetch documentation review');
-      return response.json();
+      return await get(`/assessmentDocuments?clientId=${clientId}&systemId=${systemId}`);
     } catch (error) {
-      return handleError(error);
+      console.error('Get documentation review error:', error);
+      throw error;
     }
-  },
+  }
 
-  updateDocumentReview: async (clientId, systemId, documentData) => {
+  async updateDocumentReview(clientId, systemId, documentData) {
     try {
-      const response = await fetch(
-        `${API_URL}/assessmentDocuments/${documentData.id}`,
-        {
-          method: 'PATCH',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            ...documentData,
-            updatedAt: new Date().toISOString()
-          }),
-        }
-      );
-      if (!response.ok) throw new Error('Failed to update document review');
-      return response.json();
+      const updatedDocument = {
+        ...documentData,
+        updatedAt: new Date().toISOString()
+      };
+      
+      return await patch(`/assessmentDocuments/${documentData.id}`, updatedDocument);
     } catch (error) {
-      return handleError(error);
+      console.error('Update document review error:', error);
+      throw error;
     }
-  },
+  }
 
-  getDocumentDownloadUrl: async (clientId, systemId, documentId) => {
+  async getDocumentDownloadUrl(clientId, systemId, documentId) {
     try {
-      const response = await fetch(
-        `${API_URL}/assessmentDocuments/${documentId}`
-      );
-      if (!response.ok) throw new Error('Failed to get document download URL');
-      const doc = await response.json();
+      const doc = await get(`/assessmentDocuments/${documentId}`);
       return doc.downloadUrl || '#';
     } catch (error) {
-      return handleError(error);
+      console.error('Get document download URL error:', error);
+      throw error;
     }
-  },
-};
+  }
+}
 
-export default assessmentApi;
+export default new AssessmentApi();
