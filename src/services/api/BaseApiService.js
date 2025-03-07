@@ -1,6 +1,7 @@
 // src/services/api/BaseApiService.js
 import { get, post, put, patch, del, validateRequired } from '../utils/apiHelpers';
 import { IS_MOCK, API_BASE_URL } from '../config';
+import { unwrapResponse } from '../utils/apiResponseHandler';
 
 /**
  * Utility function to create a delay with exponential backoff and jitter
@@ -151,7 +152,8 @@ export class BaseApiService {
     
     for (let attempt = 0; attempt <= maxRetries; attempt++) {
       try {
-        return await requestFn();
+        const response = await requestFn();
+        return unwrapResponse(response);
       } catch (error) {
         lastError = error;
         

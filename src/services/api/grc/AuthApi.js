@@ -2,6 +2,7 @@
 // src/services/api/grc/AuthApi.js
 import { BaseApiService } from '../BaseApiService';
 import { validateRequired, validateEmail, post, get } from '../../utils/apiHelpers';
+import { unwrapResponse } from '../../utils/apiResponseHandler';
 
 class AuthApi extends BaseApiService {
   constructor() {
@@ -17,12 +18,14 @@ class AuthApi extends BaseApiService {
       // Don't include this.baseUrl since apiHelpers.fetchWithAuth already adds API_BASE_URL
       const endpoint = '/auth/login';
       const result = await post(endpoint, { email, password });
+
+      const unwrappedResult = unwrapResponse(result);
       
       // Store user info and token in localStorage
-      localStorage.setItem('user', JSON.stringify(result.user));
-      localStorage.setItem('token', result.token);
+      localStorage.setItem('user', JSON.stringify(unwrappedResult.user));
+      localStorage.setItem('token', unwrappedResult.token);
       
-      return result;
+      return unwrappedResult;
     } catch (error) {
       console.error('Login error:', error);
       throw error;
@@ -50,9 +53,9 @@ class AuthApi extends BaseApiService {
   // Get current user
   async getCurrentUser() {
     try {
-      // Don't include this.baseUrl since apiHelpers.fetchWithAuth already adds API_BASE_URL
       const endpoint = '/auth/me';
-      return await get(endpoint);
+      const response = await get(endpoint);
+      return unwrapResponse(response);
     } catch (error) {
       console.error('Get current user error:', error);
       throw error;

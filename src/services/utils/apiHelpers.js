@@ -11,6 +11,27 @@ export class ApiError extends Error {
   }
 }
 
+// Add a response unwrapper
+export const unwrapResponse = (response) => {
+  // If response is already unwrapped or null/undefined
+  if (!response || typeof response !== 'object' || !('success' in response)) {
+    return response;
+  }
+  
+  // Check if it's a success response with data
+  if (response.success && 'data' in response) {
+    return response.data;
+  }
+  
+  // If it's an error response, throw an error with the message
+  if (!response.success && response.message) {
+    throw new ApiError(response.message, response.status || 500);
+  }
+  
+  // Fallback: return the whole response
+  return response;
+};
+
 // Request interceptor
 const requestInterceptor = (options) => {
   // Add authentication, logging, etc.
@@ -23,7 +44,11 @@ const responseInterceptor = async (response) => {
     const error = await response.json().catch(() => ({}));
     throw new ApiError(error.message || 'API request failed', response.status, error);
   }
-  return response.json();
+  
+  const jsonResponse = await response.json();
+  
+  // Unwrap the response here to provide consistent data to all callers
+  return unwrapResponse(jsonResponse);
 };
 
 // Base fetch function

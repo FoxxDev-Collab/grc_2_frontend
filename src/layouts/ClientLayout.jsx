@@ -100,16 +100,16 @@ const ClientLayout = () => {
   // Reordered menu items according to the requested flow
   const menuItems = [
     { text: 'Dashboard', icon: <DashboardIcon />, path: `/client/${clientId}/dashboard` },
-    // Company menu item is handled separately in the drawer
-    { text: 'Assets', icon: <InventoryIcon />, path: `/client/${clientId}/assets` },
     { text: 'GRC Process', icon: <AccountTreeIcon />, path: `/client/${clientId}/grc-process` },
+    // Company menu item is handled separately in the drawer
+    { text: 'Asset Management', icon: <InventoryIcon />, path: `/client/${clientId}/assets` },
     { text: 'Security Assessments', icon: <SecurityIcon />, path: `/client/${clientId}/assessments` },
-    { text: 'Audits', icon: <GavelIcon />, path: `/client/${clientId}/audits` },
+    { text: 'Security Audits', icon: <GavelIcon />, path: `/client/${clientId}/audits` },
     // Security Strategy menu item is handled separately in the drawer
     { text: 'ATO Systems', icon: <ComputerIcon />, path: `/client/${clientId}/systems` },
-    { text: 'Reports', icon: <AssessmentIcon />, path: `/client/${clientId}/reports` },
-    { text: 'Incidents', icon: <ReportIcon />, path: `/client/${clientId}/incidents` },
-    { text: 'Users', icon: <PeopleIcon />, path: `/client/${clientId}/users` },
+    { text: 'Security Reports', icon: <AssessmentIcon />, path: `/client/${clientId}/reports` },
+    { text: 'Security Incidents', icon: <ReportIcon />, path: `/client/${clientId}/incidents` },
+    { text: 'Manage Users', icon: <PeopleIcon />, path: `/client/${clientId}/users` },
   ];
 
   const companySubMenuItems = [
@@ -222,30 +222,6 @@ const ClientLayout = () => {
           </>
         )}
 
-        {/* Assets */}
-        <ListItem disablePadding>
-          <ListItemButton 
-            onClick={() => navigate(`/client/${clientId}/assets`)}
-            selected={location.pathname === `/client/${clientId}/assets`}
-            sx={{
-              minHeight: 48,
-              justifyContent: isSystemRoute ? 'center' : 'initial',
-              px: 2.5,
-            }}
-          >
-            <ListItemIcon
-              sx={{
-                minWidth: 0,
-                mr: isSystemRoute ? 0 : 3,
-                justifyContent: 'center',
-              }}
-            >
-              <InventoryIcon />
-            </ListItemIcon>
-            {!isSystemRoute && <ListItemText primary="Assets" />}
-          </ListItemButton>
-        </ListItem>
-
         {/* GRC Process */}
         <ListItem disablePadding>
           <ListItemButton 
@@ -267,6 +243,31 @@ const ClientLayout = () => {
               <AccountTreeIcon />
             </ListItemIcon>
             {!isSystemRoute && <ListItemText primary="GRC Process" />}
+          </ListItemButton>
+        </ListItem>
+
+
+        {/* Assets */}
+        <ListItem disablePadding>
+          <ListItemButton 
+            onClick={() => navigate(`/client/${clientId}/assets`)}
+            selected={location.pathname === `/client/${clientId}/assets`}
+            sx={{
+              minHeight: 48,
+              justifyContent: isSystemRoute ? 'center' : 'initial',
+              px: 2.5,
+            }}
+          >
+            <ListItemIcon
+              sx={{
+                minWidth: 0,
+                mr: isSystemRoute ? 0 : 3,
+                justifyContent: 'center',
+              }}
+            >
+              <InventoryIcon />
+            </ListItemIcon>
+            {!isSystemRoute && <ListItemText primary="Asset Management" />}
           </ListItemButton>
         </ListItem>
 
@@ -314,7 +315,7 @@ const ClientLayout = () => {
             >
               <GavelIcon />
             </ListItemIcon>
-            {!isSystemRoute && <ListItemText primary="Audits" />}
+            {!isSystemRoute && <ListItemText primary="Security Audits" />}
           </ListItemButton>
         </ListItem>
 

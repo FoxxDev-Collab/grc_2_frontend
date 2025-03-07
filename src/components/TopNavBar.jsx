@@ -28,6 +28,7 @@ import {
   BookOnlineOutlined,
 } from '@mui/icons-material';
 import { useTheme as useCustomTheme } from '../context/ThemeContext';
+import { unwrapResponse } from '../services/utils/apiHelpers'; // Import the unwrapper
 
 const TopNavBar = ({ children, onDrawerToggle }) => {
   const navigate = useNavigate();
@@ -41,9 +42,19 @@ const TopNavBar = ({ children, onDrawerToggle }) => {
     // Get user data from localStorage
     const userData = localStorage.getItem('user');
     if (userData) {
-      setCurrentUser(JSON.parse(userData));
+      try {
+        // Parse the data and handle potential wrapped response
+        const parsedData = JSON.parse(userData);
+        // Apply unwrapping if needed
+        const unwrappedUser = unwrapResponse(parsedData);
+        setCurrentUser(unwrappedUser);
+      } catch (error) {
+        console.error('Error parsing user data:', error);
+        // If there's an error, redirect to login
+        navigate('/login');
+      }
     }
-  }, []);
+  }, [navigate]);
 
   const isSystemDashboard = location.pathname === '/system/dashboard';
   const isClientView = location.pathname.includes('/client/');
@@ -122,7 +133,7 @@ const TopNavBar = ({ children, onDrawerToggle }) => {
           
           {currentUser && (
             <Chip
-              label={currentUser.role.replace(/_/g, ' ')}
+              label={currentUser.role?.replace(/_/g, ' ') || 'User'}
               size="small"
               sx={{ ml: 2, backgroundColor: 'rgba(255, 255, 255, 0.1)' }}
             />
